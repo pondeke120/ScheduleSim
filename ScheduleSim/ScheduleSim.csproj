@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AACE7840-BBA0-41F8-B229-CB6B902640BE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ScheduleSim</RootNamespace>
+    <AssemblyName>ScheduleSim</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=7.0.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.7.0.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net45\CommonServiceLocator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Prism, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.7.1.0.431\lib\net45\Prism.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Prism.Unity.Wpf, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Unity.7.1.0.431\lib\net45\Prism.Unity.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Prism.Wpf, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\Prism.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Unity.Abstractions, Version=3.3.1.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Abstractions.3.3.1\lib\net45\Unity.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Unity.Container, Version=5.8.11.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Container.5.8.11\lib\net45\Unity.Container.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Commands\Common\DelegateCommand.cs" />
+    <Compile Include="Commands\FunctionDependencyPage\DeleteDependencyCommand.cs" />
+    <Compile Include="Commands\MemberPage\AddMemberCommand.cs" />
+    <Compile Include="Commands\MemberPage\DeleteMemberCommand.cs" />
+    <Compile Include="Commands\Menu\CreateNewProjectCommand.cs" />
+    <Compile Include="Commands\Menu\ExportGanttChartCommand.cs" />
+    <Compile Include="Commands\Menu\ExportPertGraphCommand.cs" />
+    <Compile Include="Commands\Menu\ImportXlsxCommand.cs" />
+    <Compile Include="Commands\Menu\OpenFileCommand.cs" />
+    <Compile Include="Commands\Menu\SaveAsCommand.cs" />
+    <Compile Include="Commands\Menu\SaveCommand.cs" />
+    <Compile Include="Commands\PertPage\DeleteEdgeCommand.cs" />
+    <Compile Include="Commands\ProcessDependencyPage\DeleteDependencyCommand.cs" />
+    <Compile Include="Commands\WbsPage\DeleteTaskCommand.cs" />
+    <Compile Include="ControlBehaviors\BindableSelectedItemBehavior.cs" />
+    <Compile Include="ControlBehaviors\ContextMenuBindingProxy.cs" />
+    <Compile Include="ControlConverters\IndexConverter.cs" />
+    <Compile Include="Mappers\FunctionDependencyPageProfile.cs" />
+    <Compile Include="Mappers\MemberPageProfile.cs" />
+    <Compile Include="Mappers\ProcessDependencyPageProfile.cs" />
+    <Compile Include="Mappers\ProjectSettingPagePofile.cs" />
+    <Compile Include="Mappers\WbsPageProfile.cs" />
+    <Compile Include="Resouces\CustomColors.cs" />
+    <Compile Include="ViewModels\FunctionDependencyPageDependencyItemViewModel.cs" />
+    <Compile Include="ViewModels\FunctionDependencyPageViewModel.cs" />
+    <Compile Include="ViewModels\MemberPageMemberItemViewModel.cs" />
+    <Compile Include="ViewModels\MemberPageViewModel.cs" />
+    <Compile Include="ViewModels\MenuViewModel.cs" />
+    <Compile Include="ViewModels\PertPageEdgeItemViewModel.cs" />
+    <Compile Include="ViewModels\PertPageViewModel.cs" />
+    <Compile Include="ViewModels\ProcessDependencyPageDependencyItemViewModel.cs" />
+    <Compile Include="ViewModels\ProcessDependencyPageViewModel.cs" />
+    <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="ViewModels\WbsPageTaskItemViewModel.cs" />
+    <Compile Include="ViewModels\WbsPageViewModel.cs" />
+    <Compile Include="Views\ActivityScheduleGraphPage.xaml.cs">
+      <DependentUpon>ActivityScheduleGraphPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EntireSchedulePage.xaml.cs">
+      <DependentUpon>EntireSchedulePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FunctionDependencyPage.xaml.cs">
+      <DependentUpon>FunctionDependencyPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GanttChartGraphPage.xaml.cs">
+      <DependentUpon>GanttChartGraphPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PertGraphPage.xaml.cs">
+      <DependentUpon>PertGraphPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PertPage.xaml.cs">
+      <DependentUpon>PertPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlanValuePage.xaml.cs">
+      <DependentUpon>PlanValuePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProcessDependencyPage.xaml.cs">
+      <DependentUpon>ProcessDependencyPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\ProjectSettingPageFunctionItemViewModel.cs" />
+    <Compile Include="ViewModels\ProjectSettingPageHolidayItemViewModel.cs" />
+    <Compile Include="ViewModels\ProjectSettingPageProcessItemViewModel.cs" />
+    <Compile Include="ViewModels\ProjectSettingPageViewModel.cs" />
+    <Compile Include="ViewModels\ProjectSettingPageWeekdayItemViewModel.cs" />
+    <Compile Include="ViewModels\SidebarItemViewModel.cs" />
+    <Compile Include="ViewModels\SidebarViewModel.cs" />
+    <Compile Include="Views\MemberPage.xaml.cs">
+      <DependentUpon>MemberPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Menu.xaml.cs">
+      <DependentUpon>Menu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProjectSettingPage.xaml.cs">
+      <DependentUpon>ProjectSettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shell.xaml.cs">
+      <DependentUpon>Shell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\Sidebar.xaml.cs">
+      <DependentUpon>Sidebar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WbsPage.xaml.cs">
+      <DependentUpon>WbsPage.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\ActivityScheduleGraphPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EntireSchedulePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FunctionDependencyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GanttChartGraphPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PertGraphPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PertPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlanValuePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProcessDependencyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MemberPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Menu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProjectSettingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Shell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Sidebar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WbsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ScheduleSim.Access\ScheduleSim.Access.csproj">
+      <Project>{7A718115-435C-4209-971D-C09899E83814}</Project>
+      <Name>ScheduleSim.Access</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScheduleSim.Core\ScheduleSim.Core.csproj">
+      <Project>{19ED1119-0D48-4F5F-8879-034D2DEE9181}</Project>
+      <Name>ScheduleSim.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScheduleSim.Entities\ScheduleSim.Entities.csproj">
+      <Project>{8FEB58A9-9B48-417B-9839-9F01161DD06B}</Project>
+      <Name>ScheduleSim.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

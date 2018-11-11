@@ -1,0 +1,11 @@
+ScheduleSim.Core/bin/
+ScheduleSim.Core/obj/
+ScheduleSim.Access/bin/
+ScheduleSim.Access/obj/
+ScheduleSim.Entities/bin/
+ScheduleSim.Entities/obj/
+ScheduleSim.Events/bin/
+ScheduleSim.Events/obj/
+ScheduleSim/bin/
+ScheduleSim/obj/
+packages/
