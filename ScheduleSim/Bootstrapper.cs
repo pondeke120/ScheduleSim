@@ -141,6 +141,7 @@ namespace ScheduleSim
                 ));
 
             // Register BusinessLogics
+            Container.RegisterType<Core.BusinessLogics.WPF.Menu.ICreateNewProjectBusinessLogic, Core.BusinessLogics.WPF.Menu.CreateNewProjectBusinessLogic>();
             Container.RegisterType<Core.BusinessLogics.WPF.Menu.ISaveBusinessLogic, Core.BusinessLogics.WPF.Menu.SaveBusinessLogic>();
             Container.RegisterType<Core.BusinessLogics.WPF.Menu.ISaveAsBusinessLogic, Core.BusinessLogics.WPF.Menu.SaveAsBusinessLogic>();
 

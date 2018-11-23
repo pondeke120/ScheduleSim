@@ -42,12 +42,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogics\IBusinessLogic.cs" />
+    <Compile Include="BusinessLogics\WPF\Menu\CreateNewProjectBusinessLogic.cs" />
+    <Compile Include="BusinessLogics\WPF\Menu\ICreateNewProjectBusinessLogic.cs" />
     <Compile Include="BusinessLogics\WPF\Menu\ISaveAsBusinessLogic.cs" />
     <Compile Include="BusinessLogics\WPF\Menu\ISaveBusinessLogic.cs" />
     <Compile Include="BusinessLogics\WPF\Menu\SaveAsBusinessLogic.cs" />
     <Compile Include="BusinessLogics\WPF\Menu\SaveBusinessLogic.cs" />
     <Compile Include="Dispatcher\IDispatcher.cs" />
     <Compile Include="Dispatcher\TransactionDispatcher.cs" />
+    <Compile Include="IO\WPF\Menu\CreateNewProjectInput.cs" />
+    <Compile Include="IO\WPF\Menu\CreateNewProjectOutput.cs" />
     <Compile Include="IO\WPF\Menu\SaveAsInput.cs" />
     <Compile Include="IO\WPF\Menu\SaveAsOutput.cs" />
     <Compile Include="IO\WPF\Menu\SaveOutput.cs" />

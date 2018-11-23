@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ScheduleSim.Core.BusinessLogics.WPF.Menu;
+using ScheduleSim.Core.IO.WPF.Menu;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +12,15 @@ namespace ScheduleSim.Commands.Menu
 {
     public class CreateNewProjectCommand : ICommand
     {
+        private ICreateNewProjectBusinessLogic businessLogic;
+
         public event EventHandler CanExecuteChanged;
+
+        public CreateNewProjectCommand(
+            ICreateNewProjectBusinessLogic businessLogic)
+        {
+            this.businessLogic = businessLogic;
+        }
 
         public bool CanExecute(object parameter)
         {
@@ -19,7 +29,7 @@ namespace ScheduleSim.Commands.Menu
 
         public void Execute(object parameter)
         {
-            MessageBox.Show("CreateNewProject");
+            this.businessLogic.Execute(new CreateNewProjectInput());
         }
     }
 }
