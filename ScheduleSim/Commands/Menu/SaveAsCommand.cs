@@ -93,6 +93,7 @@ namespace ScheduleSim.Commands.Menu
             var output = this.businessLogic.Execute(input);
 
             this.shellViewModel.ProjectPath = output?.ProjectPath ?? input.SrcPath;
+            this.appContext.IsSaved = true;
         }
     }
 }

@@ -12,13 +12,28 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.Menu
     {
         private IDbFileAccessService dbFileAccessService;
         private IDbMigrationService dbMigrationService;
+        private IFunctionDependencyAccessService functionDependencyAccessService;
+        private IMemberAccessService memberAccessService;
+        private IProcessDependencyAccessService processDependencyAccessService;
+        private IProjectSettingsAccessService projectSettingsAccessService;
+        private ITaskAccessService taskAccessService;
 
         public SaveBusinessLogic(
             IDbMigrationService dbMigrationService,
-            IDbFileAccessService dbFileAccessService)
+            IDbFileAccessService dbFileAccessService,
+            IProjectSettingsAccessService projectSettingsAccessService,
+            IMemberAccessService memberAccessService,
+            ITaskAccessService taskAccessService,
+            IProcessDependencyAccessService processDependencyAccessService,
+            IFunctionDependencyAccessService functionDependencyAccessService)
         {
             this.dbMigrationService = dbMigrationService;
             this.dbFileAccessService = dbFileAccessService;
+            this.projectSettingsAccessService = projectSettingsAccessService;
+            this.memberAccessService = memberAccessService;
+            this.taskAccessService = taskAccessService;
+            this.processDependencyAccessService = processDependencyAccessService;
+            this.functionDependencyAccessService = functionDependencyAccessService;
         }
 
         public SaveOutput Execute(SaveInput input)
@@ -31,6 +46,26 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.Menu
             }
 
             this.dbMigrationService.Upgrade();
+
+            this.projectSettingsAccessService.Update(
+                input.StartDate,
+                input.EndDate,
+                input.Processes,
+                input.Functions,
+                input.Holidays,
+                input.RestDays);
+
+            this.memberAccessService.Update(
+                input.Members);
+
+            this.taskAccessService.Update(
+                input.Tasks);
+
+            this.processDependencyAccessService.Update(
+                input.ProcessDependencies);
+
+            this.functionDependencyAccessService.Update(
+                input.FunctionDependencies);
 
             return output;
         }

@@ -99,7 +99,20 @@ namespace ScheduleSim
             // Register Commands
             Container.RegisterType<ICommand, Commands.Menu.CreateNewProjectCommand>("Menu.CreateNewProjectCommand");
             Container.RegisterType<ICommand, Commands.Menu.OpenFileCommand>("Menu.OpenFileCommand");
-            Container.RegisterType<ICommand, Commands.Menu.SaveCommand>("Menu.SaveCommand");
+            Container.RegisterType<ICommand, Commands.Menu.SaveCommand>("Menu.SaveCommand",
+                new InjectionConstructor(
+                    new ResolvedParameter<AppContext>(),
+                    new ResolvedParameter<IDispatcher>(),
+                    new ResolvedParameter<Core.BusinessLogics.WPF.Menu.ISaveBusinessLogic>(),
+                    new ResolvedParameter<ICommand>("Menu.SaveAsCommand"),
+                    new ResolvedParameter<ProjectSettingPageViewModel>(),
+                    new ResolvedParameter<MemberPageViewModel>(),
+                    new ResolvedParameter<WbsPageViewModel>(),
+                    new ResolvedParameter<ProcessDependencyPageViewModel>(),
+                    new ResolvedParameter<FunctionDependencyPageViewModel>(),
+                    new ResolvedParameter<ShellViewModel>(),
+                    new ResolvedParameter<IMapper>()
+                ));
             Container.RegisterType<ICommand, Commands.Menu.SaveAsCommand>("Menu.SaveAsCommand");
             Container.RegisterType<ICommand, Commands.Menu.ImportXlsxCommand>("Menu.ImportXlsxCommand");
             Container.RegisterType<ICommand, Commands.Menu.ExportGanttChartCommand>("Menu.ExportGanttChartCommand");
@@ -162,6 +175,7 @@ namespace ScheduleSim
             // Register Contexts
             Container.RegisterInstance(new AppContext()
             {
+                IsSaved = false,
                 MasterDbFile = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "master.accdb"),
                 ProjectFolder = Path.GetTempPath(),
                 ProjectDbFile = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName())

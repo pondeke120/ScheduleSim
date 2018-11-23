@@ -29,7 +29,7 @@ namespace ScheduleSim.Core.Dispatcher
                 ret = businessLogic.Execute(input);
                 transaction.Commit();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 if (transaction != null)
                 {
