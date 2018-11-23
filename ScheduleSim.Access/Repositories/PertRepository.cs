@@ -22,15 +22,16 @@ namespace ScheduleSim.Access.Repositories
         public IEnumerable<Pert> Find()
         {
             var conn = this.connectionFactory.Create();
+            var trn = this.connectionFactory.GetCurrentTransaction();
             var rows = conn.Query<Pert>(@"
                 select
-                    SrcNodeCd = @SRC_NODE_NO,
-                    DstNodeCd = @DST_NODE_NO,
-                    TaskCd = @TASK_CD
+                    SRC_NODE_NO as SrcNodeCd,
+                    DST_NODE_NO as DstNodeCd,
+                    TASK_CD as TaskCd
                 from 
                     M_PERT
             "
-            );
+            , null, trn);
 
             return
                 rows.ToArray();
@@ -39,6 +40,7 @@ namespace ScheduleSim.Access.Repositories
         public void Insert(IEnumerable<Pert> edges)
         {
             var conn = this.connectionFactory.Create();
+            var trn = this.connectionFactory.GetCurrentTransaction();
             conn.Execute(@"
                 insert into M_PERT (
                     SRC_NODE_NO, DST_NODE_NO, TASK_CD
@@ -50,7 +52,7 @@ namespace ScheduleSim.Access.Repositories
                 Dst = x.DstNodeCd,
                 Task = x.TaskCd,
             }).ToArray()
-            );
+            , trn);
         }
     }
 }

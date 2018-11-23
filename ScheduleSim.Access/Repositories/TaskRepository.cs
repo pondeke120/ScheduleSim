@@ -21,20 +21,21 @@ namespace ScheduleSim.Access.Repositories
         public IEnumerable<Entities.Models.Task> Find()
         {
             var conn = this.connectionFactory.Create();
+            var trn = this.connectionFactory.GetCurrentTransaction();
             var rows = conn.Query<Entities.Models.Task>(@"
                 select
-                    TaskCd = @TASK_CD,
-                    ProcessCd = @PROCESS_CD,
-                    FunctionCd = @FUNCTION_CD,
-                    TaskName = @TASK_NAME,
-                    PlanValue = @PLAN_VALUE,
-                    StartDate = @START_DATE,
-                    EndDate = @END_DATE,
-                    AssignMemberCd = @ASSIGN_MEMBER_CD
+                    TASK_CD as TaskCd,
+                    PROCESS_CD as ProcessCd,
+                    FUNCTION_CD as FunctionCd,
+                    TASK_NAME as TaskName,
+                    PLAN_VALUE as PlanValue,
+                    START_DATE as StartDate,
+                    END_DATE as EndDate,
+                    ASSIGN_MEMBER_CD as AssignMemberCd
                 from 
                     M_TASK
             "
-            );
+            , null, trn);
 
             return
                 rows.ToArray();
@@ -43,6 +44,7 @@ namespace ScheduleSim.Access.Repositories
         public void Insert(IEnumerable<Entities.Models.Task> tasks)
         {
             var conn = this.connectionFactory.Create();
+            var trn = this.connectionFactory.GetCurrentTransaction();
             conn.Execute(@"
                 insert into M_TASK (
                     TASK_CD, PROCESS_CD, FUNCTION_CD, TASK_NAME, PLAN_VALUE, START_DATE, END_DATE, ASSIGN_MEMBER_CD
@@ -59,16 +61,17 @@ namespace ScheduleSim.Access.Repositories
                 EndDate = x.EndDate,
                 MemberCd = x.AssignMemberCd
             }).ToArray()
-            );
+            , trn);
         }
 
         public void RemoveAll()
         {
             var conn = this.connectionFactory.Create();
+            var trn = this.connectionFactory.GetCurrentTransaction();
             conn.Execute(@"
                 delete from M_TASK
             "
-            );
+            , null, trn);
         }
     }
 }

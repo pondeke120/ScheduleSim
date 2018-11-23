@@ -16,7 +16,6 @@ namespace ScheduleSim.Access
         private Func<string> openPath;
         private IDbConnection transactionConn;
         private IDbTransaction transaction;
-        private ManualResetEventSlim locker = new ManualResetEventSlim();
 
         public AccessConnectionFactory(Func<string> openPath)
         {
@@ -26,7 +25,6 @@ namespace ScheduleSim.Access
         public IDbConnection Create()
         {
             var conn = null as IDbConnection;
-
             if (this.transactionConn == null)
             {
                 var builder = new OleDbConnectionStringBuilder();
@@ -40,16 +38,24 @@ namespace ScheduleSim.Access
             {
                 conn = this.transactionConn;
             }
-
+            
             return conn;
+        }
+
+        public IDbTransaction GetCurrentTransaction()
+        {
+            return
+                this.transaction;
         }
         
         public IDbTransaction BeginTransaction()
         {
-            this.locker.Wait(3000);
-            this.locker.Reset();
             this.transactionConn = Create();
-            this.transaction = this.transactionConn.BeginTransaction();
+            this.transactionConn.Open();
+            if (this.transaction == null)
+            {
+                this.transaction = this.transactionConn.BeginTransaction();
+            }
             return this.transaction;
         }
 

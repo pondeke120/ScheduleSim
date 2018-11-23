@@ -12,6 +12,7 @@ namespace ScheduleSim.Entities
     {
         IDbConnection Create();
         IDbTransaction BeginTransaction();
+        IDbTransaction GetCurrentTransaction();
         void EndTransaction();
     }
 }

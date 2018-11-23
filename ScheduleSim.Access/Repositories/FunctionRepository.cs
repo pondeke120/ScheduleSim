@@ -22,14 +22,15 @@ namespace ScheduleSim.Access.Repositories
         public IEnumerable<Function> Find()
         {
             var conn = this.connectionFactory.Create();
+            var trn = this.connectionFactory.GetCurrentTransaction();
             var rows = conn.Query<Function>(@"
                 select
-                    FunctionCd = @FUNCTION_CD,
-                    FunctionName = @FUNCTION_NAME
+                    FUNCTION_CD as FunctionCd,
+                    FUNCTION_NAME as FunctionName
                 from 
                     M_FUNCTION
             "
-            );
+            , null, trn);
 
             return
                 rows.ToArray();
@@ -38,6 +39,7 @@ namespace ScheduleSim.Access.Repositories
         public void Insert(IEnumerable<Function> functions)
         {
             var conn = this.connectionFactory.Create();
+            var trn = this.connectionFactory.GetCurrentTransaction();
             conn.Execute(@"
                 insert into M_FUNCTION (
                     FUNCTION_CD, FUNCTION_NAME
@@ -47,15 +49,16 @@ namespace ScheduleSim.Access.Repositories
             , functions.Select(x => new {
                 Cd = x.FunctionCd, Name = x.FunctionName,
             }).ToArray()
-            );
+            , trn);
         }
         
         public void RemoveAll()
         {
             var conn = this.connectionFactory.Create();
+            var trn = this.connectionFactory.GetCurrentTransaction();
             conn.Execute(@"
                 delete from M_FUNCTION
-            ");
+            ", null, trn);
         }
     }
 }

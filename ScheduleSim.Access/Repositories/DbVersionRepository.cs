@@ -21,6 +21,7 @@ namespace ScheduleSim.Access.Repositories
         public void Regist(string version, string explain)
         {
             var conn = this.connectionFactory.Create();
+            var trn = this.connectionFactory.GetCurrentTransaction();
             conn.Execute(@"
                 insert into M_DB_VERSION (
                     VERSION, EXPLAIN
@@ -28,7 +29,7 @@ namespace ScheduleSim.Access.Repositories
                 values (@v, @e)
             "
             , new[] { new { v = version, e = explain } }
-            );
+            , trn);
         }
     }
 }

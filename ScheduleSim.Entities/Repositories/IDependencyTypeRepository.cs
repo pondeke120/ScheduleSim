@@ -11,6 +11,7 @@ namespace ScheduleSim.Entities.Repositories
     {
         IEnumerable<DependencyType> Find();
         void Insert(IEnumerable<DependencyType> dependencyTypes);
+        void Upsert(IEnumerable<DependencyType> dependencyTypes);
         void RemoveAll();
     }
 }

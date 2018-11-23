@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ScheduleSim.Entities.Enum
 {
-    public enum DependencyTypes
+    public enum DependencyTypes : int
     {
         StartDependency,
         CompleteDependency

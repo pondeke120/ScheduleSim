@@ -22,14 +22,15 @@ namespace ScheduleSim.Access.Repositories
         public IEnumerable<Process> Find()
         {
             var conn = this.connectionFactory.Create();
+            var trn = this.connectionFactory.GetCurrentTransaction();
             var rows = conn.Query<Process>(@"
                 select
-                    ProcessCd = @PROCESS_CD,
-                    ProcessName = @PROCESS_NAME
+                    PROCESS_CD as ProcessCd,
+                    PROCESS_NAME as ProcessName
                 from 
                     M_PROCESS
             "
-            );
+            , null, trn);
 
             return
                 rows.ToArray();
@@ -38,6 +39,7 @@ namespace ScheduleSim.Access.Repositories
         public void Insert(IEnumerable<Process> processes)
         {
             var conn = this.connectionFactory.Create();
+            var trn = this.connectionFactory.GetCurrentTransaction();
             conn.Execute(@"
                 insert into M_PROCESS (
                     PROCESS_CD,
@@ -49,15 +51,16 @@ namespace ScheduleSim.Access.Repositories
                 Cd = x.ProcessCd,
                 Name = x.ProcessName
             }).ToArray()
-            );
+            , trn);
         }
         
         public void RemoveAll()
         {
             var conn = this.connectionFactory.Create();
+            var trn = this.connectionFactory.GetCurrentTransaction();
             conn.Execute(@"
                 delete from M_PROCESS
-            ");
+            ", null, trn);
         }
     }
 }

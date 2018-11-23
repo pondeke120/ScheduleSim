@@ -22,15 +22,16 @@ namespace ScheduleSim.Access.Repositories
         public IEnumerable<ProcessDependency> Find()
         {
             var conn = this.connectionFactory.Create();
+            var trn = this.connectionFactory.GetCurrentTransaction();
             var rows = conn.Query<ProcessDependency>(@"
                 select
-                    OrgProcessCd = @ORG_PROCESS_CD,
-                    DstProcessCd = @DST_PROCESS_CD,
-                    DependencyType = @DEPENDENCY_TYPE_CD
+                    ORG_PROCESS_CD as OrgProcessCd,
+                    DST_PROCESS_CD as DstProcessCd,
+                    DEPENDENCY_TYPE_CD as DependencyType
                 from 
                     M_PROCESS_DEPENDENCY
             "
-            );
+            , null, trn);
 
             return
                 rows.ToArray();
@@ -39,6 +40,7 @@ namespace ScheduleSim.Access.Repositories
         public void Insert(IEnumerable<ProcessDependency> dependencies)
         {
             var conn = this.connectionFactory.Create();
+            var trn = this.connectionFactory.GetCurrentTransaction();
             conn.Execute(@"
                 insert into M_PROCESS_DEPENDENCY (
                     ORG_PROCESS_CD, DST_PROCESS_CD, DEPENDENCY_TYPE_CD
@@ -50,16 +52,17 @@ namespace ScheduleSim.Access.Repositories
                 Dst = x.DstProcessCd,
                 TypeCd = (int)x.DependencyType,
             }).ToArray()
-            );
+            , trn);
         }
 
         public void RemoveAll()
         {
             var conn = this.connectionFactory.Create();
+            var trn = this.connectionFactory.GetCurrentTransaction();
             conn.Execute(@"
                 delete from M_PROCESS_DEPENDENCY
             "
-            );
+            , null, trn);
         }
     }
 }
