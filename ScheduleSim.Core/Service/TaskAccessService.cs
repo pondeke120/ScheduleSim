@@ -19,7 +19,8 @@ namespace ScheduleSim.Core.Service
 
         public IEnumerable<Task> GetAllTasks()
         {
-            throw new NotImplementedException();
+            return
+                this.taskRepository.Find();
         }
 
         public void Update(IEnumerable<Task> tasks)

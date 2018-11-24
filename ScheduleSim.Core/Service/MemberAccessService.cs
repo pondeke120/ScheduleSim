@@ -20,7 +20,8 @@ namespace ScheduleSim.Core.Service
 
         public IEnumerable<Member> GetAllMembers()
         {
-            throw new NotImplementedException();
+            return
+                this.memberRepository.Find();
         }
 
         public void Update(IEnumerable<Member> members)

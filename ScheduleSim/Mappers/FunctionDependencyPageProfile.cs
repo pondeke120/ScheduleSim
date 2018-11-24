@@ -20,6 +20,10 @@ namespace ScheduleSim.Mappers
                 .ForMember(d => d.DependencyTypeCd, o => o.MapFrom(s => s.DependencyType));
 
             // Model -> ViewModel
+            CreateMap<FunctionDependency, FunctionDependencyPageDependencyItemViewModel>()
+                .ForMember(d => d.SrcFunctionId, o => o.MapFrom(s => s.OrgFunctionCd))
+                .ForMember(d => d.DstFunctionId, o => o.MapFrom(s => s.DstFunctionCd))
+                .ForMember(d => d.DependencyType, o => o.MapFrom(s => s.DependencyTypeCd));
         }
     }
 }

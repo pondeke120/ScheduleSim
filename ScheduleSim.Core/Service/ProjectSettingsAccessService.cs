@@ -38,7 +38,13 @@ namespace ScheduleSim.Core.Service
             ref IEnumerable<Holiday> holidays, 
             ref IEnumerable<WeekDay> restDays)
         {
-            throw new NotImplementedException();
+            var settings = this.prjSettingsRepository.FindRecently();
+            startDate = settings.StartDate;
+            endDate = settings.EndDate;
+            processes = this.processRepository.Find().ToArray();
+            functions = this.functionRepository.Find().ToArray();
+            holidays = this.holidayRepository.Find().ToArray();
+            restDays = this.weekdayRepository.Find().ToArray();
         }
 
         public void Update(

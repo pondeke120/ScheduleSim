@@ -29,6 +29,18 @@ namespace ScheduleSim.Mappers
                 .ForMember(d => d.WeekdayName, o => o.MapFrom(s => Enum.GetName(typeof(DayOfWeek), s.DayOfWeek)));
 
             // Model -> ViewModel
+            CreateMap<Process, ProjectSettingPageProcessItemViewModel>()
+                .ForMember(d => d.Id, o => o.MapFrom(s => s.ProcessCd))
+                .ForMember(d => d.Name, o => o.MapFrom(s => s.ProcessName));
+            CreateMap<Function, ProjectSettingPageFunctionItemViewModel>()
+                .ForMember(d => d.Id, o => o.MapFrom(s => s.FunctionCd))
+                .ForMember(d => d.Name, o => o.MapFrom(s => s.FunctionName));
+            CreateMap<Holiday, ProjectSettingPageHolidayItemViewModel>()
+                .ForMember(d => d.Id, o => o.MapFrom(s => s.HolidayCd))
+                .ForMember(d => d.Date, o => o.MapFrom(s => s.HolidayDate));
+            CreateMap<WeekDay, ProjectSettingPageWeekdayItemViewModel>()
+                .ForMember(d => d.DayOfWeek, o => o.MapFrom(s => s.WeekdayCd))
+                .ForMember(d => d.IsCheck, o => o.MapFrom(s => s.HolidayFlg));
         }
     }
 }

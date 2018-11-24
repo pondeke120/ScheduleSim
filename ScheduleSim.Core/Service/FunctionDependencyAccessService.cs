@@ -20,7 +20,8 @@ namespace ScheduleSim.Core.Service
 
         public IEnumerable<FunctionDependency> GetAllDependencies()
         {
-            throw new NotImplementedException();
+            return
+                this.functionDependencyRepository.Find();
         }
 
         public void Update(IEnumerable<FunctionDependency> dependencies)
