@@ -14,6 +14,7 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.Menu
         private IDbMigrationService dbMigrationService;
         private IFunctionDependencyAccessService functionDependencyAccessService;
         private IMemberAccessService memberAccessService;
+        private IPertAccessService pertAccessService;
         private IProcessDependencyAccessService processDependencyAccessService;
         private IProjectSettingsAccessService projectSettingsAccessService;
         private ITaskAccessService taskAccessService;
@@ -25,7 +26,8 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.Menu
             IMemberAccessService memberAccessService,
             ITaskAccessService taskAccessService,
             IProcessDependencyAccessService processDependencyAccessService,
-            IFunctionDependencyAccessService functionDependencyAccessService)
+            IFunctionDependencyAccessService functionDependencyAccessService,
+            IPertAccessService pertAccessService)
         {
             this.dbMigrationService = dbMigrationService;
             this.dbFileAccessService = dbFileAccessService;
@@ -34,6 +36,7 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.Menu
             this.taskAccessService = taskAccessService;
             this.processDependencyAccessService = processDependencyAccessService;
             this.functionDependencyAccessService = functionDependencyAccessService;
+            this.pertAccessService = pertAccessService;
         }
 
         public SaveAsOutput Execute(SaveAsInput input)
@@ -69,6 +72,9 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.Menu
 
             this.functionDependencyAccessService.Update(
                 input.FunctionDependencies);
+
+            this.pertAccessService.Update(
+                input.Edges);
 
             output.ProjectPath = input.SavePath;
 

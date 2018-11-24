@@ -26,8 +26,8 @@ namespace ScheduleSim.ViewModels
 
             Edges = new List<PertPageEdgeItemViewModel>()
             {
-                new PertPageEdgeItemViewModel(),
-                new PertPageEdgeItemViewModel(),
+                new PertPageEdgeItemViewModel() { INode = 1, JNode = 2, TaskId = 0 },
+                new PertPageEdgeItemViewModel() { INode = 1, JNode = 3, TaskId = 1 },
             };
         }
     }

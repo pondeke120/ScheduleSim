@@ -31,7 +31,7 @@ namespace ScheduleSim.ViewModels
         }
 
         private int? _functionId;
-        public int? Function
+        public int? FunctionId
         {
             get { return _functionId; }
             set { SetProperty(ref _functionId, value); }

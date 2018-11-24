@@ -9,6 +9,7 @@ namespace ScheduleSim.Entities.Repositories
 {
     public interface IPertRepository
     {
+        void RemoveAll();
         void Insert(IEnumerable<Pert> edges);
         IEnumerable<Pert> Find();
     }

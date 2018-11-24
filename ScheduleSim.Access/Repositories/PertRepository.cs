@@ -54,5 +54,15 @@ namespace ScheduleSim.Access.Repositories
             }).ToArray()
             , trn);
         }
+
+        public void RemoveAll()
+        {
+            var conn = this.connectionFactory.Create();
+            var trn = this.connectionFactory.GetCurrentTransaction();
+            conn.Execute(@"
+                delete from M_PERT
+            "
+            , null, trn);
+        }
     }
 }

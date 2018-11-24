@@ -27,6 +27,7 @@ namespace ScheduleSim.Commands.Menu
         private WbsPageViewModel wbsPageViewModel;
         private ProcessDependencyPageViewModel processDependencyPageViewModel;
         private FunctionDependencyPageViewModel functionDependencyPageViewModel;
+        private PertPageViewModel pertPageViewModel;
 
         public event EventHandler CanExecuteChanged;
 
@@ -38,6 +39,7 @@ namespace ScheduleSim.Commands.Menu
             WbsPageViewModel wbsPageViewModel,
             ProcessDependencyPageViewModel processDependencyPageViewModel,
             FunctionDependencyPageViewModel functionDependencyPageViewModel,
+            PertPageViewModel pertPageViewModel,
             ShellViewModel shellViewModel,
             IMapper mapper)
         {
@@ -48,6 +50,7 @@ namespace ScheduleSim.Commands.Menu
             this.wbsPageViewModel = wbsPageViewModel;
             this.processDependencyPageViewModel = processDependencyPageViewModel;
             this.functionDependencyPageViewModel = functionDependencyPageViewModel;
+            this.pertPageViewModel = pertPageViewModel;
             this.shellViewModel = shellViewModel;
             this.mapper = mapper;
         }
@@ -86,6 +89,7 @@ namespace ScheduleSim.Commands.Menu
             input.Tasks = mapper.Map<List<Task>>(this.wbsPageViewModel.Tasks.Where(x => !string.IsNullOrEmpty(x.TaskName)));
             input.ProcessDependencies = mapper.Map<List<ProcessDependency>>(this.processDependencyPageViewModel.Dependencies);
             input.FunctionDependencies = mapper.Map<List<FunctionDependency>>(this.functionDependencyPageViewModel.Dependencies);
+            input.Edges = mapper.Map<List<Pert>>(this.pertPageViewModel.Edges);
 
             appContext.ProjectDbFile = input.SavePath;
             appContext.ProjectFolder = Path.GetDirectoryName(input.SavePath);

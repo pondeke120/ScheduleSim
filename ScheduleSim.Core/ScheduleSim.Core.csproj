@@ -68,10 +68,12 @@
     <Compile Include="Service\IDbMigrationService.cs" />
     <Compile Include="Service\IFunctionDependencyAccessService.cs" />
     <Compile Include="Service\IMemberAccessService.cs" />
+    <Compile Include="Service\IPertAccessService.cs" />
     <Compile Include="Service\IProcessDependencyAccessService.cs" />
     <Compile Include="Service\IProjectSettingsAccessService.cs" />
     <Compile Include="Service\ITaskAccessService.cs" />
     <Compile Include="Service\MemberAccessService.cs" />
+    <Compile Include="Service\PertAccessService.cs" />
     <Compile Include="Service\ProcessDependencyAccessService.cs" />
     <Compile Include="Service\ProjectSettingsAccessService.cs" />
     <Compile Include="Contexts\AppContext.cs" />

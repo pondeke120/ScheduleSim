@@ -110,6 +110,7 @@ namespace ScheduleSim
                     new ResolvedParameter<WbsPageViewModel>(),
                     new ResolvedParameter<ProcessDependencyPageViewModel>(),
                     new ResolvedParameter<FunctionDependencyPageViewModel>(),
+                    new ResolvedParameter<PertPageViewModel>(),
                     new ResolvedParameter<ShellViewModel>(),
                     new ResolvedParameter<IMapper>()
                 ));
@@ -137,6 +138,7 @@ namespace ScheduleSim
                         cfg.AddProfile<WbsPageProfile>();
                         cfg.AddProfile<ProcessDependencyPageProfile>();
                         cfg.AddProfile<FunctionDependencyPageProfile>();
+                        cfg.AddProfile<PertPageProfile>();
                     })
                 ));
 
@@ -154,6 +156,7 @@ namespace ScheduleSim
             Container.RegisterType<Core.Service.ITaskAccessService, Core.Service.TaskAccessService>();
             Container.RegisterType<Core.Service.IProcessDependencyAccessService, Core.Service.ProcessDependencyAccessService>();
             Container.RegisterType<Core.Service.IFunctionDependencyAccessService, Core.Service.FunctionDependencyAccessService>();
+            Container.RegisterType<Core.Service.IPertAccessService, Core.Service.PertAccessService>();
 
             // Register Database Provider
             Container.RegisterType<AccessConnectionFactory>(new HierarchicalLifetimeManager(), new InjectionConstructor(new Func<string>(() => Container.Resolve<AppContext>().ProjectDbFile)));
