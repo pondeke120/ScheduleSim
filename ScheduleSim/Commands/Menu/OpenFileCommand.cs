@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ScheduleSim.Core.Extensions;
 
 namespace ScheduleSim.Commands.Menu
 {
@@ -94,13 +95,8 @@ namespace ScheduleSim.Commands.Menu
             this.projectSettingPageViewModel.ProjectStartDate = output.StartDate;
             this.projectSettingPageViewModel.ProjectEndDate = output.EndDate;
 
-            var processNames = this.mapper.Map<List<ProjectSettingPageProcessItemViewModel>>(output.Processes);
-            this.projectSettingPageViewModel.ProcessNames = Enumerable.Range(0, 20).Select(i =>
-            {
-                if (i < processNames.Count)
-                    return processNames[i];
-                return new ProjectSettingPageProcessItemViewModel();
-            }).ToList();
+            this.appContext.Processes.Clear();
+            this.appContext.Processes.AddRange(output.Processes);
 
             var functionNames = this.mapper.Map<List<ProjectSettingPageFunctionItemViewModel>>(output.Functions);
             this.projectSettingPageViewModel.FunctionNames = Enumerable.Range(0, 20).Select(i =>

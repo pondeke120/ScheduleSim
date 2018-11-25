@@ -1,10 +1,15 @@
-﻿using Prism.Mvvm;
+﻿using AutoMapper;
+using Prism.Mvvm;
+using ScheduleSim.Core.Contexts;
 using ScheduleSim.Core.Utility;
+using ScheduleSim.Entities.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace ScheduleSim.ViewModels
 {
@@ -46,26 +51,32 @@ namespace ScheduleSim.ViewModels
         }
 
         private DateTime? _projectEndDate;
+        private IMapper mapper;
+
         public DateTime? ProjectEndDate
         {
             get { return _projectEndDate; }
             set { SetProperty(ref _projectEndDate, value); }
         }
 
+        public ICommand ProcessChangeCommand { get; private set; }
+
         public ProjectSettingPageViewModel(
-            IIDGenerator processIdGen,
+            AppContext appContext,
+            ICommand processChangeCommand,
+            IMapper mapper,
             IIDGenerator functionIdGen,
             IIDGenerator holidayIdGen)
         {
             this.ProjectStartDate = new DateTime(2018, 10, 2);
             this.ProjectEndDate = new DateTime(2018, 10, 30);
-            this.ProcessNames = new string[20].Select(x => new ProjectSettingPageProcessItemViewModel() { Id = processIdGen.CreateNewId(), Name = x}).ToList();
-            this.ProcessNames[0].Name = "testP1";
-            this.ProcessNames[1].Name = "testP2";
+            //this.ProcessNames = new string[20].Select(x => new ProjectSettingPageProcessItemViewModel() { Id = processIdGen.CreateNewId(), Name = x }).ToList();
+            //this.ProcessNames[0].Name = "testP1";
+            //this.ProcessNames[1].Name = "testP2";
             this.FunctionNames = new string[20].Select(x => new ProjectSettingPageFunctionItemViewModel() { Id = functionIdGen.CreateNewId(), Name = x }).ToList();
             this.FunctionNames[0].Name = "testF1";
             this.FunctionNames[1].Name = "testF2";
-            this.Holidays = new string[20].Select(x => new ProjectSettingPageHolidayItemViewModel() { Id = holidayIdGen.CreateNewId(), Date = null}).ToList();
+            this.Holidays = new string[20].Select(x => new ProjectSettingPageHolidayItemViewModel() { Id = holidayIdGen.CreateNewId(), Date = null }).ToList();
             this.Holidays[0].Date = new DateTime(2018, 2, 28);
 
             this.Weekdays = new List<ProjectSettingPageWeekdayItemViewModel>()
@@ -78,6 +89,47 @@ namespace ScheduleSim.ViewModels
                 new ProjectSettingPageWeekdayItemViewModel() { IsCheck = false, DayOfWeek = DayOfWeek.Saturday },
                 new ProjectSettingPageWeekdayItemViewModel() { IsCheck = true, DayOfWeek = DayOfWeek.Sunday },
             };
+
+            this.ProcessChangeCommand = processChangeCommand;
+            this.mapper = mapper;
+            appContext.Processes.CollectionChanged += Processes_CollectionChanged;
+        }
+
+        /// <summary>
+        /// 工程変更時のイベントハンドラ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Processes_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            var collection = sender as ObservableCollection<Process>;
+
+            if (this.ProcessNames == null || this.ProcessNames.Count == 0)
+            {
+                this.ProcessNames = this.mapper.Map<List<ProjectSettingPageProcessItemViewModel>>(sender);
+            }
+            else
+            {
+                var current = this.ProcessNames.ToList();
+                var updateIds = collection.Select(x => x.ProcessCd as int?).ToArray();
+                var replaceItems = current.Where(x => updateIds.Contains(x.Id))
+                                                    .Select(x => new { Old = x, New = collection.First(a => a.ProcessCd == x.Id)})
+                                                    .ToArray();
+                var deleteItem = current.Where(x => updateIds.Contains(x.Id) == false).ToArray();
+
+                foreach (var item in replaceItems)
+                {
+                    var index = current.IndexOf(item.Old);
+                    current.RemoveAt(index);
+                    current.Insert(index, this.mapper.Map<ProjectSettingPageProcessItemViewModel>(item.New));
+                }
+                foreach (var item in deleteItem)
+                {
+                    item.Name = null;
+                }
+
+                this.ProcessNames = current;
+            }
         }
     }
 }

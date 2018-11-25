@@ -19,6 +19,9 @@ using ScheduleSim.Core.Dispatcher;
 using AutoMapper;
 using ScheduleSim.Mappers;
 using ScheduleSim.Core.Utility;
+using ScheduleSim.Core.Extensions;
+using ScheduleSim.Entities.Models;
+using System.Linq;
 
 namespace ScheduleSim
 {
@@ -37,6 +40,17 @@ namespace ScheduleSim
         protected override void InitializeModules()
         {
             base.InitializeModules();
+        }
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            var appContext = Container.Resolve<AppContext>();
+
+            var procIdGen = Container.Resolve<IIDGenerator>("ProcessIdGen");
+            appContext.Processes.Clear();
+            appContext.Processes.AddRange(Enumerable.Range(0, 20).Select(i => new Process() {ProcessCd = procIdGen.CreateNewId(), ProcessName = string.Empty }).ToArray());
         }
 
         protected override void ConfigureContainer()
@@ -70,7 +84,9 @@ namespace ScheduleSim
                 ));
             Container.RegisterType<ProjectSettingPageViewModel>(new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(
-                    new ResolvedParameter<IIDGenerator>("ProcessIdGen"),
+                    new ResolvedParameter<AppContext>(),
+                    new ResolvedParameter<ICommand>("ProjectSettingPage.ProcessChangeCommand"),
+                    new ResolvedParameter<IMapper>(),
                     new ResolvedParameter<IIDGenerator>("FunctionIdGen"),
                     new ResolvedParameter<IIDGenerator>("HolidayIdGen")
                 ));
@@ -118,6 +134,7 @@ namespace ScheduleSim
             Container.RegisterType<ICommand, Commands.Menu.ImportXlsxCommand>("Menu.ImportXlsxCommand");
             Container.RegisterType<ICommand, Commands.Menu.ExportGanttChartCommand>("Menu.ExportGanttChartCommand");
             Container.RegisterType<ICommand, Commands.Menu.ExportPertGraphCommand>("Menu.ExportPertGraphCommand");
+            Container.RegisterType<ICommand, Commands.ProjectSettingPage.ProcessChangeCommand>("ProjectSettingPage.ProcessChangeCommand");
             Container.RegisterType<ICommand, Commands.MemberPage.AddMemberCommand>("MemberPage.AddMemberCommand",
                 new InjectionConstructor(
                     new ResolvedParameter<IIDGenerator>("MemberIdGen")

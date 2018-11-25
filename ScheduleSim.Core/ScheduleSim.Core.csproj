@@ -52,6 +52,7 @@
     <Compile Include="BusinessLogics\WPF\Menu\SaveBusinessLogic.cs" />
     <Compile Include="Dispatcher\IDispatcher.cs" />
     <Compile Include="Dispatcher\TransactionDispatcher.cs" />
+    <Compile Include="Extensions\ObservableCollectionExtensions.cs" />
     <Compile Include="IO\WPF\Menu\CreateNewProjectInput.cs" />
     <Compile Include="IO\WPF\Menu\CreateNewProjectOutput.cs" />
     <Compile Include="IO\WPF\Menu\OpenFileInput.cs" />

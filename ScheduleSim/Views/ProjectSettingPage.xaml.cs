@@ -21,10 +21,18 @@ namespace ScheduleSim.Views
     /// </summary>
     public partial class ProjectSettingPage : Page
     {
+        private ProjectSettingPageViewModel viewModel;
+
         public ProjectSettingPage(ProjectSettingPageViewModel viewModel)
         {
             InitializeComponent();
             this.DataContext = viewModel;
+            this.viewModel = viewModel;
+        }
+
+        private void Process_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.viewModel.ProcessChangeCommand.Execute(new[] { sender, e});
         }
     }
 }
