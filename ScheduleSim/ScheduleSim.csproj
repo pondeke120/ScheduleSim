@@ -144,6 +144,7 @@
     <Compile Include="ViewModels\ProcessDependencyPageDependencyItemViewModel.cs" />
     <Compile Include="ViewModels\ProcessDependencyPageViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="ViewModels\WbsPageProcessItemViewModel.cs" />
     <Compile Include="ViewModels\WbsPageTaskItemViewModel.cs" />
     <Compile Include="ViewModels\WbsPageViewModel.cs" />
     <Compile Include="Views\ActivityScheduleGraphPage.xaml.cs">

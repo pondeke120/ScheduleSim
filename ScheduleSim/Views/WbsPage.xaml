@@ -12,6 +12,8 @@
       Title="WbsPage">
     <Page.Resources>
         <converter:IndexConverter x:Key="IndexConverter"/>
+        <CollectionViewSource x:Key="ProcessSource" Source="{Binding ProcessSource}">
+        </CollectionViewSource>
     </Page.Resources>
     <Grid>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
@@ -37,7 +39,13 @@
                             </MultiBinding>
                         </DataGridTextColumn.Binding>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="工程" Width="80" Binding="{Binding ProcessId}"/>
+                    <DataGridComboBoxColumn
+                        Header="工程" Width="80"
+                        SelectedValuePath="ProcessId"
+                        DisplayMemberPath="ProcessName"
+                        ItemsSource="{Binding Source={StaticResource ProcessSource}}"
+                        SelectedValueBinding="{Binding ProcessId}"
+                    />
                     <DataGridTextColumn Header="機能" Width="80" Binding="{Binding FunctionId}"/>
                     <DataGridTextColumn Header="作業" Width="200" Binding="{Binding TaskName}"/>
                     <DataGridTextColumn Header="計画工数" Width="60" Binding="{Binding PV, StringFormat=#.##}"/>

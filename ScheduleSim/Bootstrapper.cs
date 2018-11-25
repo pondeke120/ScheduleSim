@@ -97,6 +97,8 @@ namespace ScheduleSim
                 ));
             Container.RegisterType<WbsPageViewModel>(new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(
+                    new ResolvedParameter<AppContext>(),
+                    new ResolvedParameter<IMapper>(),
                     new ResolvedParameter<ICommand>("WbsPage.DeleteTaskCommand")
                 ));
             Container.RegisterType<ProcessDependencyPageViewModel>(new ContainerControlledLifetimeManager(),
