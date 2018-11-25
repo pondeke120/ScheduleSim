@@ -20,9 +20,9 @@
         <!--プロジェクト期間-->
         <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Stretch" Width="Auto" >
             <TextBlock Margin="30,0,20,0" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center">プロジェクト期間</TextBlock>
-            <DatePicker MinWidth="120" VerticalAlignment="Center" SelectedDate="{Binding ProjectStartDate}"></DatePicker>
+            <DatePicker MinWidth="120" VerticalAlignment="Center" SelectedDate="{Binding ProjectStartDate}" SelectedDateChanged="Period_SelectedDateChanged"></DatePicker>
             <TextBlock Width="60" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center">　～　</TextBlock>
-            <DatePicker MinWidth="120" VerticalAlignment="Center" SelectedDate="{Binding ProjectEndDate}"></DatePicker>
+            <DatePicker MinWidth="120" VerticalAlignment="Center" SelectedDate="{Binding ProjectEndDate}" SelectedDateChanged="Period_SelectedDateChanged"></DatePicker>
             <Button Margin="60,0,0,0" Width="70" Height="32">反映</Button>
         </StackPanel>
         

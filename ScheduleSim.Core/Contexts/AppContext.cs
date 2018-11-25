@@ -14,6 +14,7 @@ namespace ScheduleSim.Core.Contexts
         public string MasterDbFile { get; set; }
         public string ProjectDbFile { get; set; }
         public string ProjectFolder { get; set; }
+        public PrjSettings PrjSettings { get; private set; } = new PrjSettings();
         public ObservableCollection<Process> Processes { get; private set; } = new ObservableCollection<Process>();
         public ObservableCollection<Function> Functions { get; private set; } = new ObservableCollection<Function>();
     }

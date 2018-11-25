@@ -92,8 +92,8 @@ namespace ScheduleSim.Commands.Menu
 
             this.appContext.IsSaved = true;
             this.appContext.ProjectDbFile = output.FilePath;
-            this.projectSettingPageViewModel.ProjectStartDate = output.StartDate;
-            this.projectSettingPageViewModel.ProjectEndDate = output.EndDate;
+            this.appContext.PrjSettings.StartDate = output.StartDate;
+            this.appContext.PrjSettings.EndDate = output.EndDate;
 
             this.appContext.Processes.Clear();
             this.appContext.Processes.AddRange(output.Processes);

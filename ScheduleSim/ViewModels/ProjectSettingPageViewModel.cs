@@ -59,17 +59,19 @@ namespace ScheduleSim.ViewModels
 
         public ICommand ProcessChangeCommand { get; private set; }
         public ICommand FunctionChangeCommand { get; private set; }
+        public ICommand PeriodChangeCommand { get; private set; }
         private IMapper mapper;
 
         public ProjectSettingPageViewModel(
             AppContext appContext,
             ICommand processChangeCommand,
             ICommand functionChangeCommand,
+            ICommand periodChangeCommand,
             IMapper mapper,
             IIDGenerator holidayIdGen)
         {
-            this.ProjectStartDate = new DateTime(2018, 10, 2);
-            this.ProjectEndDate = new DateTime(2018, 10, 30);
+            //this.ProjectStartDate = new DateTime(2018, 10, 2);
+            //this.ProjectEndDate = new DateTime(2018, 10, 30);
             //this.ProcessNames = new string[20].Select(x => new ProjectSettingPageProcessItemViewModel() { Id = processIdGen.CreateNewId(), Name = x }).ToList();
             //this.ProcessNames[0].Name = "testP1";
             //this.ProcessNames[1].Name = "testP2";
@@ -92,9 +94,29 @@ namespace ScheduleSim.ViewModels
 
             this.ProcessChangeCommand = processChangeCommand;
             this.FunctionChangeCommand = functionChangeCommand;
+            this.PeriodChangeCommand = periodChangeCommand;
             this.mapper = mapper;
             appContext.Processes.CollectionChanged += Processes_CollectionChanged;
             appContext.Functions.CollectionChanged += Functions_CollectionChanged;
+            appContext.PrjSettings.PropertyChanged += PrjSettings_PropertyChanged;
+        }
+
+        /// <summary>
+        /// プロジェクト設定(日付)の変更イベントハンドラ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PrjSettings_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            var settings = sender as PrjSettings;
+            if (e.PropertyName.Equals(nameof(settings.StartDate)))
+            {
+                this.ProjectStartDate = settings.StartDate;
+            }
+            else if (e.PropertyName.Equals(nameof(settings.EndDate)))
+            {
+                this.ProjectEndDate = settings.EndDate;
+            }
         }
 
         /// <summary>

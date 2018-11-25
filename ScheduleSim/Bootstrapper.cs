@@ -91,6 +91,7 @@ namespace ScheduleSim
                     new ResolvedParameter<AppContext>(),
                     new ResolvedParameter<ICommand>("ProjectSettingPage.ProcessChangeCommand"),
                     new ResolvedParameter<ICommand>("ProjectSettingPage.FunctionChangeCommand"),
+                    new ResolvedParameter<ICommand>("ProjectSettingPage.PeriodChangeCommand"),
                     new ResolvedParameter<IMapper>(),
                     new ResolvedParameter<IIDGenerator>("HolidayIdGen")
                 ));
@@ -142,6 +143,7 @@ namespace ScheduleSim
             Container.RegisterType<ICommand, Commands.Menu.ExportPertGraphCommand>("Menu.ExportPertGraphCommand");
             Container.RegisterType<ICommand, Commands.ProjectSettingPage.ProcessChangeCommand>("ProjectSettingPage.ProcessChangeCommand");
             Container.RegisterType<ICommand, Commands.ProjectSettingPage.FunctionChangeCommand>("ProjectSettingPage.FunctionChangeCommand");
+            Container.RegisterType<ICommand, Commands.ProjectSettingPage.PeriodChangeCommand>("ProjectSettingPage.PeriodChangeCommand");
             Container.RegisterType<ICommand, Commands.MemberPage.AddMemberCommand>("MemberPage.AddMemberCommand",
                 new InjectionConstructor(
                     new ResolvedParameter<IIDGenerator>("MemberIdGen")

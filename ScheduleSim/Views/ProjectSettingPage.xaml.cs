@@ -39,5 +39,10 @@ namespace ScheduleSim.Views
         {
             this.viewModel.FunctionChangeCommand.Execute(new[] { sender, e });
         }
+
+        private void Period_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.viewModel.PeriodChangeCommand.Execute(new[] { sender, e });
+        }
     }
 }
