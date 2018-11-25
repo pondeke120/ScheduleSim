@@ -25,6 +25,9 @@ namespace ScheduleSim.Mappers
             CreateMap<WbsPageProcessItemViewModel, Process>()
                 .ForMember(d => d.ProcessCd, o => o.MapFrom(s => s.ProcessId))
                 .ForMember(d => d.ProcessName, o => o.MapFrom(s => s.ProcessName));
+            CreateMap<WbsPageFunctionItemViewModel, Function>()
+                .ForMember(d => d.FunctionCd, o => o.MapFrom(s => s.FunctionId))
+                .ForMember(d => d.FunctionName, o => o.MapFrom(s => s.FunctionName));
 
             // Model -> ViewModel
             CreateMap<Task, WbsPageTaskItemViewModel>()
@@ -37,6 +40,8 @@ namespace ScheduleSim.Mappers
                 .ForMember(d => d.EndDate, o => o.MapFrom(s => s.EndDate))
                 .ForMember(d => d.AssignMemberId, o => o.MapFrom(s => s.AssignMemberCd));
             CreateMap<Process, WbsPageProcessItemViewModel>()
+                .ForMember(d => d.DataContext, o => o.MapFrom(s => s));
+            CreateMap<Function, WbsPageFunctionItemViewModel>()
                 .ForMember(d => d.DataContext, o => o.MapFrom(s => s));
         }
     }

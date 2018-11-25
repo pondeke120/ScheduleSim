@@ -51,6 +51,10 @@ namespace ScheduleSim
             var procIdGen = Container.Resolve<IIDGenerator>("ProcessIdGen");
             appContext.Processes.Clear();
             appContext.Processes.AddRange(Enumerable.Range(0, 20).Select(i => new Process() {ProcessCd = procIdGen.CreateNewId(), ProcessName = string.Empty }).ToArray());
+
+            var funcIdGen = Container.Resolve<IIDGenerator>("FunctionIdGen");
+            appContext.Functions.Clear();
+            appContext.Functions.AddRange(Enumerable.Range(0, 20).Select(i => new Function() {  FunctionCd = funcIdGen.CreateNewId(), FunctionName = string.Empty }).ToArray());
         }
 
         protected override void ConfigureContainer()
@@ -86,8 +90,8 @@ namespace ScheduleSim
                 new InjectionConstructor(
                     new ResolvedParameter<AppContext>(),
                     new ResolvedParameter<ICommand>("ProjectSettingPage.ProcessChangeCommand"),
+                    new ResolvedParameter<ICommand>("ProjectSettingPage.FunctionChangeCommand"),
                     new ResolvedParameter<IMapper>(),
-                    new ResolvedParameter<IIDGenerator>("FunctionIdGen"),
                     new ResolvedParameter<IIDGenerator>("HolidayIdGen")
                 ));
             Container.RegisterType<MemberPageViewModel>(new ContainerControlledLifetimeManager(),
@@ -137,6 +141,7 @@ namespace ScheduleSim
             Container.RegisterType<ICommand, Commands.Menu.ExportGanttChartCommand>("Menu.ExportGanttChartCommand");
             Container.RegisterType<ICommand, Commands.Menu.ExportPertGraphCommand>("Menu.ExportPertGraphCommand");
             Container.RegisterType<ICommand, Commands.ProjectSettingPage.ProcessChangeCommand>("ProjectSettingPage.ProcessChangeCommand");
+            Container.RegisterType<ICommand, Commands.ProjectSettingPage.FunctionChangeCommand>("ProjectSettingPage.FunctionChangeCommand");
             Container.RegisterType<ICommand, Commands.MemberPage.AddMemberCommand>("MemberPage.AddMemberCommand",
                 new InjectionConstructor(
                     new ResolvedParameter<IIDGenerator>("MemberIdGen")

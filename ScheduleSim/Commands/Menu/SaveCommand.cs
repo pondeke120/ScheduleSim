@@ -74,7 +74,7 @@ namespace ScheduleSim.Commands.Menu
             input.StartDate = this.projectSettingPageViewModel.ProjectStartDate;
             input.EndDate = this.projectSettingPageViewModel.ProjectEndDate;
             input.Processes = mapper.Map<List<Process>>(this.projectSettingPageViewModel.ProcessNames);
-            input.Functions = mapper.Map<List<Function>>(this.projectSettingPageViewModel.FunctionNames.Where(x => !string.IsNullOrEmpty(x.Name)));
+            input.Functions = mapper.Map<List<Function>>(this.projectSettingPageViewModel.FunctionNames);
             input.Holidays = mapper.Map<List<Holiday>>(this.projectSettingPageViewModel.Holidays.Where(x => x.Date.HasValue));
             input.RestDays = mapper.Map<List<WeekDay>>(this.projectSettingPageViewModel.Weekdays);
             input.Members = mapper.Map<List<Member>>(this.memberPageViewModel.Members);

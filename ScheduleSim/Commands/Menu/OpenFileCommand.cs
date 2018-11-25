@@ -98,13 +98,8 @@ namespace ScheduleSim.Commands.Menu
             this.appContext.Processes.Clear();
             this.appContext.Processes.AddRange(output.Processes);
 
-            var functionNames = this.mapper.Map<List<ProjectSettingPageFunctionItemViewModel>>(output.Functions);
-            this.projectSettingPageViewModel.FunctionNames = Enumerable.Range(0, 20).Select(i =>
-            {
-                if (i < functionNames.Count)
-                    return functionNames[i];
-                return new ProjectSettingPageFunctionItemViewModel();
-            }).ToList();
+            this.appContext.Functions.Clear();
+            this.appContext.Functions.AddRange(output.Functions);
 
             var holidays = this.mapper.Map<List<ProjectSettingPageHolidayItemViewModel>>(output.Holidays);
             this.projectSettingPageViewModel.Holidays = Enumerable.Range(0, 20).Select(i =>

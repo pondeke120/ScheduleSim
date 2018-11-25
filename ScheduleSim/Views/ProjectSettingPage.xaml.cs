@@ -34,5 +34,10 @@ namespace ScheduleSim.Views
         {
             this.viewModel.ProcessChangeCommand.Execute(new[] { sender, e});
         }
+
+        private void Function_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.viewModel.FunctionChangeCommand.Execute(new[] { sender, e });
+        }
     }
 }

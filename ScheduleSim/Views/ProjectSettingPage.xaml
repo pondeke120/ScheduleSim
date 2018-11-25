@@ -90,7 +90,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBox VerticalContentAlignment="Center" Text="{Binding Name}" Height="24">
+                            <TextBox VerticalContentAlignment="Center" Text="{Binding Name}" Height="24" TextChanged="Function_TextChanged">
                             </TextBox>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

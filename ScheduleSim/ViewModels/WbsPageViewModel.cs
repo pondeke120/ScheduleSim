@@ -31,6 +31,13 @@ namespace ScheduleSim.ViewModels
             set { SetProperty(ref _processSource, value); }
         }
 
+        private List<WbsPageFunctionItemViewModel> _functionSource;
+        public List<WbsPageFunctionItemViewModel> FunctionSource
+        {
+            get { return _functionSource; }
+            set { SetProperty(ref _functionSource, value); }
+        }
+
         public WbsPageViewModel(
             AppContext appContext,
             IMapper mapper,
@@ -47,6 +54,14 @@ namespace ScheduleSim.ViewModels
             };
 
             appContext.Processes.CollectionChanged += Processes_CollectionChanged;
+            appContext.Functions.CollectionChanged += Functions_CollectionChanged;
+        }
+
+        private void Functions_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            var collection = sender as ObservableCollection<Function>;
+
+            this.FunctionSource = this.mapper.Map<List<WbsPageFunctionItemViewModel>>(sender);
         }
 
         /// <summary>

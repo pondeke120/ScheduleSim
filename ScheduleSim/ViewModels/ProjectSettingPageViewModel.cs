@@ -51,8 +51,6 @@ namespace ScheduleSim.ViewModels
         }
 
         private DateTime? _projectEndDate;
-        private IMapper mapper;
-
         public DateTime? ProjectEndDate
         {
             get { return _projectEndDate; }
@@ -60,12 +58,14 @@ namespace ScheduleSim.ViewModels
         }
 
         public ICommand ProcessChangeCommand { get; private set; }
+        public ICommand FunctionChangeCommand { get; private set; }
+        private IMapper mapper;
 
         public ProjectSettingPageViewModel(
             AppContext appContext,
             ICommand processChangeCommand,
+            ICommand functionChangeCommand,
             IMapper mapper,
-            IIDGenerator functionIdGen,
             IIDGenerator holidayIdGen)
         {
             this.ProjectStartDate = new DateTime(2018, 10, 2);
@@ -73,9 +73,9 @@ namespace ScheduleSim.ViewModels
             //this.ProcessNames = new string[20].Select(x => new ProjectSettingPageProcessItemViewModel() { Id = processIdGen.CreateNewId(), Name = x }).ToList();
             //this.ProcessNames[0].Name = "testP1";
             //this.ProcessNames[1].Name = "testP2";
-            this.FunctionNames = new string[20].Select(x => new ProjectSettingPageFunctionItemViewModel() { Id = functionIdGen.CreateNewId(), Name = x }).ToList();
-            this.FunctionNames[0].Name = "testF1";
-            this.FunctionNames[1].Name = "testF2";
+            //this.FunctionNames = new string[20].Select(x => new ProjectSettingPageFunctionItemViewModel() { Id = functionIdGen.CreateNewId(), Name = x }).ToList();
+            //this.FunctionNames[0].Name = "testF1";
+            //this.FunctionNames[1].Name = "testF2";
             this.Holidays = new string[20].Select(x => new ProjectSettingPageHolidayItemViewModel() { Id = holidayIdGen.CreateNewId(), Date = null }).ToList();
             this.Holidays[0].Date = new DateTime(2018, 2, 28);
 
@@ -91,8 +91,47 @@ namespace ScheduleSim.ViewModels
             };
 
             this.ProcessChangeCommand = processChangeCommand;
+            this.FunctionChangeCommand = functionChangeCommand;
             this.mapper = mapper;
             appContext.Processes.CollectionChanged += Processes_CollectionChanged;
+            appContext.Functions.CollectionChanged += Functions_CollectionChanged;
+        }
+
+        /// <summary>
+        /// 機能名変更時のイベントハンドラ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Functions_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            var collection = sender as ObservableCollection<Function>;
+
+            if (this.FunctionNames == null || this.FunctionNames.Count == 0)
+            {
+                this.FunctionNames = this.mapper.Map<List<ProjectSettingPageFunctionItemViewModel>>(sender);
+            }
+            else
+            {
+                var current = this.FunctionNames.ToList();
+                var updateIds = collection.Select(x => x.FunctionCd as int?).ToArray();
+                var replaceItems = current.Where(x => updateIds.Contains(x.Id))
+                                                    .Select(x => new { Old = x, New = collection.First(a => a.FunctionCd == x.Id) })
+                                                    .ToArray();
+                var deleteItem = current.Where(x => updateIds.Contains(x.Id) == false).ToArray();
+
+                foreach (var item in replaceItems)
+                {
+                    var index = current.IndexOf(item.Old);
+                    current.RemoveAt(index);
+                    current.Insert(index, this.mapper.Map<ProjectSettingPageFunctionItemViewModel>(item.New));
+                }
+                foreach (var item in deleteItem)
+                {
+                    item.Name = null;
+                }
+
+                this.FunctionNames = current;
+            }
         }
 
         /// <summary>
