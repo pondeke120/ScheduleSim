@@ -60,6 +60,7 @@ namespace ScheduleSim.ViewModels
         public ICommand ProcessChangeCommand { get; private set; }
         public ICommand FunctionChangeCommand { get; private set; }
         public ICommand PeriodChangeCommand { get; private set; }
+        public ICommand HolidayChangeCommand { get; private set; }
         private IMapper mapper;
 
         public ProjectSettingPageViewModel(
@@ -67,8 +68,8 @@ namespace ScheduleSim.ViewModels
             ICommand processChangeCommand,
             ICommand functionChangeCommand,
             ICommand periodChangeCommand,
-            IMapper mapper,
-            IIDGenerator holidayIdGen)
+            ICommand holidayChangeCommand,
+            IMapper mapper)
         {
             //this.ProjectStartDate = new DateTime(2018, 10, 2);
             //this.ProjectEndDate = new DateTime(2018, 10, 30);
@@ -78,8 +79,8 @@ namespace ScheduleSim.ViewModels
             //this.FunctionNames = new string[20].Select(x => new ProjectSettingPageFunctionItemViewModel() { Id = functionIdGen.CreateNewId(), Name = x }).ToList();
             //this.FunctionNames[0].Name = "testF1";
             //this.FunctionNames[1].Name = "testF2";
-            this.Holidays = new string[20].Select(x => new ProjectSettingPageHolidayItemViewModel() { Id = holidayIdGen.CreateNewId(), Date = null }).ToList();
-            this.Holidays[0].Date = new DateTime(2018, 2, 28);
+            //this.Holidays = new string[20].Select(x => new ProjectSettingPageHolidayItemViewModel() { Id = holidayIdGen.CreateNewId(), Date = null }).ToList();
+            //this.Holidays[0].Date = new DateTime(2018, 2, 28);
 
             this.Weekdays = new List<ProjectSettingPageWeekdayItemViewModel>()
             {
@@ -95,9 +96,11 @@ namespace ScheduleSim.ViewModels
             this.ProcessChangeCommand = processChangeCommand;
             this.FunctionChangeCommand = functionChangeCommand;
             this.PeriodChangeCommand = periodChangeCommand;
+            this.HolidayChangeCommand = holidayChangeCommand;
             this.mapper = mapper;
             appContext.Processes.CollectionChanged += Processes_CollectionChanged;
             appContext.Functions.CollectionChanged += Functions_CollectionChanged;
+            appContext.Holidays.CollectionChanged += Holidays_CollectionChanged;
             appContext.PrjSettings.PropertyChanged += PrjSettings_PropertyChanged;
         }
 
@@ -116,6 +119,39 @@ namespace ScheduleSim.ViewModels
             else if (e.PropertyName.Equals(nameof(settings.EndDate)))
             {
                 this.ProjectEndDate = settings.EndDate;
+            }
+        }
+
+
+        private void Holidays_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            var collection = sender as ObservableCollection<Holiday>;
+
+            if (this.Holidays == null || this.Holidays.Count == 0)
+            {
+                this.Holidays = this.mapper.Map<List<ProjectSettingPageHolidayItemViewModel>>(sender);
+            }
+            else
+            {
+                var current = this.Holidays.ToList();
+                var updateIds = collection.Select(x => x.HolidayCd as int?).ToArray();
+                var replaceItems = current.Where(x => updateIds.Contains(x.Id))
+                                                    .Select(x => new { Old = x, New = collection.First(a => a.HolidayCd == x.Id) })
+                                                    .ToArray();
+                var deleteItem = current.Where(x => updateIds.Contains(x.Id) == false).ToArray();
+
+                foreach (var item in replaceItems)
+                {
+                    var index = current.IndexOf(item.Old);
+                    current.RemoveAt(index);
+                    current.Insert(index, this.mapper.Map<ProjectSettingPageHolidayItemViewModel>(item.New));
+                }
+                foreach (var item in deleteItem)
+                {
+                    item.Date = null;
+                }
+
+                this.Holidays = current;
             }
         }
 

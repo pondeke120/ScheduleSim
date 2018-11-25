@@ -55,6 +55,10 @@ namespace ScheduleSim
             var funcIdGen = Container.Resolve<IIDGenerator>("FunctionIdGen");
             appContext.Functions.Clear();
             appContext.Functions.AddRange(Enumerable.Range(0, 20).Select(i => new Function() {  FunctionCd = funcIdGen.CreateNewId(), FunctionName = string.Empty }).ToArray());
+
+            var holidayIdGen = Container.Resolve<IIDGenerator>("HolidayIdGen");
+            appContext.Holidays.Clear();
+            appContext.Holidays.AddRange(Enumerable.Range(0, 20).Select(i => new Holiday() { HolidayCd = holidayIdGen.CreateNewId(), HolidayDate = null, HolidayName = string.Empty }).ToArray());
         }
 
         protected override void ConfigureContainer()
@@ -92,8 +96,8 @@ namespace ScheduleSim
                     new ResolvedParameter<ICommand>("ProjectSettingPage.ProcessChangeCommand"),
                     new ResolvedParameter<ICommand>("ProjectSettingPage.FunctionChangeCommand"),
                     new ResolvedParameter<ICommand>("ProjectSettingPage.PeriodChangeCommand"),
-                    new ResolvedParameter<IMapper>(),
-                    new ResolvedParameter<IIDGenerator>("HolidayIdGen")
+                    new ResolvedParameter<ICommand>("ProjectSettingPage.HolidayChangeCommand"),
+                    new ResolvedParameter<IMapper>()
                 ));
             Container.RegisterType<MemberPageViewModel>(new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(
@@ -144,6 +148,7 @@ namespace ScheduleSim
             Container.RegisterType<ICommand, Commands.ProjectSettingPage.ProcessChangeCommand>("ProjectSettingPage.ProcessChangeCommand");
             Container.RegisterType<ICommand, Commands.ProjectSettingPage.FunctionChangeCommand>("ProjectSettingPage.FunctionChangeCommand");
             Container.RegisterType<ICommand, Commands.ProjectSettingPage.PeriodChangeCommand>("ProjectSettingPage.PeriodChangeCommand");
+            Container.RegisterType<ICommand, Commands.ProjectSettingPage.HolidayChangeCommand>("ProjectSettingPage.HolidayChangeCommand");
             Container.RegisterType<ICommand, Commands.MemberPage.AddMemberCommand>("MemberPage.AddMemberCommand",
                 new InjectionConstructor(
                     new ResolvedParameter<IIDGenerator>("MemberIdGen")

@@ -118,7 +118,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <DatePicker SelectedDate="{Binding Date}"/>
+                            <DatePicker SelectedDate="{Binding Date}" SelectedDateChanged="Holiday_SelectedDateChanged"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
