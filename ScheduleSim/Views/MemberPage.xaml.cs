@@ -36,5 +36,20 @@ namespace ScheduleSim.Views
         {
             this.viewModel.AddMemberCommand.Execute(e);
         }
+
+        private void JoinDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.viewModel.JoinDateChangeCommand.Execute(new[] { sender, e });
+        }
+
+        private void LeaveDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.viewModel.LeaveDateChangeCommand.Execute(new[] { sender, e });
+        }
+
+        private void Name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.viewModel.NameChangeCommand.Execute(new[] { sender, e });
+        }
     }
 }

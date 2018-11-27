@@ -16,6 +16,9 @@ namespace ScheduleSim.ViewModels
     {
         public ICommand AddMemberCommand { get; private set; }
         public ICommand DeleteMemberCommand { get; private set; }
+        public ICommand NameChangeCommand { get; private set; }
+        public ICommand JoinDateChangeCommand { get; private set; }
+        public ICommand LeaveDateChangeCommand { get; private set; }
         private IMapper mapper;
 
         private ObservableCollection<MemberPageMemberItemViewModel> _members;
@@ -29,10 +32,16 @@ namespace ScheduleSim.ViewModels
             AppContext appContext,
             ICommand addMemberCommand,
             ICommand deleteMemberCommand,
+            ICommand nameChangeCommand,
+            ICommand joinDateChangeCommand,
+            ICommand leaveDateChangeCommand,
             IMapper mapper)
         {
             this.AddMemberCommand = addMemberCommand;
             this.DeleteMemberCommand = deleteMemberCommand;
+            this.NameChangeCommand = nameChangeCommand;
+            this.JoinDateChangeCommand = joinDateChangeCommand;
+            this.LeaveDateChangeCommand = leaveDateChangeCommand;
 
             //Members = new List<MemberPageMemberItemViewModel>()
             //{

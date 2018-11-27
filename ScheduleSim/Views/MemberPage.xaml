@@ -8,11 +8,36 @@
       xmlns:converter="clr-namespace:ScheduleSim.ControlConverters"
       xmlns:behavior="clr-namespace:ScheduleSim.ControlBehaviors"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:custom="clr-namespace:ScheduleSim.CustomControls"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="600"
       Title="MemberPage">
     <Page.Resources>
         <converter:IndexConverter x:Key="IndexConverter"/>
+        <DataTemplate x:Key="NameTemplate">
+            <StackPanel Orientation="Horizontal" Margin="5,0" VerticalAlignment="Center">
+                <TextBlock Text="{Binding Name}" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="NameEditTemplate">
+            <TextBox Text="{Binding Name}" TextChanged="Name_TextChanged" Focusable="True"/>
+        </DataTemplate>
+        <DataTemplate x:Key="JoinDateTemplate">
+            <StackPanel Orientation="Horizontal" Margin="5,0" VerticalAlignment="Center">
+                <TextBlock Text="{Binding JoinDate, StringFormat=yyyy年MM月dd日}" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="JoinDateEditTemplate">
+            <DatePicker SelectedDateFormat="Short" SelectedDate="{Binding JoinDate}" SelectedDateChanged="JoinDate_SelectedDateChanged"/>
+        </DataTemplate>
+        <DataTemplate x:Key="LeaveDateTemplate">
+            <StackPanel Orientation="Horizontal" Margin="5,0" VerticalAlignment="Center">
+                <TextBlock Text="{Binding LeaveDate, StringFormat=yyyy年MM月dd日}" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="LeaveDateEditTemplate">
+            <DatePicker SelectedDateFormat="Short" SelectedDate="{Binding LeaveDate}" SelectedDateChanged="LeaveDate_SelectedDateChanged" />
+        </DataTemplate>
     </Page.Resources>
     <Grid>
         <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" RowHeight="24" ItemsSource="{Binding Members}" CanUserDeleteRows="True">
@@ -37,9 +62,18 @@
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="名前" Width="120" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="参加日" Width="120" Binding="{Binding JoinDate, StringFormat=yyyy/MM/dd}"/>
-                <DataGridTextColumn Header="終了日" Width="120" Binding="{Binding LeaveDate, StringFormat=yyyy/MM/dd}"/>
+                <custom:CustomDataGridTemplateColumn 
+                    Header="名前" Width="120" 
+                    CellTemplate="{StaticResource NameTemplate}"
+                    CellEditingTemplate="{StaticResource NameEditTemplate}"/>
+                <custom:CustomDataGridTemplateColumn 
+                    Header="参加日" Width="120" 
+                    CellTemplate="{StaticResource JoinDateTemplate}"
+                    CellEditingTemplate="{StaticResource JoinDateEditTemplate}"/>
+                <custom:CustomDataGridTemplateColumn 
+                    Header="終了日" Width="120" 
+                    CellTemplate="{StaticResource LeaveDateTemplate}"
+                    CellEditingTemplate="{StaticResource LeaveDateEditTemplate}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

@@ -113,6 +113,9 @@
     <Compile Include="Commands\FunctionDependencyPage\DeleteDependencyCommand.cs" />
     <Compile Include="Commands\MemberPage\AddMemberCommand.cs" />
     <Compile Include="Commands\MemberPage\DeleteMemberCommand.cs" />
+    <Compile Include="Commands\MemberPage\JoinDateChangeCommand.cs" />
+    <Compile Include="Commands\MemberPage\LeaveDateChangeCommand.cs" />
+    <Compile Include="Commands\MemberPage\NameChangeCommand.cs" />
     <Compile Include="Commands\Menu\CreateNewProjectCommand.cs" />
     <Compile Include="Commands\Menu\ExportGanttChartCommand.cs" />
     <Compile Include="Commands\Menu\ExportPertGraphCommand.cs" />
@@ -131,6 +134,7 @@
     <Compile Include="ControlBehaviors\BindableSelectedItemBehavior.cs" />
     <Compile Include="ControlBehaviors\ContextMenuBindingProxy.cs" />
     <Compile Include="ControlConverters\IndexConverter.cs" />
+    <Compile Include="CustomControls\CustomDataGridTemplateColumn.cs" />
     <Compile Include="Mappers\FunctionDependencyPageProfile.cs" />
     <Compile Include="Mappers\MemberPageProfile.cs" />
     <Compile Include="Mappers\PertPageProfile.cs" />
