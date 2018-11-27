@@ -1,4 +1,7 @@
-﻿using ScheduleSim.Core.Utility;
+﻿using AutoMapper;
+using ScheduleSim.Core.Contexts;
+using ScheduleSim.Core.Utility;
+using ScheduleSim.Entities.Models;
 using ScheduleSim.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -12,14 +15,18 @@ namespace ScheduleSim.Commands.MemberPage
 {
     public class AddMemberCommand : ICommand
     {
+        private AppContext appContext;
+        private IMapper mapper;
         private IIDGenerator memberIdGen;
 
         public AddMemberCommand(
-            IIDGenerator memberIdGen)
+            AppContext appContext,
+            IIDGenerator memberIdGen,
+            IMapper mapper)
         {
+            this.appContext = appContext;
             this.memberIdGen = memberIdGen;
-            // TODO デバッグ用なので削除
-            this.memberIdGen.SetCurrentIndex(2);
+            this.mapper = mapper;
         }
 
         public event EventHandler CanExecuteChanged;
@@ -33,10 +40,13 @@ namespace ScheduleSim.Commands.MemberPage
         {
             var args = parameter as AddingNewItemEventArgs;
 
-            args.NewItem = new MemberPageMemberItemViewModel()
+            var newMember = new Member()
             {
-                No = this.memberIdGen.CreateNewId()
+                MemberCd = this.memberIdGen.CreateNewId()
             };
+
+            this.appContext.Members.Add(newMember);
+            args.NewItem = this.mapper.Map<MemberPageMemberItemViewModel>(newMember);
         }
     }
 }

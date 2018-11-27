@@ -19,5 +19,6 @@ namespace ScheduleSim.Core.Contexts
         public ObservableCollection<Function> Functions { get; private set; } = new ObservableCollection<Function>();
         public ObservableCollection<Holiday> Holidays { get; private set; } = new ObservableCollection<Holiday>();
         public ObservableCollection<WeekDay> WeekDays { get; private set; } = new ObservableCollection<WeekDay>();
+        public ObservableCollection<Member> Members { get; private set; } = new ObservableCollection<Member>();
     }
 }

@@ -12,5 +12,6 @@ namespace ScheduleSim.Entities.Repositories
         void Insert(IEnumerable<Member> members);
         IEnumerable<Member> Find();
         void RemoveAll();
+        int GetCurrentIndex();
     }
 }

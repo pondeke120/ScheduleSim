@@ -11,5 +11,6 @@ namespace ScheduleSim.Core.Service
     {
         void Update(IEnumerable<Member> members);
         IEnumerable<Member> GetAllMembers();
+        int GetCurrentIndex();
     }
 }

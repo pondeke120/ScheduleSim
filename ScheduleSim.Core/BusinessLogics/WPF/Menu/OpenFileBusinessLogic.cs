@@ -66,6 +66,7 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.Menu
             output.Functions = functions;
             output.Holidays = holidays;
             output.RestDays = restDays;
+            output.MaxMemberId = this.memberAccessService.GetCurrentIndex();
             output.Members = this.memberAccessService.GetAllMembers();
             output.ProcessDependencies = this.processDependencyAccessService.GetAllDependencies();
             output.FunctionDependencies = this.functionDependencyAccessService.GetAllDependencies();

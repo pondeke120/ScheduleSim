@@ -16,6 +16,7 @@ namespace ScheduleSim.Core.IO.WPF.Menu
         public IEnumerable<Function> Functions { get; set; }
         public IEnumerable<Holiday> Holidays { get; set; }
         public IEnumerable<WeekDay> RestDays { get; set; }
+        public int MaxMemberId { get; set; }
         public IEnumerable<Member> Members { get; set; }
         public IEnumerable<Task> Tasks { get; set; }
         public IEnumerable<ProcessDependency> ProcessDependencies { get; set; }

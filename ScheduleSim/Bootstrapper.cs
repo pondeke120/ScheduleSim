@@ -62,6 +62,10 @@ namespace ScheduleSim
 
             appContext.WeekDays.Clear();
             appContext.WeekDays.AddRange(Enum.GetValues(typeof(DayOfWeek)).Cast<DayOfWeek>().Select(x => new WeekDay() { WeekdayCd = x, HolidayFlg = false, WeekdayName = Enum.GetName(typeof(DayOfWeek), x) }));
+            
+            var memberIdGen = Container.Resolve<IIDGenerator>("MemberIdGen");
+            appContext.Members.Clear();
+            appContext.Members.Add(new Member() { MemberCd = memberIdGen.CreateNewId() });
         }
 
         protected override void ConfigureContainer()
@@ -105,8 +109,10 @@ namespace ScheduleSim
                 ));
             Container.RegisterType<MemberPageViewModel>(new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(
+                    new ResolvedParameter<AppContext>(),
                     new ResolvedParameter<ICommand>("MemberPage.AddMemberCommand"),
-                    new ResolvedParameter<ICommand>("MemberPage.DeleteMemberCommand")
+                    new ResolvedParameter<ICommand>("MemberPage.DeleteMemberCommand"),
+                    new ResolvedParameter<IMapper>()
                 ));
             Container.RegisterType<WbsPageViewModel>(new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(
@@ -129,7 +135,19 @@ namespace ScheduleSim
 
             // Register Commands
             Container.RegisterType<ICommand, Commands.Menu.CreateNewProjectCommand>("Menu.CreateNewProjectCommand");
-            Container.RegisterType<ICommand, Commands.Menu.OpenFileCommand>("Menu.OpenFileCommand");
+            Container.RegisterType<ICommand, Commands.Menu.OpenFileCommand>("Menu.OpenFileCommand",
+                new InjectionConstructor(
+                    new ResolvedParameter<AppContext>(),
+                    new ResolvedParameter<Core.BusinessLogics.WPF.Menu.IOpenFileBusinessLogic>(),
+                    new ResolvedParameter<ProcessDependencyPageViewModel>(),
+                    new ResolvedParameter<FunctionDependencyPageViewModel>(),
+                    new ResolvedParameter<WbsPageViewModel>(),
+                    new ResolvedParameter<PertPageViewModel>(),
+                    new ResolvedParameter<ShellViewModel>(),
+                    new ResolvedParameter<IIDGenerator>("MemberIdGen"),
+                    new ResolvedParameter<IMapper>(),
+                    new ResolvedParameter<IDispatcher>()
+                ));
             Container.RegisterType<ICommand, Commands.Menu.SaveCommand>("Menu.SaveCommand",
                 new InjectionConstructor(
                     new ResolvedParameter<AppContext>(),
@@ -156,7 +174,9 @@ namespace ScheduleSim
             Container.RegisterType<ICommand, Commands.ProjectSettingPage.WeekDayChangeCommand>("ProjectSettingPage.WeekDayChangeCommand");
             Container.RegisterType<ICommand, Commands.MemberPage.AddMemberCommand>("MemberPage.AddMemberCommand",
                 new InjectionConstructor(
-                    new ResolvedParameter<IIDGenerator>("MemberIdGen")
+                    new ResolvedParameter<AppContext>(),
+                    new ResolvedParameter<IIDGenerator>("MemberIdGen"),
+                    new ResolvedParameter<IMapper>()
                 ));
             Container.RegisterType<ICommand, Commands.MemberPage.DeleteMemberCommand>("MemberPage.DeleteMemberCommand");
             Container.RegisterType<ICommand, Commands.WbsPage.DeleteTaskCommand>("WbsPage.DeleteTaskCommand");

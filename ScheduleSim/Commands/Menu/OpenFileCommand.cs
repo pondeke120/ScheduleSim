@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using ScheduleSim.Core.Extensions;
+using ScheduleSim.Core.Utility;
 
 namespace ScheduleSim.Commands.Menu
 {
@@ -21,13 +22,12 @@ namespace ScheduleSim.Commands.Menu
     {
         private AppContext appContext;
         private IOpenFileBusinessLogic openFileBusinessLogic;
-        private ProjectSettingPageViewModel projectSettingPageViewModel;
-        private MemberPageViewModel memberPageViewModel;
         private ProcessDependencyPageViewModel processDependencyPageViewModel;
         private FunctionDependencyPageViewModel functionDependencyPageViewModel;
         private WbsPageViewModel wbsPageViewModel;
         private PertPageViewModel pertPageViewModel;
         private ShellViewModel shellViewModel;
+        private IIDGenerator memberIdGen;
         private IMapper mapper;
         private IDispatcher dispatcher;
 
@@ -36,25 +36,23 @@ namespace ScheduleSim.Commands.Menu
         public OpenFileCommand(
             AppContext appContext,
             IOpenFileBusinessLogic openFileBusinessLogic,
-            ProjectSettingPageViewModel projectSettingPageViewModel,
-            MemberPageViewModel memberPageViewModel,
             ProcessDependencyPageViewModel processDependencyPageViewModel,
             FunctionDependencyPageViewModel functionDependencyPageViewModel,
             WbsPageViewModel wbsPageViewModel,
             PertPageViewModel pertPageViewModel,
             ShellViewModel shellViewModel,
+            IIDGenerator memberIdGen,
             IMapper mapper,
             IDispatcher dispatcher)
         {
             this.appContext = appContext;
             this.openFileBusinessLogic = openFileBusinessLogic;
-            this.projectSettingPageViewModel = projectSettingPageViewModel;
-            this.memberPageViewModel = memberPageViewModel;
             this.processDependencyPageViewModel = processDependencyPageViewModel;
             this.functionDependencyPageViewModel = functionDependencyPageViewModel;
             this.wbsPageViewModel = wbsPageViewModel;
             this.pertPageViewModel = pertPageViewModel;
             this.shellViewModel = shellViewModel;
+            this.memberIdGen = memberIdGen;
             this.mapper = mapper;
             this.dispatcher = dispatcher;
         }
@@ -107,7 +105,9 @@ namespace ScheduleSim.Commands.Menu
             this.appContext.WeekDays.Clear();
             this.appContext.WeekDays.AddRange(output.RestDays);
 
-            this.memberPageViewModel.Members = this.mapper.Map<List<MemberPageMemberItemViewModel>>(output.Members);
+            this.memberIdGen.SetCurrentIndex(output.MaxMemberId + 1);
+            this.appContext.Members.Clear();
+            this.appContext.Members.AddRange(output.Members);
 
             this.wbsPageViewModel.Tasks = this.mapper.Map<List<WbsPageTaskItemViewModel>>(output.Tasks);
 

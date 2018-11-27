@@ -29,5 +29,11 @@ namespace ScheduleSim.Core.Service
             this.memberRepository.RemoveAll();
             this.memberRepository.Insert(members);
         }
+
+        public int GetCurrentIndex()
+        {
+            return
+                this.memberRepository.GetCurrentIndex();
+        }
     }
 }
