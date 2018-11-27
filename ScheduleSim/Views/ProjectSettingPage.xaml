@@ -143,7 +143,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <CheckBox IsChecked="{Binding IsCheck}" Content="{Binding DayOfWeek}"/>
+                            <CheckBox IsChecked="{Binding IsCheck}" Content="{Binding DayOfWeek}" Checked="Weekday_CheckChanged" Unchecked="Weekday_CheckChanged"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

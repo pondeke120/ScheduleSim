@@ -61,6 +61,7 @@ namespace ScheduleSim.ViewModels
         public ICommand FunctionChangeCommand { get; private set; }
         public ICommand PeriodChangeCommand { get; private set; }
         public ICommand HolidayChangeCommand { get; private set; }
+        public ICommand WeekdayChangeCommand { get; private set; }
         private IMapper mapper;
 
         public ProjectSettingPageViewModel(
@@ -69,6 +70,7 @@ namespace ScheduleSim.ViewModels
             ICommand functionChangeCommand,
             ICommand periodChangeCommand,
             ICommand holidayChangeCommand,
+            ICommand weekdayChangeCommand,
             IMapper mapper)
         {
             //this.ProjectStartDate = new DateTime(2018, 10, 2);
@@ -82,25 +84,27 @@ namespace ScheduleSim.ViewModels
             //this.Holidays = new string[20].Select(x => new ProjectSettingPageHolidayItemViewModel() { Id = holidayIdGen.CreateNewId(), Date = null }).ToList();
             //this.Holidays[0].Date = new DateTime(2018, 2, 28);
 
-            this.Weekdays = new List<ProjectSettingPageWeekdayItemViewModel>()
-            {
-                new ProjectSettingPageWeekdayItemViewModel() { IsCheck = true, DayOfWeek = DayOfWeek.Monday },
-                new ProjectSettingPageWeekdayItemViewModel() { IsCheck = false, DayOfWeek = DayOfWeek.Tuesday },
-                new ProjectSettingPageWeekdayItemViewModel() { IsCheck = true, DayOfWeek = DayOfWeek.Wednesday },
-                new ProjectSettingPageWeekdayItemViewModel() { IsCheck = false, DayOfWeek = DayOfWeek.Thursday },
-                new ProjectSettingPageWeekdayItemViewModel() { IsCheck = true, DayOfWeek = DayOfWeek.Friday },
-                new ProjectSettingPageWeekdayItemViewModel() { IsCheck = false, DayOfWeek = DayOfWeek.Saturday },
-                new ProjectSettingPageWeekdayItemViewModel() { IsCheck = true, DayOfWeek = DayOfWeek.Sunday },
-            };
+            //this.Weekdays = new List<ProjectSettingPageWeekdayItemViewModel>()
+            //{
+            //    new ProjectSettingPageWeekdayItemViewModel() { IsCheck = true, DayOfWeek = DayOfWeek.Monday },
+            //    new ProjectSettingPageWeekdayItemViewModel() { IsCheck = false, DayOfWeek = DayOfWeek.Tuesday },
+            //    new ProjectSettingPageWeekdayItemViewModel() { IsCheck = true, DayOfWeek = DayOfWeek.Wednesday },
+            //    new ProjectSettingPageWeekdayItemViewModel() { IsCheck = false, DayOfWeek = DayOfWeek.Thursday },
+            //    new ProjectSettingPageWeekdayItemViewModel() { IsCheck = true, DayOfWeek = DayOfWeek.Friday },
+            //    new ProjectSettingPageWeekdayItemViewModel() { IsCheck = false, DayOfWeek = DayOfWeek.Saturday },
+            //    new ProjectSettingPageWeekdayItemViewModel() { IsCheck = true, DayOfWeek = DayOfWeek.Sunday },
+            //};
 
             this.ProcessChangeCommand = processChangeCommand;
             this.FunctionChangeCommand = functionChangeCommand;
             this.PeriodChangeCommand = periodChangeCommand;
             this.HolidayChangeCommand = holidayChangeCommand;
+            this.WeekdayChangeCommand = weekdayChangeCommand;
             this.mapper = mapper;
             appContext.Processes.CollectionChanged += Processes_CollectionChanged;
             appContext.Functions.CollectionChanged += Functions_CollectionChanged;
             appContext.Holidays.CollectionChanged += Holidays_CollectionChanged;
+            appContext.WeekDays.CollectionChanged += WeekDays_CollectionChanged; ;
             appContext.PrjSettings.PropertyChanged += PrjSettings_PropertyChanged;
         }
 
@@ -121,7 +125,12 @@ namespace ScheduleSim.ViewModels
                 this.ProjectEndDate = settings.EndDate;
             }
         }
-
+        
+        private void WeekDays_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            var collection = sender as ObservableCollection<WeekDay>;
+            this.Weekdays = this.mapper.Map<List<ProjectSettingPageWeekdayItemViewModel>>(sender);
+        }
 
         private void Holidays_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {

@@ -126,6 +126,7 @@
     <Compile Include="Commands\ProjectSettingPage\HolidayChangeCommand.cs" />
     <Compile Include="Commands\ProjectSettingPage\PeriodChangeCommand.cs" />
     <Compile Include="Commands\ProjectSettingPage\ProcessChangeCommand.cs" />
+    <Compile Include="Commands\ProjectSettingPage\WeekDayChangeCommand.cs" />
     <Compile Include="Commands\WbsPage\DeleteTaskCommand.cs" />
     <Compile Include="ControlBehaviors\BindableSelectedItemBehavior.cs" />
     <Compile Include="ControlBehaviors\ContextMenuBindingProxy.cs" />

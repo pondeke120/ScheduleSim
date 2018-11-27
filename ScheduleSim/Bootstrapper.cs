@@ -59,6 +59,9 @@ namespace ScheduleSim
             var holidayIdGen = Container.Resolve<IIDGenerator>("HolidayIdGen");
             appContext.Holidays.Clear();
             appContext.Holidays.AddRange(Enumerable.Range(0, 20).Select(i => new Holiday() { HolidayCd = holidayIdGen.CreateNewId(), HolidayDate = null, HolidayName = string.Empty }).ToArray());
+
+            appContext.WeekDays.Clear();
+            appContext.WeekDays.AddRange(Enum.GetValues(typeof(DayOfWeek)).Cast<DayOfWeek>().Select(x => new WeekDay() { WeekdayCd = x, HolidayFlg = false, WeekdayName = Enum.GetName(typeof(DayOfWeek), x) }));
         }
 
         protected override void ConfigureContainer()
@@ -97,6 +100,7 @@ namespace ScheduleSim
                     new ResolvedParameter<ICommand>("ProjectSettingPage.FunctionChangeCommand"),
                     new ResolvedParameter<ICommand>("ProjectSettingPage.PeriodChangeCommand"),
                     new ResolvedParameter<ICommand>("ProjectSettingPage.HolidayChangeCommand"),
+                    new ResolvedParameter<ICommand>("ProjectSettingPage.WeekDayChangeCommand"),
                     new ResolvedParameter<IMapper>()
                 ));
             Container.RegisterType<MemberPageViewModel>(new ContainerControlledLifetimeManager(),
@@ -149,6 +153,7 @@ namespace ScheduleSim
             Container.RegisterType<ICommand, Commands.ProjectSettingPage.FunctionChangeCommand>("ProjectSettingPage.FunctionChangeCommand");
             Container.RegisterType<ICommand, Commands.ProjectSettingPage.PeriodChangeCommand>("ProjectSettingPage.PeriodChangeCommand");
             Container.RegisterType<ICommand, Commands.ProjectSettingPage.HolidayChangeCommand>("ProjectSettingPage.HolidayChangeCommand");
+            Container.RegisterType<ICommand, Commands.ProjectSettingPage.WeekDayChangeCommand>("ProjectSettingPage.WeekDayChangeCommand");
             Container.RegisterType<ICommand, Commands.MemberPage.AddMemberCommand>("MemberPage.AddMemberCommand",
                 new InjectionConstructor(
                     new ResolvedParameter<IIDGenerator>("MemberIdGen")

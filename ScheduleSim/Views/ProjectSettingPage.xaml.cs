@@ -49,5 +49,10 @@ namespace ScheduleSim.Views
         {
             this.viewModel.HolidayChangeCommand.Execute(new[] { sender, e });
         }
+
+        private void Weekday_CheckChanged(object sender, RoutedEventArgs e)
+        {
+            this.viewModel.WeekdayChangeCommand.Execute(new[] { sender, e });
+        }
     }
 }

@@ -103,8 +103,9 @@ namespace ScheduleSim.Commands.Menu
 
             this.appContext.Holidays.Clear();
             this.appContext.Holidays.AddRange(output.Holidays);
-
-            this.projectSettingPageViewModel.Weekdays = this.mapper.Map<List<ProjectSettingPageWeekdayItemViewModel>>(output.RestDays);
+            
+            this.appContext.WeekDays.Clear();
+            this.appContext.WeekDays.AddRange(output.RestDays);
 
             this.memberPageViewModel.Members = this.mapper.Map<List<MemberPageMemberItemViewModel>>(output.Members);
 
