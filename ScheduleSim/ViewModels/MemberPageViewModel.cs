@@ -21,6 +21,13 @@ namespace ScheduleSim.ViewModels
         public ICommand LeaveDateChangeCommand { get; private set; }
         private IMapper mapper;
 
+        private MemberPageMemberItemViewModel _selectedMember;
+        public MemberPageMemberItemViewModel SelectedMember
+        {
+            get { return _selectedMember; }
+            set { SetProperty(ref _selectedMember, value); }
+        }
+
         private ObservableCollection<MemberPageMemberItemViewModel> _members;
         public ObservableCollection<MemberPageMemberItemViewModel> Members
         {
@@ -61,7 +68,8 @@ namespace ScheduleSim.ViewModels
         {
             var members = sender as ObservableCollection<Member>;
 
-            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Reset)
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Reset
+                || e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
             {
                 this.Members = this.mapper.Map<ObservableCollection<MemberPageMemberItemViewModel>>(members);
             }

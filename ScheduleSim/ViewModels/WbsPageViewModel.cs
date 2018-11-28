@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ScheduleSim.Core.Extensions;
 
 namespace ScheduleSim.ViewModels
 {
@@ -74,7 +75,21 @@ namespace ScheduleSim.ViewModels
         {
             var collection = sender as ObservableCollection<Member>;
 
-            this.MemberSource = this.mapper.Map<List<WbsPageMemberItemViewModel>>(sender);
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Reset)
+            {
+                this.MemberSource = this.mapper.Map<List<WbsPageMemberItemViewModel>>(sender);
+            }
+            else if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+            {
+                var newItems = this.mapper.Map<List<WbsPageMemberItemViewModel>>(e.NewItems);
+                this.MemberSource.AddRange(newItems);
+            }
+            else if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
+            {
+                var oldItemIds = e.OldItems.Cast<Member>().Select(x => x.MemberCd as int?).ToArray();
+                var oldItems = this.MemberSource.Where(x => oldItemIds.Contains(x.MemberCd)).ToArray();
+                this.MemberSource.RemoveRange(oldItems);
+            }
         }
 
         /// <summary>

@@ -12,7 +12,7 @@ namespace ScheduleSim.Core.Extensions
     {
         public static void AddRange<T>(this ObservableCollection<T> source, IEnumerable<T> collection)
         {
-            if (ValidateCollectionCount(source, collection))
+            if (ValidateAddCollectionCount(source, collection))
             {
                 return;
             }
@@ -29,7 +29,7 @@ namespace ScheduleSim.Core.Extensions
         }
 
         private const int switchForeachThresold = 2;
-        private static bool ValidateCollectionCount<T>(ObservableCollection<T> source, IEnumerable<T> collection)
+        private static bool ValidateAddCollectionCount<T>(ObservableCollection<T> source, IEnumerable<T> collection)
         {
             var count = collection.Count();
             if (count <= switchForeachThresold)
@@ -42,6 +42,14 @@ namespace ScheduleSim.Core.Extensions
             }
 
             return false;
+        }
+
+        public static void RemoveRange<T>(this ObservableCollection<T> source, IEnumerable<T> collection)
+        {
+            foreach (var item in collection)
+            {
+                source.Remove(item);
+            }
         }
     }
 }

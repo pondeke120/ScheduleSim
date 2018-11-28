@@ -40,13 +40,13 @@
         </DataTemplate>
     </Page.Resources>
     <Grid>
-        <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" RowHeight="24" ItemsSource="{Binding Members}" CanUserDeleteRows="True">
+        <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" RowHeight="24" ItemsSource="{Binding Members}" CanUserDeleteRows="True" SelectedItem="{Binding SelectedMember}">
             <DataGrid.Resources>
                 <behavior:ContextMenuBindingProxy x:Key="ContextMenuBindingProxy" Data="{Binding Path=DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}"/>
                 <ContextMenu x:Key="DataGridContextMenu">
                     <MenuItem Header="Delete Row" 
                               Command="{Binding Source={StaticResource ContextMenuBindingProxy}, Path=Data.DeleteMemberCommand}"
-                              CommandParameter="{Binding Source={StaticResource ContextMenuBindingProxy}, Path=Data}"
+                              CommandParameter="{Binding Source={StaticResource ContextMenuBindingProxy}, Path=Data.SelectedMember}"
                               />
                 </ContextMenu>
                 <Style TargetType="{x:Type DataGridRow}">

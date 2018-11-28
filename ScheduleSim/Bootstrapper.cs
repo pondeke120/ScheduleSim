@@ -65,7 +65,6 @@ namespace ScheduleSim
             
             var memberIdGen = Container.Resolve<IIDGenerator>("MemberIdGen");
             appContext.Members.Clear();
-            appContext.Members.Add(new Member() { MemberCd = memberIdGen.CreateNewId() });
         }
 
         protected override void ConfigureContainer()

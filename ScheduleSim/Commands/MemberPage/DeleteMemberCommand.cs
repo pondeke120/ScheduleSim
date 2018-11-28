@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ScheduleSim.Core.Contexts;
+using ScheduleSim.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +12,15 @@ namespace ScheduleSim.Commands.MemberPage
 {
     public class DeleteMemberCommand : ICommand
     {
+        private AppContext appContext;
+
         public event EventHandler CanExecuteChanged;
+
+        public DeleteMemberCommand(
+            AppContext appContext)
+        {
+            this.appContext = appContext;
+        }
 
         public bool CanExecute(object parameter)
         {
@@ -20,7 +30,12 @@ namespace ScheduleSim.Commands.MemberPage
 
         public void Execute(object parameter)
         {
-            MessageBox.Show("aaaa");
+            var viewModel = parameter as MemberPageMemberItemViewModel;
+            var removeMember = this.appContext.Members.FirstOrDefault(x => x.MemberCd == viewModel.No);
+            if (removeMember != null)
+            {
+                this.appContext.Members.Remove(removeMember);
+            }
         }
     }
 }
