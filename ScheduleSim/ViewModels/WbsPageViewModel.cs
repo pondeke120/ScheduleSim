@@ -38,6 +38,13 @@ namespace ScheduleSim.ViewModels
             set { SetProperty(ref _functionSource, value); }
         }
 
+        private List<WbsPageMemberItemViewModel> _memberSource;
+        public List<WbsPageMemberItemViewModel> MemberSource
+        {
+            get { return _memberSource; }
+            set { SetProperty(ref _memberSource, value); }
+        }
+
         public WbsPageViewModel(
             AppContext appContext,
             IMapper mapper,
@@ -55,8 +62,26 @@ namespace ScheduleSim.ViewModels
 
             appContext.Processes.CollectionChanged += Processes_CollectionChanged;
             appContext.Functions.CollectionChanged += Functions_CollectionChanged;
+            appContext.Members.CollectionChanged += Members_CollectionChanged;
         }
 
+        /// <summary>
+        /// 要員変更時のイベントハンドラ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Members_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            var collection = sender as ObservableCollection<Member>;
+
+            this.MemberSource = this.mapper.Map<List<WbsPageMemberItemViewModel>>(sender);
+        }
+
+        /// <summary>
+        /// 機能変更時のイベントハンドラ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Functions_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             var collection = sender as ObservableCollection<Function>;

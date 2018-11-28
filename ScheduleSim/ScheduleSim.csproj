@@ -153,6 +153,7 @@
     <Compile Include="ViewModels\ProcessDependencyPageViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\WbsPageFunctionItemViewModel.cs" />
+    <Compile Include="ViewModels\WbsPageMemberItemViewModel.cs" />
     <Compile Include="ViewModels\WbsPageProcessItemViewModel.cs" />
     <Compile Include="ViewModels\WbsPageTaskItemViewModel.cs" />
     <Compile Include="ViewModels\WbsPageViewModel.cs" />
