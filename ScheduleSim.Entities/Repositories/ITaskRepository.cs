@@ -8,5 +8,6 @@ namespace ScheduleSim.Entities.Repositories
         void Insert(IEnumerable<Task> tasks);
         IEnumerable<Task> Find();
         void RemoveAll();
+        int GetCurrentIndex();
     }
 }

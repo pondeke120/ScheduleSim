@@ -28,7 +28,7 @@ namespace ScheduleSim.Core.Extensions
             }
         }
 
-        private const int switchForeachThresold = 2;
+        private const int switchForeachThresold = 0;
         private static bool ValidateAddCollectionCount<T>(ObservableCollection<T> source, IEnumerable<T> collection)
         {
             var count = collection.Count();

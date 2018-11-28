@@ -78,7 +78,7 @@ namespace ScheduleSim.Commands.Menu
             input.Holidays = mapper.Map<List<Holiday>>(this.projectSettingPageViewModel.Holidays);
             input.RestDays = mapper.Map<List<WeekDay>>(this.projectSettingPageViewModel.Weekdays);
             input.Members = this.appContext.Members;
-            input.Tasks = mapper.Map<List<Task>>(this.wbsPageViewModel.Tasks.Where(x => !string.IsNullOrEmpty(x.TaskName)));
+            input.Tasks = this.appContext.Tasks;
             input.ProcessDependencies = mapper.Map<List<ProcessDependency>>(this.processDependencyPageViewModel.Dependencies);
             input.FunctionDependencies = mapper.Map<List<FunctionDependency>>(this.functionDependencyPageViewModel.Dependencies);
             input.Edges = mapper.Map<List<Pert>>(this.pertPageViewModel.Edges);

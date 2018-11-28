@@ -7,6 +7,7 @@
       xmlns:vm="clr-namespace:ScheduleSim.ViewModels"
       xmlns:converter="clr-namespace:ScheduleSim.ControlConverters"
       xmlns:behavior="clr-namespace:ScheduleSim.ControlBehaviors"
+      xmlns:custom="clr-namespace:ScheduleSim.CustomControls"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="600"
       Title="WbsPage">
@@ -15,10 +16,33 @@
         <CollectionViewSource x:Key="ProcessSource" Source="{Binding ProcessSource}"/>
         <CollectionViewSource x:Key="FunctionSource" Source="{Binding FunctionSource}"/>
         <CollectionViewSource x:Key="MemberSource" Source="{Binding MemberSource}"/>
+        <DataTemplate x:Key="StartDateTemplate">
+            <StackPanel Orientation="Horizontal" Margin="5,0" VerticalAlignment="Center">
+                <TextBlock Text="{Binding StartDate, StringFormat=yyyy年MM月dd日}" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="StartDateEditTemplate">
+            <DatePicker SelectedDateFormat="Short" SelectedDate="{Binding StartDate}" SelectedDateChanged="StartDate_SelectedDateChanged" />
+        </DataTemplate>
+        <DataTemplate x:Key="EndDateTemplate">
+            <StackPanel Orientation="Horizontal" Margin="5,0" VerticalAlignment="Center">
+                <TextBlock Text="{Binding EndDate, StringFormat=yyyy年MM月dd日}" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="EndDateEditTemplate">
+            <DatePicker SelectedDateFormat="Short" SelectedDate="{Binding EndDate}" SelectedDateChanged="EndDate_SelectedDateChanged" />
+        </DataTemplate>
     </Page.Resources>
     <Grid>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" RowHeight="24" ItemsSource="{Binding Tasks}" CanUserDeleteRows="True">
+            <DataGrid 
+                x:Name="dataGrid" 
+                AutoGenerateColumns="False" 
+                RowHeight="24" 
+                ItemsSource="{Binding Tasks}" 
+                CanUserDeleteRows="True" 
+                IsSynchronizedWithCurrentItem="True"
+                AddingNewItem="dataGrid_AddingNewItem">
                 <DataGrid.Resources>
                     <behavior:ContextMenuBindingProxy x:Key="ContextMenuBindingProxy" Data="{Binding Path=DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}"/>
                     <ContextMenu x:Key="DataGridContextMenu">
@@ -45,19 +69,35 @@
                         SelectedValuePath="ProcessId"
                         DisplayMemberPath="ProcessName"
                         ItemsSource="{Binding Source={StaticResource ProcessSource}}"
-                        SelectedValueBinding="{Binding ProcessId}"
-                    />
+                        SelectedValueBinding="{Binding ProcessId}">
+                        <DataGridComboBoxColumn.EditingElementStyle>
+                            <Style TargetType="{x:Type ComboBox}">
+                                <EventSetter Event="SelectionChanged" Handler="Process_SelectionChanged" />
+                            </Style>
+                        </DataGridComboBoxColumn.EditingElementStyle>
+                    </DataGridComboBoxColumn>
                     <DataGridComboBoxColumn
                         Header="機能" Width="80"
                         SelectedValuePath="FunctionId"
                         DisplayMemberPath="FunctionName"
                         ItemsSource="{Binding Source={StaticResource FunctionSource}}"
-                        SelectedValueBinding="{Binding FunctionId}"
-                    />
+                        SelectedValueBinding="{Binding FunctionId}">
+                        <DataGridComboBoxColumn.EditingElementStyle>
+                            <Style TargetType="{x:Type ComboBox}">
+                                <EventSetter Event="SelectionChanged" Handler="Function_SelectionChanged" />
+                            </Style>
+                        </DataGridComboBoxColumn.EditingElementStyle>
+                    </DataGridComboBoxColumn>
                     <DataGridTextColumn Header="作業" Width="200" Binding="{Binding TaskName}"/>
                     <DataGridTextColumn Header="計画工数" Width="60" Binding="{Binding PV, StringFormat=#.##}"/>
-                    <DataGridTextColumn Header="作業開始日" Width="120" Binding="{Binding StartDate, StringFormat=yyyy/MM/dd}"/>
-                    <DataGridTextColumn Header="作業終了日" Width="120" Binding="{Binding EndDate, StringFormat=yyyy/MM/dd}"/>
+                    <custom:CustomDataGridTemplateColumn 
+                        Header="作業開始日" Width="120" 
+                        CellTemplate="{StaticResource StartDateTemplate}"
+                        CellEditingTemplate="{StaticResource StartDateEditTemplate}"/>
+                    <custom:CustomDataGridTemplateColumn 
+                        Header="作業終了日" Width="120" 
+                        CellTemplate="{StaticResource EndDateTemplate}"
+                        CellEditingTemplate="{StaticResource EndDateEditTemplate}"/>
                     <DataGridComboBoxColumn
                         Header="担当者" Width="120"
                         SelectedValuePath="MemberCd"

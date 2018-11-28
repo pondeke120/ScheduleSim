@@ -73,5 +73,21 @@ namespace ScheduleSim.Access.Repositories
             "
             , null, trn);
         }
+
+        public int GetCurrentIndex()
+        {
+            var conn = this.connectionFactory.Create();
+            var trn = this.connectionFactory.GetCurrentTransaction();
+            var rows = conn.Query<int>(@"
+                select
+                    MAX(TASK_CD) as TaskCd
+                from 
+                    M_TASK
+            "
+            , null, trn);
+
+            return
+                rows.FirstOrDefault();
+        }
     }
 }

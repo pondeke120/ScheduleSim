@@ -10,5 +10,6 @@ namespace ScheduleSim.Core.Service
     {
         void Update(IEnumerable<Task> tasks);
         IEnumerable<Task> GetAllTasks();
+        int GetCurrentIndex();
     }
 }

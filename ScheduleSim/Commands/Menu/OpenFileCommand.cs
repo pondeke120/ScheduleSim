@@ -28,6 +28,7 @@ namespace ScheduleSim.Commands.Menu
         private PertPageViewModel pertPageViewModel;
         private ShellViewModel shellViewModel;
         private IIDGenerator memberIdGen;
+        private IIDGenerator taskIdGen;
         private IMapper mapper;
         private IDispatcher dispatcher;
 
@@ -42,6 +43,7 @@ namespace ScheduleSim.Commands.Menu
             PertPageViewModel pertPageViewModel,
             ShellViewModel shellViewModel,
             IIDGenerator memberIdGen,
+            IIDGenerator taskIdGen,
             IMapper mapper,
             IDispatcher dispatcher)
         {
@@ -53,6 +55,7 @@ namespace ScheduleSim.Commands.Menu
             this.pertPageViewModel = pertPageViewModel;
             this.shellViewModel = shellViewModel;
             this.memberIdGen = memberIdGen;
+            this.taskIdGen = taskIdGen;
             this.mapper = mapper;
             this.dispatcher = dispatcher;
         }
@@ -109,7 +112,9 @@ namespace ScheduleSim.Commands.Menu
             this.appContext.Members.Clear();
             this.appContext.Members.AddRange(output.Members);
 
-            this.wbsPageViewModel.Tasks = this.mapper.Map<List<WbsPageTaskItemViewModel>>(output.Tasks);
+            this.taskIdGen.SetCurrentIndex(output.MaxMemberId + 1);
+            this.appContext.Tasks.Clear();
+            this.appContext.Tasks.AddRange(output.Tasks);
 
             this.processDependencyPageViewModel.Dependencies = this.mapper.Map<List<ProcessDependencyPageDependencyItemViewModel>>(output.ProcessDependencies);
             

@@ -18,6 +18,7 @@ namespace ScheduleSim.Core.IO.WPF.Menu
         public IEnumerable<WeekDay> RestDays { get; set; }
         public int MaxMemberId { get; set; }
         public IEnumerable<Member> Members { get; set; }
+        public int MaxTaskId { get; set; }
         public IEnumerable<Task> Tasks { get; set; }
         public IEnumerable<ProcessDependency> ProcessDependencies { get; set; }
         public IEnumerable<FunctionDependency> FunctionDependencies { get; set; }

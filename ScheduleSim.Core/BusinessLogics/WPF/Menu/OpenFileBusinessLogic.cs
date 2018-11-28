@@ -70,6 +70,7 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.Menu
             output.Members = this.memberAccessService.GetAllMembers();
             output.ProcessDependencies = this.processDependencyAccessService.GetAllDependencies();
             output.FunctionDependencies = this.functionDependencyAccessService.GetAllDependencies();
+            output.MaxTaskId = this.taskAccessService.GetCurrentIndex();
             output.Tasks = this.taskAccessService.GetAllTasks();
             output.Edges = this.pertAccessService.GetAllEdges();
 

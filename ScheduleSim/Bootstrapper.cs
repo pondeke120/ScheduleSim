@@ -63,8 +63,9 @@ namespace ScheduleSim
             appContext.WeekDays.Clear();
             appContext.WeekDays.AddRange(Enum.GetValues(typeof(DayOfWeek)).Cast<DayOfWeek>().Select(x => new WeekDay() { WeekdayCd = x, HolidayFlg = false, WeekdayName = Enum.GetName(typeof(DayOfWeek), x) }));
             
-            var memberIdGen = Container.Resolve<IIDGenerator>("MemberIdGen");
             appContext.Members.Clear();
+            
+            appContext.Tasks.Clear();
         }
 
         protected override void ConfigureContainer()
@@ -120,7 +121,10 @@ namespace ScheduleSim
                 new InjectionConstructor(
                     new ResolvedParameter<AppContext>(),
                     new ResolvedParameter<IMapper>(),
-                    new ResolvedParameter<ICommand>("WbsPage.DeleteTaskCommand")
+                    new ResolvedParameter<ICommand>("WbsPage.AddTaskCommand"),
+                    new ResolvedParameter<ICommand>("WbsPage.DeleteTaskCommand"),
+                    new ResolvedParameter<ICommand>("WbsPage.ProcessChangeCommand"),
+                    new ResolvedParameter<ICommand>("WbsPage.FunctionChangeCommand")
                 ));
             Container.RegisterType<ProcessDependencyPageViewModel>(new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(
@@ -147,6 +151,7 @@ namespace ScheduleSim
                     new ResolvedParameter<PertPageViewModel>(),
                     new ResolvedParameter<ShellViewModel>(),
                     new ResolvedParameter<IIDGenerator>("MemberIdGen"),
+                    new ResolvedParameter<IIDGenerator>("TaskIdGen"),
                     new ResolvedParameter<IMapper>(),
                     new ResolvedParameter<IDispatcher>()
                 ));
@@ -184,7 +189,15 @@ namespace ScheduleSim
             Container.RegisterType<ICommand, Commands.MemberPage.NameChangeCommand>("MemberPage.NameChangeCommand");
             Container.RegisterType<ICommand, Commands.MemberPage.JoinDateChangeCommand>("MemberPage.JoinDateChangeCommand");
             Container.RegisterType<ICommand, Commands.MemberPage.LeaveDateChangeCommand>("MemberPage.LeaveDateChangeCommand");
+            Container.RegisterType<ICommand, Commands.WbsPage.AddTaskCommand>("WbsPage.AddTaskCommand",
+                new InjectionConstructor(
+                    new ResolvedParameter<AppContext>(),
+                    new ResolvedParameter<IIDGenerator>("TaskIdGen"),
+                    new ResolvedParameter<IMapper>()
+                ));
             Container.RegisterType<ICommand, Commands.WbsPage.DeleteTaskCommand>("WbsPage.DeleteTaskCommand");
+            Container.RegisterType<ICommand, Commands.WbsPage.ProcessChangeCommand>("WbsPage.ProcessChangeCommand");
+            Container.RegisterType<ICommand, Commands.WbsPage.FunctionChangeCommand>("WbsPage.FunctionChangeCommand");
             Container.RegisterType<ICommand, Commands.ProcessDependencyPage.DeleteDependencyCommand>("ProcessDependencyPage.DeleteDependencyCommand");
             Container.RegisterType<ICommand, Commands.FunctionDependencyPage.DeleteDependencyCommand>("FunctionDependencyPage.DeleteDependencyCommand");
             Container.RegisterType<ICommand, Commands.PertPage.DeleteEdgeCommand>("PertPage.DeleteEdgeCommand");

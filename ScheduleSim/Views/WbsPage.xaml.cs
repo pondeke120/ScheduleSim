@@ -29,5 +29,30 @@ namespace ScheduleSim.Views
             this.DataContext = viewModel;
             this.viewModel = viewModel;
         }
+
+        private void StartDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void EndDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void dataGrid_AddingNewItem(object sender, AddingNewItemEventArgs e)
+        {
+            this.viewModel.AddTaskCommand.Execute(new[] { sender, e });
+        }
+
+        private void Process_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.viewModel.ProcessChangeCommand.Execute(new object[] { sender, e });
+        }
+
+        private void Function_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.viewModel.FunctionChangeCommand.Execute(new object[] { sender, e });
+        }
     }
 }

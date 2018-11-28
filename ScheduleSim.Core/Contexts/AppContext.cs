@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ScheduleSim.Core.Contexts
 {
@@ -20,5 +19,6 @@ namespace ScheduleSim.Core.Contexts
         public ObservableCollection<Holiday> Holidays { get; private set; } = new ObservableCollection<Holiday>();
         public ObservableCollection<WeekDay> WeekDays { get; private set; } = new ObservableCollection<WeekDay>();
         public ObservableCollection<Member> Members { get; private set; } = new ObservableCollection<Member>();
+        public ObservableCollection<Task> Tasks { get; private set; } = new ObservableCollection<Task>();
     }
 }
