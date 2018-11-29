@@ -32,12 +32,12 @@ namespace ScheduleSim.Views
 
         private void StartDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            this.viewModel.StartDateChangeCommand.Execute(new[] { sender, e });
         }
 
         private void EndDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            this.viewModel.EndDateChangeCommand.Execute(new[] { sender, e });
         }
 
         private void dataGrid_AddingNewItem(object sender, AddingNewItemEventArgs e)
@@ -53,6 +53,21 @@ namespace ScheduleSim.Views
         private void Function_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.viewModel.FunctionChangeCommand.Execute(new object[] { sender, e });
+        }
+
+        private void TaskName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.viewModel.TaskNameChangeCommand.Execute(new object[] { sender, e });
+        }
+
+        private void PlanValue_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.viewModel.PlanValueChangeCommand.Execute(new object[] { sender, e });
+        }
+
+        private void AssignMember_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.viewModel.AssignMemberChangeCommand.Execute(new object[] { sender, e });
         }
     }
 }

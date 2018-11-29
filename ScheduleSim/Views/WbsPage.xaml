@@ -88,8 +88,20 @@
                             </Style>
                         </DataGridComboBoxColumn.EditingElementStyle>
                     </DataGridComboBoxColumn>
-                    <DataGridTextColumn Header="作業" Width="200" Binding="{Binding TaskName}"/>
-                    <DataGridTextColumn Header="計画工数" Width="60" Binding="{Binding PV, StringFormat=#.##}"/>
+                    <DataGridTextColumn Header="作業" Width="200" Binding="{Binding TaskName}">
+                        <DataGridTextColumn.EditingElementStyle>
+                            <Style TargetType="{x:Type TextBox}">
+                                <EventSetter Event="TextChanged" Handler="TaskName_TextChanged" />
+                            </Style>
+                        </DataGridTextColumn.EditingElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="計画工数" Width="60" Binding="{Binding PV, StringFormat=#.##}">
+                        <DataGridTextColumn.EditingElementStyle>
+                            <Style TargetType="{x:Type TextBox}">
+                                <EventSetter Event="TextChanged" Handler="PlanValue_TextChanged" />
+                            </Style>
+                        </DataGridTextColumn.EditingElementStyle>
+                    </DataGridTextColumn>
                     <custom:CustomDataGridTemplateColumn 
                         Header="作業開始日" Width="120" 
                         CellTemplate="{StaticResource StartDateTemplate}"
@@ -103,8 +115,13 @@
                         SelectedValuePath="MemberCd"
                         DisplayMemberPath="MemberName"
                         ItemsSource="{Binding Source={StaticResource MemberSource}}"
-                        SelectedValueBinding="{Binding AssignMemberId}"
-                    />
+                        SelectedValueBinding="{Binding AssignMemberId}">
+                        <DataGridComboBoxColumn.EditingElementStyle>
+                            <Style TargetType="{x:Type ComboBox}">
+                                <EventSetter Event="SelectionChanged" Handler="AssignMember_SelectionChanged" />
+                            </Style>
+                        </DataGridComboBoxColumn.EditingElementStyle>
+                    </DataGridComboBoxColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </ScrollViewer>

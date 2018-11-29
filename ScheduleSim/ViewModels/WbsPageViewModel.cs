@@ -18,6 +18,11 @@ namespace ScheduleSim.ViewModels
         public ICommand DeleteTaskCommand { get; private set; }
         public ICommand ProcessChangeCommand { get; private set; }
         public ICommand FunctionChangeCommand { get; private set; }
+        public ICommand TaskNameChangeCommand { get; private set; }
+        public ICommand PlanValueChangeCommand { get; private set; }
+        public ICommand StartDateChangeCommand { get; private set; }
+        public ICommand EndDateChangeCommand { get; private set; }
+        public ICommand AssignMemberChangeCommand { get; private set; }
         private IMapper mapper;
 
         private ObservableCollection<WbsPageTaskItemViewModel> _tasks;
@@ -54,12 +59,22 @@ namespace ScheduleSim.ViewModels
             ICommand addTaskCommand,
             ICommand deleteTaskCommand,
             ICommand processChangeCommand,
-            ICommand functionChangeCommand)
+            ICommand functionChangeCommand,
+            ICommand taskNameChangeCommand,
+            ICommand planValueChangeCommand,
+            ICommand startDateChangeCommand,
+            ICommand endDateChangeCommand,
+            ICommand assignMemberChangeCommand)
         {
             AddTaskCommand = addTaskCommand;
             DeleteTaskCommand = deleteTaskCommand;
             ProcessChangeCommand = processChangeCommand;
             FunctionChangeCommand = functionChangeCommand;
+            TaskNameChangeCommand = taskNameChangeCommand;
+            PlanValueChangeCommand = planValueChangeCommand;
+            StartDateChangeCommand = startDateChangeCommand;
+            EndDateChangeCommand = endDateChangeCommand;
+            AssignMemberChangeCommand = assignMemberChangeCommand;
             this.mapper = mapper;
 
             //Tasks = new List<WbsPageTaskItemViewModel>()

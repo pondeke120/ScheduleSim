@@ -124,7 +124,12 @@ namespace ScheduleSim
                     new ResolvedParameter<ICommand>("WbsPage.AddTaskCommand"),
                     new ResolvedParameter<ICommand>("WbsPage.DeleteTaskCommand"),
                     new ResolvedParameter<ICommand>("WbsPage.ProcessChangeCommand"),
-                    new ResolvedParameter<ICommand>("WbsPage.FunctionChangeCommand")
+                    new ResolvedParameter<ICommand>("WbsPage.FunctionChangeCommand"),
+                    new ResolvedParameter<ICommand>("WbsPage.TaskNameChangeCommand"),
+                    new ResolvedParameter<ICommand>("WbsPage.PlanValueChangeCommand"),
+                    new ResolvedParameter<ICommand>("WbsPage.StartDateChangeCommand"),
+                    new ResolvedParameter<ICommand>("WbsPage.EndDateChangeCommand"),
+                    new ResolvedParameter<ICommand>("WbsPage.AssignMemberChangeCommand")
                 ));
             Container.RegisterType<ProcessDependencyPageViewModel>(new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(
@@ -198,6 +203,11 @@ namespace ScheduleSim
             Container.RegisterType<ICommand, Commands.WbsPage.DeleteTaskCommand>("WbsPage.DeleteTaskCommand");
             Container.RegisterType<ICommand, Commands.WbsPage.ProcessChangeCommand>("WbsPage.ProcessChangeCommand");
             Container.RegisterType<ICommand, Commands.WbsPage.FunctionChangeCommand>("WbsPage.FunctionChangeCommand");
+            Container.RegisterType<ICommand, Commands.WbsPage.TaskNameChangeCommand>("WbsPage.TaskNameChangeCommand");
+            Container.RegisterType<ICommand, Commands.WbsPage.PlanValueChangeCommand>("WbsPage.PlanValueChangeCommand");
+            Container.RegisterType<ICommand, Commands.WbsPage.StartDateChangeCommand>("WbsPage.StartDateChangeCommand");
+            Container.RegisterType<ICommand, Commands.WbsPage.EndDateChangeCommand>("WbsPage.EndDateChangeCommand");
+            Container.RegisterType<ICommand, Commands.WbsPage.AssignMemberChangeCommand>("WbsPage.AssignMemberChangeCommand");
             Container.RegisterType<ICommand, Commands.ProcessDependencyPage.DeleteDependencyCommand>("ProcessDependencyPage.DeleteDependencyCommand");
             Container.RegisterType<ICommand, Commands.FunctionDependencyPage.DeleteDependencyCommand>("FunctionDependencyPage.DeleteDependencyCommand");
             Container.RegisterType<ICommand, Commands.PertPage.DeleteEdgeCommand>("PertPage.DeleteEdgeCommand");

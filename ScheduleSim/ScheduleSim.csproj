@@ -131,9 +131,14 @@
     <Compile Include="Commands\ProjectSettingPage\ProcessChangeCommand.cs" />
     <Compile Include="Commands\ProjectSettingPage\WeekDayChangeCommand.cs" />
     <Compile Include="Commands\WbsPage\AddTaskCommand.cs" />
+    <Compile Include="Commands\WbsPage\AssignMemberChangeCommand.cs" />
     <Compile Include="Commands\WbsPage\DeleteTaskCommand.cs" />
+    <Compile Include="Commands\WbsPage\EndDateChangeCommand.cs" />
     <Compile Include="Commands\WbsPage\FunctionChangeCommand.cs" />
+    <Compile Include="Commands\WbsPage\PlanValueChangeCommand.cs" />
     <Compile Include="Commands\WbsPage\ProcessChangeCommand.cs" />
+    <Compile Include="Commands\WbsPage\StartDateChangeCommand.cs" />
+    <Compile Include="Commands\WbsPage\TaskNameChangeCommand.cs" />
     <Compile Include="ControlBehaviors\BindableSelectedItemBehavior.cs" />
     <Compile Include="ControlBehaviors\ContextMenuBindingProxy.cs" />
     <Compile Include="ControlConverters\IndexConverter.cs" />
