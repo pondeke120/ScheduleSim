@@ -12,9 +12,18 @@
       Title="ProcessDependencyPage">
     <Page.Resources>
         <converter:IndexConverter x:Key="IndexConverter"/>
+        <CollectionViewSource x:Key="SrcProcessSource" Source="{Binding ProcessSource}"/>
+        <CollectionViewSource x:Key="DstProcessSource" Source="{Binding ProcessSource}"/>
+        <CollectionViewSource x:Key="DependencyTypeSource" Source="{Binding DependencyTypeSource}"/>
     </Page.Resources>
     <Grid>
-        <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" RowHeight="24" ItemsSource="{Binding Dependencies}" CanUserDeleteRows="True">
+        <DataGrid 
+            x:Name="dataGrid" 
+            AutoGenerateColumns="False" 
+            RowHeight="24" 
+            ItemsSource="{Binding Dependencies}" 
+            CanUserDeleteRows="True" 
+            AddingNewItem="dataGrid_AddingNewItem">
             <DataGrid.Resources>
                 <behavior:ContextMenuBindingProxy x:Key="ContextMenuBindingProxy" Data="{Binding Path=DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}"/>
                 <ContextMenu x:Key="DataGridContextMenu">
@@ -28,9 +37,43 @@
                 </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="依存元工程" Width="120" Binding="{Binding SrcProcessId}"/>
-                <DataGridTextColumn Header="依存先工程" Width="120" Binding="{Binding DstProcessId}"/>
-                <DataGridTextColumn Header="依存種類" Width="120" Binding="{Binding DependencyType}"/>
+                <DataGridComboBoxColumn
+                        Header="依存元工程" Width="120"
+                        SelectedValuePath="ProcessId"
+                        DisplayMemberPath="ProcessName"
+                        ItemsSource="{Binding Source={StaticResource SrcProcessSource}}"
+                        SelectedValueBinding="{Binding SrcProcessId}">
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <EventSetter Event="SelectionChanged" Handler="SrcProcess_SelectionChanged" />
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+                <DataGridComboBoxColumn
+                        x:Name="aaa"
+                        Header="依存先工程" Width="120"
+                        SelectedValuePath="ProcessId"
+                        DisplayMemberPath="ProcessName"
+                        ItemsSource="{Binding Source={StaticResource DstProcessSource}}"
+                        SelectedValueBinding="{Binding DstProcessId}">
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <EventSetter Event="SelectionChanged" Handler="DstProcess_SelectionChanged" />
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+                <DataGridComboBoxColumn
+                        Header="依存種類" Width="120"
+                        SelectedValuePath="DependencyType"
+                        DisplayMemberPath="DependencyTypeName"
+                        ItemsSource="{Binding Source={StaticResource DependencyTypeSource}}"
+                        SelectedValueBinding="{Binding DependencyType}">
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <EventSetter Event="SelectionChanged" Handler="DependencyType_SelectionChanged" />
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

@@ -87,7 +87,7 @@ namespace ScheduleSim.Commands.Menu
             input.RestDays = mapper.Map<List<WeekDay>>(this.projectSettingPageViewModel.Weekdays);
             input.Members = this.appContext.Members;
             input.Tasks = this.appContext.Tasks;
-            input.ProcessDependencies = mapper.Map<List<ProcessDependency>>(this.processDependencyPageViewModel.Dependencies);
+            input.ProcessDependencies = this.appContext.ProcessDependencies;
             input.FunctionDependencies = mapper.Map<List<FunctionDependency>>(this.functionDependencyPageViewModel.Dependencies);
             input.Edges = mapper.Map<List<Pert>>(this.pertPageViewModel.Edges);
 

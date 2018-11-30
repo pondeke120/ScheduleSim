@@ -29,5 +29,26 @@ namespace ScheduleSim.Views
             this.DataContext = viewModel;
             this.viewModel = viewModel;
         }
+
+        private void dataGrid_AddingNewItem(object sender, AddingNewItemEventArgs e)
+        {
+            this.viewModel.AddDependencyCommand.Execute(new[] { sender, e });
+        }
+
+        private void SrcProcess_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.viewModel.SrcProcessChangeCommand.Execute(new object[] { sender, e });
+        }
+
+        private void DstProcess_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.viewModel.DstProcessChangeCommand.Execute(new object[] { sender, e });
+        }
+
+        private void DependencyType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.viewModel.DependencyTypeChangeCommand.Execute(new object[] { sender, e });
+        }
+
     }
 }

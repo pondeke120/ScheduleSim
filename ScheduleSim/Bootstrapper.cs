@@ -66,6 +66,14 @@ namespace ScheduleSim
             appContext.Members.Clear();
             
             appContext.Tasks.Clear();
+
+            appContext.DependencyTypes.Clear();
+            appContext.DependencyTypes.AddRange(
+                Enum.GetValues(typeof(Entities.Enum.DependencyTypes))
+                .Cast<Entities.Enum.DependencyTypes>()
+                .Select(x => new DependencyType() { DependencyTypeCd = x, DependencyName = Enum.GetName(typeof(Entities.Enum.DependencyTypes), x) }));
+
+            appContext.ProcessDependencies.Clear();
         }
 
         protected override void ConfigureContainer()
@@ -133,7 +141,13 @@ namespace ScheduleSim
                 ));
             Container.RegisterType<ProcessDependencyPageViewModel>(new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(
-                    new ResolvedParameter<ICommand>("ProcessDependencyPage.DeleteDependencyCommand")
+                    new ResolvedParameter<AppContext>(),
+                    new ResolvedParameter<IMapper>(),
+                    new ResolvedParameter<ICommand>("ProcessDependencyPage.AddDependencyCommand"),
+                    new ResolvedParameter<ICommand>("ProcessDependencyPage.DeleteDependencyCommand"),
+                    new ResolvedParameter<ICommand>("ProcessDependencyPage.SrcProcessChangeCommand"),
+                    new ResolvedParameter<ICommand>("ProcessDependencyPage.DstProcessChangeCommand"),
+                    new ResolvedParameter<ICommand>("ProcessDependencyPage.DependencyTypeChangeCommand")
                 ));
             Container.RegisterType<FunctionDependencyPageViewModel>(new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(
@@ -150,7 +164,6 @@ namespace ScheduleSim
                 new InjectionConstructor(
                     new ResolvedParameter<AppContext>(),
                     new ResolvedParameter<Core.BusinessLogics.WPF.Menu.IOpenFileBusinessLogic>(),
-                    new ResolvedParameter<ProcessDependencyPageViewModel>(),
                     new ResolvedParameter<FunctionDependencyPageViewModel>(),
                     new ResolvedParameter<WbsPageViewModel>(),
                     new ResolvedParameter<PertPageViewModel>(),
@@ -208,7 +221,11 @@ namespace ScheduleSim
             Container.RegisterType<ICommand, Commands.WbsPage.StartDateChangeCommand>("WbsPage.StartDateChangeCommand");
             Container.RegisterType<ICommand, Commands.WbsPage.EndDateChangeCommand>("WbsPage.EndDateChangeCommand");
             Container.RegisterType<ICommand, Commands.WbsPage.AssignMemberChangeCommand>("WbsPage.AssignMemberChangeCommand");
+            Container.RegisterType<ICommand, Commands.ProcessDependencyPage.AddDependencyCommand>("ProcessDependencyPage.AddDependencyCommand");
             Container.RegisterType<ICommand, Commands.ProcessDependencyPage.DeleteDependencyCommand>("ProcessDependencyPage.DeleteDependencyCommand");
+            Container.RegisterType<ICommand, Commands.ProcessDependencyPage.SrcProcessChangeCommand>("ProcessDependencyPage.SrcProcessChangeCommand");
+            Container.RegisterType<ICommand, Commands.ProcessDependencyPage.DstProcessChangeCommand>("ProcessDependencyPage.DstProcessChangeCommand");
+            Container.RegisterType<ICommand, Commands.ProcessDependencyPage.DependencyTypeChangeCommand>("ProcessDependencyPage.DependencyTypeChangeCommand");
             Container.RegisterType<ICommand, Commands.FunctionDependencyPage.DeleteDependencyCommand>("FunctionDependencyPage.DeleteDependencyCommand");
             Container.RegisterType<ICommand, Commands.PertPage.DeleteEdgeCommand>("PertPage.DeleteEdgeCommand");
 

@@ -124,7 +124,11 @@
     <Compile Include="Commands\Menu\SaveAsCommand.cs" />
     <Compile Include="Commands\Menu\SaveCommand.cs" />
     <Compile Include="Commands\PertPage\DeleteEdgeCommand.cs" />
+    <Compile Include="Commands\ProcessDependencyPage\AddDependencyCommand.cs" />
     <Compile Include="Commands\ProcessDependencyPage\DeleteDependencyCommand.cs" />
+    <Compile Include="Commands\ProcessDependencyPage\DependencyTypeChangeCommand.cs" />
+    <Compile Include="Commands\ProcessDependencyPage\DstProcessChangeCommand.cs" />
+    <Compile Include="Commands\ProcessDependencyPage\SrcProcessChangeCommand.cs" />
     <Compile Include="Commands\ProjectSettingPage\FunctionChangeCommand.cs" />
     <Compile Include="Commands\ProjectSettingPage\HolidayChangeCommand.cs" />
     <Compile Include="Commands\ProjectSettingPage\PeriodChangeCommand.cs" />
@@ -158,6 +162,8 @@
     <Compile Include="ViewModels\PertPageEdgeItemViewModel.cs" />
     <Compile Include="ViewModels\PertPageViewModel.cs" />
     <Compile Include="ViewModels\ProcessDependencyPageDependencyItemViewModel.cs" />
+    <Compile Include="ViewModels\ProcessDependencyPageDependencyTypeItemViewModel.cs" />
+    <Compile Include="ViewModels\ProcessDependencyPageProcessItemViewModel.cs" />
     <Compile Include="ViewModels\ProcessDependencyPageViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\WbsPageFunctionItemViewModel.cs" />

@@ -22,7 +22,6 @@ namespace ScheduleSim.Commands.Menu
     {
         private AppContext appContext;
         private IOpenFileBusinessLogic openFileBusinessLogic;
-        private ProcessDependencyPageViewModel processDependencyPageViewModel;
         private FunctionDependencyPageViewModel functionDependencyPageViewModel;
         private WbsPageViewModel wbsPageViewModel;
         private PertPageViewModel pertPageViewModel;
@@ -37,7 +36,6 @@ namespace ScheduleSim.Commands.Menu
         public OpenFileCommand(
             AppContext appContext,
             IOpenFileBusinessLogic openFileBusinessLogic,
-            ProcessDependencyPageViewModel processDependencyPageViewModel,
             FunctionDependencyPageViewModel functionDependencyPageViewModel,
             WbsPageViewModel wbsPageViewModel,
             PertPageViewModel pertPageViewModel,
@@ -49,7 +47,6 @@ namespace ScheduleSim.Commands.Menu
         {
             this.appContext = appContext;
             this.openFileBusinessLogic = openFileBusinessLogic;
-            this.processDependencyPageViewModel = processDependencyPageViewModel;
             this.functionDependencyPageViewModel = functionDependencyPageViewModel;
             this.wbsPageViewModel = wbsPageViewModel;
             this.pertPageViewModel = pertPageViewModel;
@@ -116,7 +113,11 @@ namespace ScheduleSim.Commands.Menu
             this.appContext.Tasks.Clear();
             this.appContext.Tasks.AddRange(output.Tasks);
 
-            this.processDependencyPageViewModel.Dependencies = this.mapper.Map<List<ProcessDependencyPageDependencyItemViewModel>>(output.ProcessDependencies);
+            this.appContext.DependencyTypes.Clear();
+            this.appContext.DependencyTypes.AddRange(output.DependencyTypes);
+
+            this.appContext.ProcessDependencies.Clear();
+            this.appContext.ProcessDependencies.AddRange(output.ProcessDependencies);
             
             this.functionDependencyPageViewModel.Dependencies = this.mapper.Map<List<FunctionDependencyPageDependencyItemViewModel>>(output.FunctionDependencies);
             

@@ -23,5 +23,6 @@ namespace ScheduleSim.Core.IO.WPF.Menu
         public IEnumerable<ProcessDependency> ProcessDependencies { get; set; }
         public IEnumerable<FunctionDependency> FunctionDependencies { get; set; }
         public IEnumerable<Pert> Edges { get; set; }
+        public IEnumerable<DependencyType> DependencyTypes { get; set; }
     }
 }

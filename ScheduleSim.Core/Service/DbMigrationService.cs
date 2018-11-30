@@ -27,5 +27,11 @@ namespace ScheduleSim.Core.Service
             this.dependencyTypeRepository.Upsert(Enum.GetValues(typeof(DependencyTypes)).Cast<DependencyTypes>().Select(x => new DependencyType() { DependencyTypeCd = x, DependencyName = Enum.GetName(typeof(DependencyTypes), x) }));
             this.dbVersionRepository.Regist("1.0.0.0", "first version");
         }
+
+        public IEnumerable<DependencyType> GetAllDependencyTypes()
+        {
+            return
+                this.dependencyTypeRepository.Find();
+        }
     }
 }

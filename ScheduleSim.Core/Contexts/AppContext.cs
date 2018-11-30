@@ -20,5 +20,7 @@ namespace ScheduleSim.Core.Contexts
         public ObservableCollection<WeekDay> WeekDays { get; private set; } = new ObservableCollection<WeekDay>();
         public ObservableCollection<Member> Members { get; private set; } = new ObservableCollection<Member>();
         public ObservableCollection<Task> Tasks { get; private set; } = new ObservableCollection<Task>();
+        public ObservableCollection<ProcessDependency> ProcessDependencies { get; private set; } = new ObservableCollection<ProcessDependency>();
+        public ObservableCollection<DependencyType> DependencyTypes { get; private set; } = new ObservableCollection<DependencyType>();
     }
 }

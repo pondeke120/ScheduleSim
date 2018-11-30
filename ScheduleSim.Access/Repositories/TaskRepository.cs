@@ -78,7 +78,7 @@ namespace ScheduleSim.Access.Repositories
         {
             var conn = this.connectionFactory.Create();
             var trn = this.connectionFactory.GetCurrentTransaction();
-            var rows = conn.Query<int>(@"
+            var rows = conn.Query<int?>(@"
                 select
                     MAX(TASK_CD) as TaskCd
                 from 
@@ -87,7 +87,7 @@ namespace ScheduleSim.Access.Repositories
             , null, trn);
 
             return
-                rows.FirstOrDefault();
+                rows.FirstOrDefault() ?? default(int);
         }
     }
 }
