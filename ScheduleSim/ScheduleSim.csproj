@@ -230,6 +230,10 @@
     <Compile Include="Views\WbsPage.xaml.cs">
       <DependentUpon>WbsPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="Template\TreeViewTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ActivityScheduleGraphPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
