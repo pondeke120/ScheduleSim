@@ -40,7 +40,7 @@ namespace ScheduleSim.Commands.FunctionDependencyPage
                 && model != null)
             {
                 viewModel.SrcFunctionId = model.FunctionId;
-                targetDependency.DstFunctionCd = model.FunctionId;
+                targetDependency.OrgFunctionCd = model.FunctionId;
             }
             e.Handled = true;
         }

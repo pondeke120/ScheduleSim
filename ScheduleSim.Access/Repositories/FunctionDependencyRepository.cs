@@ -47,7 +47,9 @@ namespace ScheduleSim.Access.Repositories
                 )
                 values (@Org, @Dst, @TypeCd)
             "
-            , dependencies.Select(x => new {
+            , dependencies
+            .Where(x => x.OrgFunctionCd != null && x.DstFunctionCd != null && x.DependencyTypeCd != null)
+            .Select(x => new {
                 Org = x.OrgFunctionCd,
                 Dst = x.DstFunctionCd,
                 TypeCd = (int)x.DependencyTypeCd,
