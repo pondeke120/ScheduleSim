@@ -110,7 +110,11 @@
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Commands\Common\DelegateCommand.cs" />
+    <Compile Include="Commands\FunctionDependencyPage\AddDependencyCommand.cs" />
     <Compile Include="Commands\FunctionDependencyPage\DeleteDependencyCommand.cs" />
+    <Compile Include="Commands\FunctionDependencyPage\DependencyTypeChangeCommand.cs" />
+    <Compile Include="Commands\FunctionDependencyPage\DstFunctionChangeCommand.cs" />
+    <Compile Include="Commands\FunctionDependencyPage\SrcFunctionChangeCommand.cs" />
     <Compile Include="Commands\MemberPage\AddMemberCommand.cs" />
     <Compile Include="Commands\MemberPage\DeleteMemberCommand.cs" />
     <Compile Include="Commands\MemberPage\JoinDateChangeCommand.cs" />
@@ -155,6 +159,8 @@
     <Compile Include="Mappers\WbsPageProfile.cs" />
     <Compile Include="Resouces\CustomColors.cs" />
     <Compile Include="ViewModels\FunctionDependencyPageDependencyItemViewModel.cs" />
+    <Compile Include="ViewModels\FunctionDependencyPageDependencyTypeItemViewModel.cs" />
+    <Compile Include="ViewModels\FunctionDependencyPageFunctionItemViewModel.cs" />
     <Compile Include="ViewModels\FunctionDependencyPageViewModel.cs" />
     <Compile Include="ViewModels\MemberPageMemberItemViewModel.cs" />
     <Compile Include="ViewModels\MemberPageViewModel.cs" />

@@ -12,6 +12,9 @@
       Title="FunctionDependencyPage">
     <Page.Resources>
         <converter:IndexConverter x:Key="IndexConverter"/>
+        <CollectionViewSource x:Key="SrcFunctionSource" Source="{Binding FunctionSource}"/>
+        <CollectionViewSource x:Key="DstFunctionSource" Source="{Binding FunctionSource}"/>
+        <CollectionViewSource x:Key="DependencyTypeSource" Source="{Binding DependencyTypeSource}"/>
     </Page.Resources>
     <Grid>
         <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" RowHeight="24" ItemsSource="{Binding Dependencies}" CanUserDeleteRows="True">
@@ -28,9 +31,43 @@
                 </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="依存元機能" Width="120" Binding="{Binding SrcFunctionId}"/>
-                <DataGridTextColumn Header="依存先機能" Width="120" Binding="{Binding DstFunctionId}"/>
-                <DataGridTextColumn Header="依存種類" Width="120" Binding="{Binding DependencyType}"/>
+                <DataGridComboBoxColumn
+                        Header="依存元機能" Width="120"
+                        SelectedValuePath="FunctionId"
+                        DisplayMemberPath="FunctionName"
+                        ItemsSource="{Binding Source={StaticResource SrcFunctionSource}}"
+                        SelectedValueBinding="{Binding SrcFunctionId}">
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <EventSetter Event="SelectionChanged" Handler="SrcFunction_SelectionChanged" />
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+                <DataGridComboBoxColumn
+                        x:Name="aaa"
+                        Header="依存先機能" Width="120"
+                        SelectedValuePath="FunctionId"
+                        DisplayMemberPath="FunctionName"
+                        ItemsSource="{Binding Source={StaticResource DstFunctionSource}}"
+                        SelectedValueBinding="{Binding DstFunctionId}">
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <EventSetter Event="SelectionChanged" Handler="DstFunction_SelectionChanged" />
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+                <DataGridComboBoxColumn
+                        Header="依存種類" Width="120"
+                        SelectedValuePath="DependencyType"
+                        DisplayMemberPath="DependencyTypeName"
+                        ItemsSource="{Binding Source={StaticResource DependencyTypeSource}}"
+                        SelectedValueBinding="{Binding DependencyType}">
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <EventSetter Event="SelectionChanged" Handler="DependencyType_SelectionChanged" />
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

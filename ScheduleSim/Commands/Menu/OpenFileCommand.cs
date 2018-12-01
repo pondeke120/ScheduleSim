@@ -118,9 +118,10 @@ namespace ScheduleSim.Commands.Menu
 
             this.appContext.ProcessDependencies.Clear();
             this.appContext.ProcessDependencies.AddRange(output.ProcessDependencies);
-            
-            this.functionDependencyPageViewModel.Dependencies = this.mapper.Map<List<FunctionDependencyPageDependencyItemViewModel>>(output.FunctionDependencies);
-            
+
+            this.appContext.FunctionDependencies.Clear();
+            this.appContext.FunctionDependencies.AddRange(output.FunctionDependencies);
+
             this.pertPageViewModel.Edges = this.mapper.Map<List<PertPageEdgeItemViewModel>>(output.Edges);
 
             this.shellViewModel.ProjectPath = output?.FilePath ?? projectDbFileBak;

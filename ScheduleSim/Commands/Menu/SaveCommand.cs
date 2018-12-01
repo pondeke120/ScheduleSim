@@ -80,7 +80,7 @@ namespace ScheduleSim.Commands.Menu
             input.Members = this.appContext.Members;
             input.Tasks = this.appContext.Tasks;
             input.ProcessDependencies = this.appContext.ProcessDependencies;
-            input.FunctionDependencies = mapper.Map<List<FunctionDependency>>(this.functionDependencyPageViewModel.Dependencies);
+            input.FunctionDependencies = this.appContext.FunctionDependencies;
             input.Edges = mapper.Map<List<Pert>>(this.pertPageViewModel.Edges);
 
             input.masterDbFile = this.appContext.MasterDbFile;

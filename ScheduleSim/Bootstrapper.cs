@@ -74,6 +74,7 @@ namespace ScheduleSim
                 .Select(x => new DependencyType() { DependencyTypeCd = x, DependencyName = Enum.GetName(typeof(Entities.Enum.DependencyTypes), x) }));
 
             appContext.ProcessDependencies.Clear();
+            appContext.FunctionDependencies.Clear();
         }
 
         protected override void ConfigureContainer()
@@ -151,7 +152,13 @@ namespace ScheduleSim
                 ));
             Container.RegisterType<FunctionDependencyPageViewModel>(new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(
-                    new ResolvedParameter<ICommand>("FunctionDependencyPage.DeleteDependencyCommand")
+                    new ResolvedParameter<AppContext>(),
+                    new ResolvedParameter<IMapper>(),
+                    new ResolvedParameter<ICommand>("FunctionDependencyPage.AddDependencyCommand"),
+                    new ResolvedParameter<ICommand>("FunctionDependencyPage.DeleteDependencyCommand"),
+                    new ResolvedParameter<ICommand>("FunctionDependencyPage.SrcFunctionChangeCommand"),
+                    new ResolvedParameter<ICommand>("FunctionDependencyPage.DstFunctionChangeCommand"),
+                    new ResolvedParameter<ICommand>("FunctionDependencyPage.DependencyTypeChangeCommand")
                 ));
             Container.RegisterType<PertPageViewModel>(new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(
@@ -226,7 +233,11 @@ namespace ScheduleSim
             Container.RegisterType<ICommand, Commands.ProcessDependencyPage.SrcProcessChangeCommand>("ProcessDependencyPage.SrcProcessChangeCommand");
             Container.RegisterType<ICommand, Commands.ProcessDependencyPage.DstProcessChangeCommand>("ProcessDependencyPage.DstProcessChangeCommand");
             Container.RegisterType<ICommand, Commands.ProcessDependencyPage.DependencyTypeChangeCommand>("ProcessDependencyPage.DependencyTypeChangeCommand");
+            Container.RegisterType<ICommand, Commands.FunctionDependencyPage.AddDependencyCommand>("FunctionDependencyPage.AddDependencyCommand");
             Container.RegisterType<ICommand, Commands.FunctionDependencyPage.DeleteDependencyCommand>("FunctionDependencyPage.DeleteDependencyCommand");
+            Container.RegisterType<ICommand, Commands.FunctionDependencyPage.SrcFunctionChangeCommand>("FunctionDependencyPage.SrcFunctionChangeCommand");
+            Container.RegisterType<ICommand, Commands.FunctionDependencyPage.DstFunctionChangeCommand>("FunctionDependencyPage.DstFunctionChangeCommand");
+            Container.RegisterType<ICommand, Commands.FunctionDependencyPage.DependencyTypeChangeCommand>("FunctionDependencyPage.DependencyTypeChangeCommand");
             Container.RegisterType<ICommand, Commands.PertPage.DeleteEdgeCommand>("PertPage.DeleteEdgeCommand");
 
             // Register Mappers
