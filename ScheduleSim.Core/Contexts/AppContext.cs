@@ -23,5 +23,6 @@ namespace ScheduleSim.Core.Contexts
         public ObservableCollection<ProcessDependency> ProcessDependencies { get; private set; } = new ObservableCollection<ProcessDependency>();
         public ObservableCollection<FunctionDependency> FunctionDependencies { get; private set; } = new ObservableCollection<FunctionDependency>();
         public ObservableCollection<DependencyType> DependencyTypes { get; private set; } = new ObservableCollection<DependencyType>();
+        public ObservableCollection<Pert> PertEdges { get; private set; } = new ObservableCollection<Pert>();
     }
 }

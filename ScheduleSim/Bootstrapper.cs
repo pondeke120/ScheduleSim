@@ -75,6 +75,8 @@ namespace ScheduleSim
 
             appContext.ProcessDependencies.Clear();
             appContext.FunctionDependencies.Clear();
+
+            appContext.PertEdges.Clear();
         }
 
         protected override void ConfigureContainer()
@@ -162,7 +164,13 @@ namespace ScheduleSim
                 ));
             Container.RegisterType<PertPageViewModel>(new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(
-                    new ResolvedParameter<ICommand>("PertPage.DeleteEdgeCommand")
+                    new ResolvedParameter<AppContext>(),
+                    new ResolvedParameter<IMapper>(),
+                    new ResolvedParameter<ICommand>("PertPage.AddPertEdgeCommand"),
+                    new ResolvedParameter<ICommand>("PertPage.DeleteEdgeCommand"),
+                    new ResolvedParameter<ICommand>("PertPage.ProcessChangeCommand"),
+                    new ResolvedParameter<ICommand>("PertPage.FunctionChangeCommand"),
+                    new ResolvedParameter<ICommand>("PertPage.TaskChangeCommand")
                 ));
 
             // Register Commands
@@ -238,7 +246,11 @@ namespace ScheduleSim
             Container.RegisterType<ICommand, Commands.FunctionDependencyPage.SrcFunctionChangeCommand>("FunctionDependencyPage.SrcFunctionChangeCommand");
             Container.RegisterType<ICommand, Commands.FunctionDependencyPage.DstFunctionChangeCommand>("FunctionDependencyPage.DstFunctionChangeCommand");
             Container.RegisterType<ICommand, Commands.FunctionDependencyPage.DependencyTypeChangeCommand>("FunctionDependencyPage.DependencyTypeChangeCommand");
+            Container.RegisterType<ICommand, Commands.PertPage.AddPertEdgeCommand>("PertPage.AddPertEdgeCommand");
             Container.RegisterType<ICommand, Commands.PertPage.DeleteEdgeCommand>("PertPage.DeleteEdgeCommand");
+            Container.RegisterType<ICommand, Commands.PertPage.FunctionChangeCommand>("PertPage.FunctionChangeCommand");
+            Container.RegisterType<ICommand, Commands.PertPage.ProcessChangeCommand>("PertPage.ProcessChangeCommand");
+            Container.RegisterType<ICommand, Commands.PertPage.TaskChangeCommand>("PertPage.TaskChangeCommand");
 
             // Register Mappers
             Container.RegisterType<IMapper, Mapper>(new InjectionConstructor(new ResolvedParameter<IConfigurationProvider>()));

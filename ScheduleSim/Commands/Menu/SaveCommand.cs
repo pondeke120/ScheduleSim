@@ -81,7 +81,7 @@ namespace ScheduleSim.Commands.Menu
             input.Tasks = this.appContext.Tasks;
             input.ProcessDependencies = this.appContext.ProcessDependencies;
             input.FunctionDependencies = this.appContext.FunctionDependencies;
-            input.Edges = mapper.Map<List<Pert>>(this.pertPageViewModel.Edges);
+            input.Edges = this.appContext.PertEdges;
 
             input.masterDbFile = this.appContext.MasterDbFile;
             input.currentDbFile = this.appContext.ProjectDbFile;

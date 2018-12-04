@@ -127,7 +127,11 @@
     <Compile Include="Commands\Menu\OpenFileCommand.cs" />
     <Compile Include="Commands\Menu\SaveAsCommand.cs" />
     <Compile Include="Commands\Menu\SaveCommand.cs" />
+    <Compile Include="Commands\PertPage\AddPertEdgeCommand.cs" />
     <Compile Include="Commands\PertPage\DeleteEdgeCommand.cs" />
+    <Compile Include="Commands\PertPage\FunctionChangeCommand.cs" />
+    <Compile Include="Commands\PertPage\ProcessChangeCommand.cs" />
+    <Compile Include="Commands\PertPage\TaskChangeCommand.cs" />
     <Compile Include="Commands\ProcessDependencyPage\AddDependencyCommand.cs" />
     <Compile Include="Commands\ProcessDependencyPage\DeleteDependencyCommand.cs" />
     <Compile Include="Commands\ProcessDependencyPage\DependencyTypeChangeCommand.cs" />
@@ -166,6 +170,9 @@
     <Compile Include="ViewModels\MemberPageViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\PertPageEdgeItemViewModel.cs" />
+    <Compile Include="ViewModels\PertPageFunctionItemViewModel.cs" />
+    <Compile Include="ViewModels\PertPageProcessItemViewModel.cs" />
+    <Compile Include="ViewModels\PertPageTaskItemViewModel.cs" />
     <Compile Include="ViewModels\PertPageViewModel.cs" />
     <Compile Include="ViewModels\ProcessDependencyPageDependencyItemViewModel.cs" />
     <Compile Include="ViewModels\ProcessDependencyPageDependencyTypeItemViewModel.cs" />

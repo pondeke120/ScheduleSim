@@ -122,7 +122,8 @@ namespace ScheduleSim.Commands.Menu
             this.appContext.FunctionDependencies.Clear();
             this.appContext.FunctionDependencies.AddRange(output.FunctionDependencies);
 
-            this.pertPageViewModel.Edges = this.mapper.Map<List<PertPageEdgeItemViewModel>>(output.Edges);
+            this.appContext.PertEdges.Clear();
+            this.appContext.PertEdges.AddRange(output.Edges);
 
             this.shellViewModel.ProjectPath = output?.FilePath ?? projectDbFileBak;
         }
