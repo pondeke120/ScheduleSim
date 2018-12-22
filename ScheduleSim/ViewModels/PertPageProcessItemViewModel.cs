@@ -10,9 +10,9 @@ namespace ScheduleSim.ViewModels
 {
     public class PertPageProcessItemViewModel : BindableBase
     {
-        public int ProcessId
+        public int? ProcessId
         {
-            get { return _dataContext?.ProcessCd ?? -1; }
+            get { return _dataContext?.ProcessCd; }
         }
 
         public string ProcessName

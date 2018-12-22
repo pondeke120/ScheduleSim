@@ -10,9 +10,9 @@ namespace ScheduleSim.ViewModels
 {
     public class PertPageFunctionItemViewModel : BindableBase
     {
-        public int FunctionId
+        public int? FunctionId
         {
-            get { return _dataContext?.FunctionCd ?? -1; }
+            get { return _dataContext?.FunctionCd; }
         }
 
         public string FunctionName

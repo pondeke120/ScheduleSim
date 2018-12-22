@@ -49,5 +49,26 @@ namespace ScheduleSim.Views
         {
             this.viewModel.TaskChangeCommand.Execute(new object[] { sender, e });
         }
+
+        private void Task_DropDownOpened(object sender, EventArgs e)
+        {
+            var cb = sender as ComboBox;
+            var row = DataGridRow.GetRowContainingElement(cb);
+
+            var edgeVm = row.Item as PertPageEdgeItemViewModel;
+            if (edgeVm == null)
+                return;
+
+            var functionId = edgeVm.FunctionId;
+            var processId = edgeVm.ProcessId;
+            if (functionId != null && processId != null)
+            {
+                cb.ItemsSource = this.viewModel.TaskSource.Where(x => x.ProcessId == processId && x.FunctionId == functionId).ToList();
+            }
+            else
+            {
+                cb.ItemsSource = this.viewModel.TaskSource;
+            }
+        }
     }
 }

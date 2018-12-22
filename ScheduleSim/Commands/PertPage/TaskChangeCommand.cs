@@ -34,14 +34,18 @@ namespace ScheduleSim.Commands.PertPage
             var viewModel = sender.DataContext as PertPageEdgeItemViewModel;
             var targetEdge = appContext.PertEdges.FirstOrDefault(x => x.SrcNodeCd == viewModel?.INode
                                                                         && x.DstNodeCd == viewModel?.JNode);
-            if (targetEdge != null)
+            var selectedValue = (int?)((e.OriginalSource as ComboBox).SelectedValue);
+            if (targetEdge != null
+                && selectedValue != null)
             {
-                targetEdge.TaskCd = (int)((e.OriginalSource as ComboBox).SelectedValue);
+                targetEdge.TaskCd = selectedValue.Value;
                 var task = appContext.Tasks.FirstOrDefault(x => x.TaskCd == targetEdge.TaskCd);
                 if (task != null)
                 {
-                    viewModel.ProcessId = task.ProcessCd;
-                    viewModel.FunctionId = task.FunctionCd;
+                    if (viewModel.ProcessId == null)
+                        viewModel.ProcessId = task.ProcessCd;
+                    if (viewModel.FunctionId == null)
+                        viewModel.FunctionId = task.FunctionCd;
                     viewModel.PV = task.PlanValue;
                 }
             }

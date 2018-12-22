@@ -154,6 +154,7 @@
     <Compile Include="ControlBehaviors\BindableSelectedItemBehavior.cs" />
     <Compile Include="ControlBehaviors\ContextMenuBindingProxy.cs" />
     <Compile Include="ControlConverters\IndexConverter.cs" />
+    <Compile Include="ControlConverters\PertPageTaskNameConverter.cs" />
     <Compile Include="CustomControls\CustomDataGridTemplateColumn.cs" />
     <Compile Include="Mappers\FunctionDependencyPageProfile.cs" />
     <Compile Include="Mappers\MemberPageProfile.cs" />
@@ -161,6 +162,8 @@
     <Compile Include="Mappers\ProcessDependencyPageProfile.cs" />
     <Compile Include="Mappers\ProjectSettingPagePofile.cs" />
     <Compile Include="Mappers\WbsPageProfile.cs" />
+    <Compile Include="PresentationLogics\PertPage\ITaskItemFilter.cs" />
+    <Compile Include="PresentationLogics\PertPage\TaskItemFilter.cs" />
     <Compile Include="Resouces\CustomColors.cs" />
     <Compile Include="ViewModels\FunctionDependencyPageDependencyItemViewModel.cs" />
     <Compile Include="ViewModels\FunctionDependencyPageDependencyTypeItemViewModel.cs" />

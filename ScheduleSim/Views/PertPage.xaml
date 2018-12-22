@@ -8,11 +8,13 @@
       xmlns:converter="clr-namespace:ScheduleSim.ControlConverters"
       xmlns:behavior="clr-namespace:ScheduleSim.ControlBehaviors"
       xmlns:resources="clr-namespace:ScheduleSim.Resources"
+      xmlns:custom="clr-namespace:ScheduleSim.CustomControls"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="600"
       Title="PertPage">
     <Page.Resources>
         <converter:IndexConverter x:Key="IndexConverter"/>
+        <converter:PertPageTaskNameConverter x:Key="TaskNameConverter"/>
         <CollectionViewSource x:Key="ProcessSource" Source="{Binding ProcessSource}"/>
         <CollectionViewSource x:Key="FunctionSource" Source="{Binding FunctionSource}"/>
         <CollectionViewSource x:Key="TaskSource" Source="{Binding TaskSource}"/>
@@ -105,12 +107,12 @@
                         <DataGridTextColumn x:Name="INode" Header="i" Width="40" Binding="{Binding INode}"/>
                         <DataGridTextColumn x:Name="JNode" Header="j" Width="40" Binding="{Binding JNode}"/>
                         <DataGridComboBoxColumn
-                        x:Name="ProcessId"
-                        Header="工程" Width="80"
-                        SelectedValuePath="ProcessId"
-                        DisplayMemberPath="ProcessName"
-                        ItemsSource="{Binding Source={StaticResource ProcessSource}}"
-                        SelectedValueBinding="{Binding ProcessId}">
+                            x:Name="ProcessId"
+                            Header="工程" Width="80"
+                            SelectedValuePath="ProcessId"
+                            DisplayMemberPath="ProcessName"
+                            ItemsSource="{Binding Source={StaticResource ProcessSource}}"
+                            SelectedValueBinding="{Binding ProcessId}">
                             <DataGridComboBoxColumn.EditingElementStyle>
                                 <Style TargetType="{x:Type ComboBox}">
                                     <EventSetter Event="SelectionChanged" Handler="Process_SelectionChanged" />
@@ -118,31 +120,39 @@
                             </DataGridComboBoxColumn.EditingElementStyle>
                         </DataGridComboBoxColumn>
                         <DataGridComboBoxColumn
-                        x:Name="FunctionId"
-                        Header="機能" Width="80"
-                        SelectedValuePath="FunctionId"
-                        DisplayMemberPath="FunctionName"
-                        ItemsSource="{Binding Source={StaticResource FunctionSource}}"
-                        SelectedValueBinding="{Binding FunctionId}">
+                            x:Name="FunctionId"
+                            Header="機能" Width="80"
+                            SelectedValuePath="FunctionId"
+                            DisplayMemberPath="FunctionName"
+                            ItemsSource="{Binding Source={StaticResource FunctionSource}}"
+                            SelectedValueBinding="{Binding FunctionId}">
                             <DataGridComboBoxColumn.EditingElementStyle>
                                 <Style TargetType="{x:Type ComboBox}">
                                     <EventSetter Event="SelectionChanged" Handler="Function_SelectionChanged" />
                                 </Style>
                             </DataGridComboBoxColumn.EditingElementStyle>
                         </DataGridComboBoxColumn>
-                        <DataGridComboBoxColumn
-                        x:Name="TaskId"
-                        Header="作業" Width="80"
-                        SelectedValuePath="TaskId"
-                        DisplayMemberPath="TaskName"
-                        ItemsSource="{Binding Source={StaticResource TaskSource}}"
-                        SelectedValueBinding="{Binding TaskId}">
-                            <DataGridComboBoxColumn.EditingElementStyle>
-                                <Style TargetType="{x:Type ComboBox}">
-                                    <EventSetter Event="SelectionChanged" Handler="Task_SelectionChanged" />
-                                </Style>
-                            </DataGridComboBoxColumn.EditingElementStyle>
-                        </DataGridComboBoxColumn>
+                        <custom:CustomDataGridTemplateColumn        
+                            x:Name="TaskId"
+                            Header="作業" Width="80">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding TaskId, Converter={StaticResource TaskNameConverter}, ConverterParameter={StaticResource TaskSource}}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.CellEditingTemplate>
+                                <DataTemplate>
+                                    <ComboBox
+                                        SelectedValue="{Binding TaskId}"
+                                        DisplayMemberPath="TaskName"
+                                        SelectedValuePath="TaskId"
+                                        ItemsSource="{Binding Source={StaticResource TaskSource}}"
+                                        SelectionChanged="Task_SelectionChanged"
+                                        DropDownOpened="Task_DropDownOpened"
+                                        IsSynchronizedWithCurrentItem="False"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellEditingTemplate>
+                        </custom:CustomDataGridTemplateColumn>
                         <DataGridTextColumn x:Name="PV" Header="PV" Width="40" Binding="{Binding PV, StringFormat=#.##}" IsReadOnly="True"/>
                         <DataGridTextColumn x:Name="FastestStartValue" Header="最早" Width="40" Binding="{Binding FastestStartValue, StringFormat=#.##}" IsReadOnly="True"/>
                         <DataGridTextColumn x:Name="LatestStartValue" Header="最遅" Width="40" Binding="{Binding LatestStartValue, StringFormat=#.##}" IsReadOnly="True"/>

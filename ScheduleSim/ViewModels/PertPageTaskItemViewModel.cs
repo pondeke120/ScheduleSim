@@ -9,9 +9,9 @@ namespace ScheduleSim.ViewModels
 {
     public class PertPageTaskItemViewModel : BindableBase
     {
-        public int TaskId
+        public int? TaskId
         {
-            get { return _dataContext?.TaskCd ?? -1; }
+            get { return _dataContext?.TaskCd; }
         }
 
         public string TaskName
@@ -19,14 +19,14 @@ namespace ScheduleSim.ViewModels
             get { return _dataContext?.TaskName; }
         }
 
-        public int ProcessId
+        public int? ProcessId
         {
-            get { return _dataContext?.ProcessCd ?? -1; }
+            get { return _dataContext?.ProcessCd; }
         }
 
-        public int FunctionId
+        public int? FunctionId
         {
-            get { return _dataContext?.FunctionCd ?? -1; }
+            get { return _dataContext?.FunctionCd; }
         }
 
         private Task _dataContext;

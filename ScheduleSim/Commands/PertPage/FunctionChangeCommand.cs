@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace ScheduleSim.Commands.PertPage
@@ -34,8 +35,12 @@ namespace ScheduleSim.Commands.PertPage
             var viewModel = sender.DataContext as PertPageEdgeItemViewModel;
             var targetEdge = appContext.PertEdges.FirstOrDefault(x => x.SrcNodeCd == viewModel?.INode
                                                                         && x.DstNodeCd == viewModel?.JNode);
-            if (targetEdge != null)
+            if (targetEdge != null && e.AddedItems.Count > 0)
             {
+                // 選択項目の値を設定
+                var selectedValue = ((PertPageFunctionItemViewModel)(e.AddedItems[0])).FunctionId;
+                viewModel.FunctionId = selectedValue;
+
                 // 関数にフィルタ処理？
             }
             e.Handled = true;

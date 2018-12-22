@@ -103,7 +103,10 @@ namespace ScheduleSim.ViewModels
         {
             var collection = sender as ObservableCollection<Function>;
 
-            this.FunctionSource = this.mapper.Map<ObservableCollection<PertPageFunctionItemViewModel>>(sender);
+            this.FunctionSource = new ObservableCollection<PertPageFunctionItemViewModel>(
+                                    new[] { new PertPageFunctionItemViewModel() { DataContext = null } }
+                                    .Concat(this.mapper.Map<ObservableCollection<PertPageFunctionItemViewModel>>(sender))
+                                );
         }
 
         /// <summary>
@@ -114,8 +117,11 @@ namespace ScheduleSim.ViewModels
         private void Processes_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             var collection = sender as ObservableCollection<Process>;
-
-            this.ProcessSource = this.mapper.Map<ObservableCollection<PertPageProcessItemViewModel>>(sender);
+            
+            this.ProcessSource = new ObservableCollection<PertPageProcessItemViewModel>(
+                                    new[] { new PertPageProcessItemViewModel() { DataContext = null } }
+                                    .Concat(this.mapper.Map<ObservableCollection<PertPageProcessItemViewModel>>(sender))
+                                );
         }
 
         /// <summary>
@@ -127,7 +133,10 @@ namespace ScheduleSim.ViewModels
         {
             var collection = sender as ObservableCollection<Task>;
 
-            this.TaskSource = this.mapper.Map<ObservableCollection<PertPageTaskItemViewModel>>(sender);
+            this.TaskSource = new ObservableCollection<PertPageTaskItemViewModel>(
+                                    new[] { new PertPageTaskItemViewModel() { DataContext = null } }
+                                    .Concat(this.mapper.Map<ObservableCollection<PertPageTaskItemViewModel>>(sender))
+                                );
         }
     }
 }
