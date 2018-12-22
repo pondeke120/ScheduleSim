@@ -161,7 +161,7 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
         private IDictionary<int, double> CalcEarliestStartValues(IEnumerable<UpdateCalcValuesInput.ActivityData> data)
         {
             // ノード番号の一覧を作成する
-            var valMap = new Dictionary<int, double>();
+            var valMap = data.ToDictionary(x => x.Id, x => 0.0);
             var nodes = new HashSet<int>();
             var srcNodes = new HashSet<int>();
             var dstNodes = new HashSet<int>();
@@ -221,7 +221,7 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
         private IDictionary<int, double> CalcLatestStartValues(IEnumerable<UpdateCalcValuesInput.ActivityData> data, double totalValueOfPeriod)
         {
             // ノード番号の一覧を作成する
-            var valMap = new Dictionary<int, double>();
+            var valMap = data.ToDictionary(x => x.Id, x => 0.0);
             var nodes = new HashSet<int>();
             var srcNodes = new HashSet<int>();
             var dstNodes = new HashSet<int>();
