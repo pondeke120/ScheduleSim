@@ -19,17 +19,32 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
             var earliestStartValues = CalcEarliestStartValues(input.Data);
             // 最遅開始時刻を演算
             var latestStartValues = CalcLatestStartValues(input.Data, totalValueOfPeriod);
+            // 最早完了時刻を演算
+            var earliestFinishValues = CalcEarliestFinishValues(input.Data, earliestStartValues);
 
             output.CalcValues = input.Data.Select(x =>
             {
                 return new UpdateCalcValuesOutput.CalcValue()
                 {
                     EarliestStartTime = earliestStartValues[x.Id],
-                    LatestStartTime = latestStartValues[x.Id]
+                    LatestStartTime = latestStartValues[x.Id],
+                    EarliestFinishTime = earliestFinishValues[x.Id]
                 };
             });
 
             return output;
+        }
+
+        /// <summary>
+        /// 最早終了時刻の演算
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="earliestStartValues"></param>
+        /// <returns></returns>
+        private IDictionary<int, double> CalcEarliestFinishValues(IEnumerable<UpdateCalcValuesInput.ActivityData> data, IDictionary<int, double> earliestStartValues)
+        {
+            return
+                data.ToDictionary(x => x.Id, x => x.PlanValue + earliestStartValues[x.Id]);
         }
 
         /// <summary>
