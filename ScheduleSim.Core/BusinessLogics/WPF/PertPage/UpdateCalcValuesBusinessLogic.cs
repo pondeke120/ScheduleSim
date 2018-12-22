@@ -23,6 +23,8 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
             var earliestFinishValues = CalcEarliestFinishValues(input.Data, earliestStartValues);
             // 最遅完了時刻を演算
             var latestFinishValues = CalcLatestFinishValues(input.Data, latestStartValues);
+            // トータルフロート(全余裕時間)を演算
+            var totalFloats = CalcTotalFloatValues(latestStartValues, earliestStartValues);
 
             output.CalcValues = input.Data.Select(x =>
             {
@@ -31,11 +33,24 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
                     EarliestStartTime = earliestStartValues[x.Id],
                     LatestStartTime = latestStartValues[x.Id],
                     EarliestFinishTime = earliestFinishValues[x.Id],
-                    LatestFinishTime = latestFinishValues[x.Id]
+                    LatestFinishTime = latestFinishValues[x.Id],
+                    TotalFloat = totalFloats[x.Id]
                 };
             });
 
             return output;
+        }
+
+        /// <summary>
+        /// トータルフロート(Total Float)を演算する
+        /// </summary>
+        /// <param name="latestStartValues"></param>
+        /// <param name="earliestStartValues"></param>
+        /// <returns></returns>
+        private IDictionary<int, double> CalcTotalFloatValues(IDictionary<int, double> latestStartValues, IDictionary<int, double> earliestStartValues)
+        {
+            return
+                latestStartValues.ToDictionary(x => x.Key, x => x.Value - earliestStartValues[x.Key]);
         }
 
         /// <summary>

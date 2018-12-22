@@ -37,7 +37,7 @@ namespace ScheduleSim.Core.IO.WPF.PertPage
             /// </summary>
             public double FreeFloat { get; set; }
             /// <summary>
-            /// トータルフロート(Total Float)
+            /// トータルフロート(全余裕時間)
             /// </summary>
             public double TotalFloat { get; set; }
             /// <summary>
