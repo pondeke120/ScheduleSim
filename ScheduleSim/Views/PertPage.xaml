@@ -15,6 +15,7 @@
     <Page.Resources>
         <converter:IndexConverter x:Key="IndexConverter"/>
         <converter:PertPageTaskNameConverter x:Key="TaskNameConverter"/>
+        <converter:PertPageCriticalFlagConverter x:Key="CriticalFlagConverter"/>
         <CollectionViewSource x:Key="ProcessSource" Source="{Binding ProcessSource}"/>
         <CollectionViewSource x:Key="FunctionSource" Source="{Binding FunctionSource}"/>
         <CollectionViewSource x:Key="TaskSource" Source="{Binding TaskSource}"/>
@@ -105,6 +106,21 @@
                     </DataGrid.Resources>
                     <DataGrid.Columns>
                         <DataGridTextColumn x:Name="INode" Header="i" Width="40" Binding="{Binding INode}">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                                    <Setter Property="Background" Value="{Binding Source={x:Static resources:CustomColors.Cream}}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}},
+                                           Path=IsSelected}" Value="True">
+                                            <Setter Property="Background" Value="DodgerBlue"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}},
+                                           Path=IsSelected}" Value="False">
+                                            <Setter Property="Background" Value="{Binding Source={x:Static resources:CustomColors.Cream}}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
                             <DataGridTextColumn.EditingElementStyle>
                                 <Style TargetType="TextBox">
                                     <EventSetter Event="TextChanged" Handler="INode_TextChanged"/>
@@ -112,6 +128,21 @@
                             </DataGridTextColumn.EditingElementStyle>
                         </DataGridTextColumn>
                         <DataGridTextColumn x:Name="JNode" Header="j" Width="40" Binding="{Binding JNode}">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                                    <Setter Property="Background" Value="{Binding Source={x:Static resources:CustomColors.Cream}}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}},
+                                           Path=IsSelected}" Value="True">
+                                            <Setter Property="Background" Value="DodgerBlue"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}},
+                                           Path=IsSelected}" Value="False">
+                                            <Setter Property="Background" Value="{Binding Source={x:Static resources:CustomColors.Cream}}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
                             <DataGridTextColumn.EditingElementStyle>
                                 <Style TargetType="TextBox">
                                     <EventSetter Event="TextChanged" Handler="JNode_TextChanged"/>
@@ -130,6 +161,21 @@
                                     <EventSetter Event="SelectionChanged" Handler="Process_SelectionChanged" />
                                 </Style>
                             </DataGridComboBoxColumn.EditingElementStyle>
+                            <DataGridComboBoxColumn.CellStyle>
+                                <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                                    <Setter Property="Background" Value="{Binding Source={x:Static resources:CustomColors.Cream}}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}},
+                                           Path=IsSelected}" Value="True">
+                                            <Setter Property="Background" Value="DodgerBlue"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}},
+                                           Path=IsSelected}" Value="False">
+                                            <Setter Property="Background" Value="{Binding Source={x:Static resources:CustomColors.Cream}}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridComboBoxColumn.CellStyle>
                         </DataGridComboBoxColumn>
                         <DataGridComboBoxColumn
                             x:Name="FunctionId"
@@ -143,6 +189,21 @@
                                     <EventSetter Event="SelectionChanged" Handler="Function_SelectionChanged" />
                                 </Style>
                             </DataGridComboBoxColumn.EditingElementStyle>
+                            <DataGridComboBoxColumn.CellStyle>
+                                <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                                    <Setter Property="Background" Value="{Binding Source={x:Static resources:CustomColors.Cream}}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}},
+                                           Path=IsSelected}" Value="True">
+                                            <Setter Property="Background" Value="DodgerBlue"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}},
+                                           Path=IsSelected}" Value="False">
+                                            <Setter Property="Background" Value="{Binding Source={x:Static resources:CustomColors.Cream}}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridComboBoxColumn.CellStyle>
                         </DataGridComboBoxColumn>
                         <custom:CustomDataGridTemplateColumn        
                             x:Name="TaskId"
@@ -164,6 +225,21 @@
                                         IsSynchronizedWithCurrentItem="False"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellEditingTemplate>
+                            <DataGridTemplateColumn.CellStyle>
+                                <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                                    <Setter Property="Background" Value="{Binding Source={x:Static resources:CustomColors.Cream}}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}},
+                                           Path=IsSelected}" Value="True">
+                                            <Setter Property="Background" Value="DodgerBlue"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}},
+                                           Path=IsSelected}" Value="False">
+                                            <Setter Property="Background" Value="{Binding Source={x:Static resources:CustomColors.Cream}}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTemplateColumn.CellStyle>
                         </custom:CustomDataGridTemplateColumn>
                         <DataGridTextColumn x:Name="PV" Header="PV" Width="40" Binding="{Binding PV, StringFormat={}{0:N1}}" IsReadOnly="True"/>
                         <DataGridTextColumn x:Name="FastestStartValue" Header="最早" Width="40" Binding="{Binding FastestStartValue, StringFormat={}{0:N1}}" IsReadOnly="True"/>
@@ -172,7 +248,17 @@
                         <DataGridTextColumn x:Name="LatestEndValue" Header="最遅" Width="40" Binding="{Binding LatestEndValue, StringFormat={}{0:N1}}" IsReadOnly="True"/>
                         <DataGridTextColumn x:Name="TotalFloat" Header="TF" Width="40" Binding="{Binding TotalFloat, StringFormat={}{0:N1}}" IsReadOnly="True"/>
                         <DataGridTextColumn x:Name="FreeFloat" Header="FF" Width="40" Binding="{Binding FreeFloat, StringFormat={}{0:N1}}" IsReadOnly="True"/>
-                        <DataGridTextColumn x:Name="IsCritical" Header="CR" Width="40" Binding="{Binding IsCritical}" IsReadOnly="True"/>
+                        <DataGridTextColumn x:Name="IsCritical" Header="CR" Width="40" Binding="{Binding IsCritical, Converter={StaticResource CriticalFlagConverter}}" IsReadOnly="True">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="TextAlignment" Value="Center" />
+                                    <Setter Property="Foreground" Value="Red"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
