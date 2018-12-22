@@ -8,6 +8,11 @@ namespace ScheduleSim.Core.IO.WPF.PertPage
 {
     public class UpdateCalcValuesInput
     {
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public IEnumerable<DayOfWeek> RestDate { get; set; }
+        public IEnumerable<DateTime> Holidays { get; set; }
+        public double ValueOfDay { get; set; }
         public IEnumerable<ActivityData> Data { get; set; }
 
         public class ActivityData

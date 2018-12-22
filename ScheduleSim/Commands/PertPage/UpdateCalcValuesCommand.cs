@@ -52,8 +52,18 @@ namespace ScheduleSim.Commands.PertPage
                 }
             }
 
+            // 演算に必要なデータが入力済みであるかをチェックし、不足があれば演算を中止
+            if (CheckCalc() == false)
+                return;
+
             // 計算データの更新
             var input = new UpdateCalcValuesInput();
+            input.StartDate = appContext.PrjSettings.StartDate.Value;
+            input.EndDate = appContext.PrjSettings.EndDate.Value;
+            input.RestDate = appContext.WeekDays.Where(x => x.HolidayFlg).Select(x => x.WeekdayCd).ToArray();
+            input.Holidays = appContext.Holidays.Where(x => x.HolidayDate.HasValue).Select(x => x.HolidayDate.Value).ToArray();
+            // TODO 一日当たりの生産量は画面から入力可能にする
+            input.ValueOfDay = 8.0;
             input.Data = viewModel.Edges
             .Where(x => x.INode.HasValue && x.JNode.HasValue && x.PV.HasValue)
             .Select(x => new UpdateCalcValuesInput.ActivityData()
@@ -81,6 +91,17 @@ namespace ScheduleSim.Commands.PertPage
                 vmEdge.IsCritical = enEdge.IsCritical;
             }
 
+        }
+
+        /// <summary>
+        /// 演算に必要な入力がそろっているか確認する
+        /// </summary>
+        /// <returns></returns>
+        private bool CheckCalc()
+        {
+            return
+                appContext.PrjSettings.StartDate != null
+                && appContext.PrjSettings.EndDate != null;
         }
     }
 }
