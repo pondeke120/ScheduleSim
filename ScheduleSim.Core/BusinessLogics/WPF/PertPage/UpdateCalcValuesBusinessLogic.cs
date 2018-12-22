@@ -27,6 +27,8 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
             var totalFloats = CalcTotalFloatValues(latestStartValues, earliestStartValues);
             // フリーフロート(自由余裕時間)を演算
             var freeFloats = CalcFreeFloatValues(input.Data, earliestStartValues);
+            // クリティカルパスを演算
+            var criticalFlags = CalcCriticalPath(totalFloats);
 
             output.CalcValues = input.Data.Select(x =>
             {
@@ -37,11 +39,27 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
                     EarliestFinishTime = earliestFinishValues[x.Id],
                     LatestFinishTime = latestFinishValues[x.Id],
                     TotalFloat = totalFloats[x.Id],
-                    FreeFloat = freeFloats[x.Id]
+                    FreeFloat = freeFloats[x.Id],
+                    IsCritical = criticalFlags[x.Id]
                 };
             });
 
             return output;
+        }
+
+        /// <summary>
+        /// クリティカルパスを演算する
+        /// </summary>
+        /// <param name="totalFloats"></param>
+        /// <returns></returns>
+        private IDictionary<int, bool> CalcCriticalPath(IDictionary<int, double> totalFloats)
+        {
+            // トータルフローの最小値を取得
+            var minFloat = totalFloats.Values.Min();
+
+            // トータルフローが最小値をとっているパスがクリティカルパス
+            return
+                totalFloats.ToDictionary(x => x.Key, x => Math.Abs(x.Value - minFloat) < 0.0001);
         }
 
         /// <summary>
