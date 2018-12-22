@@ -25,6 +25,8 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
             var latestFinishValues = CalcLatestFinishValues(input.Data, latestStartValues);
             // トータルフロート(全余裕時間)を演算
             var totalFloats = CalcTotalFloatValues(latestStartValues, earliestStartValues);
+            // フリーフロート(自由余裕時間)を演算
+            var freeFloats = CalcFreeFloatValues(input.Data, earliestStartValues);
 
             output.CalcValues = input.Data.Select(x =>
             {
@@ -34,11 +36,45 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
                     LatestStartTime = latestStartValues[x.Id],
                     EarliestFinishTime = earliestFinishValues[x.Id],
                     LatestFinishTime = latestFinishValues[x.Id],
-                    TotalFloat = totalFloats[x.Id]
+                    TotalFloat = totalFloats[x.Id],
+                    FreeFloat = freeFloats[x.Id]
                 };
             });
 
             return output;
+        }
+
+        /// <summary>
+        /// フリーフロート(自由余裕時間)を演算する
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="earliestStartValues"></param>
+        /// <returns></returns>
+        private IDictionary<int, double> CalcFreeFloatValues(IEnumerable<UpdateCalcValuesInput.ActivityData> data, IDictionary<int, double> earliestStartValues)
+        {
+            // ノード番号の一覧を作成する
+            var valMap = new Dictionary<int, double>();
+
+            // edgeごとに演算
+            foreach (var edge in data)
+            {
+                // 対象エッジの終点を始点とするエッジを取得
+                var nextEdges = data.Where(x => x.SrcNodeId == edge.DstNodeId).ToArray();
+                // 終点の場合はFreeFloatは0
+                if (nextEdges.Length == 0)
+                {
+                    valMap[edge.Id] = 0.0;
+                    continue;
+                }
+
+                // 接続ノードの次のエッジの最早開始時刻の最小値を求める
+                var earliestNextStartTime = nextEdges.Min(x => earliestStartValues[x.Id]);
+                // フリーフロート(自由余裕時間)を算出
+                // 接続エッジの最早開始時刻 - (対象エッジの最早開始時刻 + 所要時間)
+                valMap[edge.Id] = earliestNextStartTime - (earliestStartValues[edge.Id] + edge.PlanValue);
+            }
+
+            return valMap;
         }
 
         /// <summary>
