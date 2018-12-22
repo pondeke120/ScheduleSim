@@ -45,7 +45,7 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
         {
             // 日数を算出
             var span = endDate - startDate;
-            var days = Enumerable.Range(0, (int)Math.Ceiling(span.TotalDays)).Select(i => startDate.AddDays(i)).ToArray();
+            var days = Enumerable.Range(0, 1 + (int)Math.Ceiling(span.TotalDays)).Select(i => startDate.AddDays(i)).ToArray();
             // 休日にあたる曜日を減算
             days = days.Where(x => restDate.Contains(x.DayOfWeek) == false && holidays.Contains(x) == false).ToArray();
 
@@ -142,7 +142,7 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
             foreach (var startEdge in startEdges)
             {
                 // 終点ノードの最早開始時刻=MAX(直列ノードの最早開始時刻+ノード自身の作業時間)
-                valMap[startEdge.Id] = CalcLatestStartValue(startEdge, data, valMap, totalValueOfPeriod);
+                valMap[startEdge.Id] = CalcLatestStartValue(startEdge, data, valMap, totalValueOfPeriod) - startEdge.PlanValue;
             }
 
             return valMap;
@@ -168,9 +168,9 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
 
             return edges.Min(x =>
             {
-                var val = CalcLatestStartValue(x, data, valMap, totalValueOfPeriod);
+                var val = CalcLatestStartValue(x, data, valMap, totalValueOfPeriod) - x.PlanValue;
                 valMap[x.Id] = val;
-                return val - x.PlanValue;
+                return val;
             });
         }
     }
