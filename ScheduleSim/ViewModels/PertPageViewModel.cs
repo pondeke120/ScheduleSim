@@ -20,6 +20,7 @@ namespace ScheduleSim.ViewModels
         public ICommand TaskChangeCommand { get; private set; }
         public ICommand SrcNodeChangeCommand { get; private set; }
         public ICommand DstNodeChangeCommand { get; private set; }
+        public ICommand UpdateCalcValuesCommand { get; private set; }
         private IMapper mapper;
 
         private ObservableCollection<PertPageEdgeItemViewModel> _edges;
@@ -61,7 +62,8 @@ namespace ScheduleSim.ViewModels
             ICommand functionChangeCommand,
             ICommand taskChangeCommand,
             ICommand srcNodeChangeCommand,
-            ICommand dstNodeChangeCommand)
+            ICommand dstNodeChangeCommand,
+            ICommand updateCalcValuesCommand)
         {
             this.AddEdgeCommand = addEdgeCommand;
             this.DeleteEdgeCommand = deleteEdgeCommand;
@@ -70,6 +72,7 @@ namespace ScheduleSim.ViewModels
             this.TaskChangeCommand = taskChangeCommand;
             this.SrcNodeChangeCommand = srcNodeChangeCommand;
             this.DstNodeChangeCommand = dstNodeChangeCommand;
+            this.UpdateCalcValuesCommand = updateCalcValuesCommand;
             this.mapper = mapper;
             this.appContext = appContext;
 
@@ -102,21 +105,7 @@ namespace ScheduleSim.ViewModels
 
                 if (Edges.Count > 0)
                 {
-                    foreach (var edge in this.Edges)
-                    {
-                        var taskId = edge.TaskId;
-                        var task = this.appContext.Tasks.FirstOrDefault(x => x.TaskCd == taskId);
-                        if (task != null)
-                        {
-                            edge.ProcessId = task.ProcessCd;
-                            edge.FunctionId = task.FunctionCd;
-                            edge.PV = task.PlanValue;
-                        }
-                        else
-                        {
-                            edge.PV = 0.0;
-                        }
-                    }
+                    this.UpdateCalcValuesCommand.Execute(this);
                 }
             }
         }

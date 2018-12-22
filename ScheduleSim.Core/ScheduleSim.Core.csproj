@@ -50,6 +50,8 @@
     <Compile Include="BusinessLogics\WPF\Menu\OpenFileBusinessLogic.cs" />
     <Compile Include="BusinessLogics\WPF\Menu\SaveAsBusinessLogic.cs" />
     <Compile Include="BusinessLogics\WPF\Menu\SaveBusinessLogic.cs" />
+    <Compile Include="BusinessLogics\WPF\PertPage\IUpdateCalcValuesBusinessLogic.cs" />
+    <Compile Include="BusinessLogics\WPF\PertPage\UpdateCalcValuesBusinessLogic.cs" />
     <Compile Include="Dispatcher\IDispatcher.cs" />
     <Compile Include="Dispatcher\TransactionDispatcher.cs" />
     <Compile Include="Extensions\IListExtensions.cs" />
@@ -62,6 +64,8 @@
     <Compile Include="IO\WPF\Menu\SaveAsOutput.cs" />
     <Compile Include="IO\WPF\Menu\SaveOutput.cs" />
     <Compile Include="IO\WPF\Menu\SaveInput.cs" />
+    <Compile Include="IO\WPF\PertPage\UpdateCalcValuesInput.cs" />
+    <Compile Include="IO\WPF\PertPage\UpdateCalcValuesOutput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\DbFileAccessService.cs" />
     <Compile Include="Service\DbMigrationService.cs" />

@@ -134,6 +134,7 @@
     <Compile Include="Commands\PertPage\SrcNodeChangeCommand.cs" />
     <Compile Include="Commands\PertPage\ProcessChangeCommand.cs" />
     <Compile Include="Commands\PertPage\TaskChangeCommand.cs" />
+    <Compile Include="Commands\PertPage\UpdateCalcValuesCommand.cs" />
     <Compile Include="Commands\ProcessDependencyPage\AddDependencyCommand.cs" />
     <Compile Include="Commands\ProcessDependencyPage\DeleteDependencyCommand.cs" />
     <Compile Include="Commands\ProcessDependencyPage\DependencyTypeChangeCommand.cs" />

@@ -165,13 +165,13 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellEditingTemplate>
                         </custom:CustomDataGridTemplateColumn>
-                        <DataGridTextColumn x:Name="PV" Header="PV" Width="40" Binding="{Binding PV, StringFormat=#.##}" IsReadOnly="True"/>
-                        <DataGridTextColumn x:Name="FastestStartValue" Header="最早" Width="40" Binding="{Binding FastestStartValue, StringFormat=#.##}" IsReadOnly="True"/>
-                        <DataGridTextColumn x:Name="LatestStartValue" Header="最遅" Width="40" Binding="{Binding LatestStartValue, StringFormat=#.##}" IsReadOnly="True"/>
-                        <DataGridTextColumn x:Name="FastestEndValue" Header="最早" Width="40" Binding="{Binding FastestEndValue, StringFormat=#.##}" IsReadOnly="True"/>
-                        <DataGridTextColumn x:Name="LatestEndValue" Header="最遅" Width="40" Binding="{Binding LatestEndValue, StringFormat=#.##}" IsReadOnly="True"/>
-                        <DataGridTextColumn x:Name="TotalFloat" Header="TF" Width="40" Binding="{Binding TotalFloat, StringFormat=#.##}" IsReadOnly="True"/>
-                        <DataGridTextColumn x:Name="FreeFloat" Header="FF" Width="40" Binding="{Binding FreeFloat, StringFormat=#.##}" IsReadOnly="True"/>
+                        <DataGridTextColumn x:Name="PV" Header="PV" Width="40" Binding="{Binding PV, StringFormat={}{0:N1}}" IsReadOnly="True"/>
+                        <DataGridTextColumn x:Name="FastestStartValue" Header="最早" Width="40" Binding="{Binding FastestStartValue, StringFormat={}{0:N1}}" IsReadOnly="True"/>
+                        <DataGridTextColumn x:Name="LatestStartValue" Header="最遅" Width="40" Binding="{Binding LatestStartValue, StringFormat={}{0:N1}}" IsReadOnly="True"/>
+                        <DataGridTextColumn x:Name="FastestEndValue" Header="最早" Width="40" Binding="{Binding FastestEndValue, StringFormat={}{0:N1}}" IsReadOnly="True"/>
+                        <DataGridTextColumn x:Name="LatestEndValue" Header="最遅" Width="40" Binding="{Binding LatestEndValue, StringFormat={}{0:N1}}" IsReadOnly="True"/>
+                        <DataGridTextColumn x:Name="TotalFloat" Header="TF" Width="40" Binding="{Binding TotalFloat, StringFormat={}{0:N1}}" IsReadOnly="True"/>
+                        <DataGridTextColumn x:Name="FreeFloat" Header="FF" Width="40" Binding="{Binding FreeFloat, StringFormat={}{0:N1}}" IsReadOnly="True"/>
                         <DataGridTextColumn x:Name="IsCritical" Header="CR" Width="40" Binding="{Binding IsCritical}" IsReadOnly="True"/>
                     </DataGrid.Columns>
                 </DataGrid>

@@ -172,7 +172,8 @@ namespace ScheduleSim
                     new ResolvedParameter<ICommand>("PertPage.FunctionChangeCommand"),
                     new ResolvedParameter<ICommand>("PertPage.TaskChangeCommand"),
                     new ResolvedParameter<ICommand>("PertPage.SrcNodeChangeCommand"),
-                    new ResolvedParameter<ICommand>("PertPage.DstNodeChangeCommand")
+                    new ResolvedParameter<ICommand>("PertPage.DstNodeChangeCommand"),
+                    new ResolvedParameter<ICommand>("PertPage.UpdateCalcValuesCommand")
                 ));
 
             // Register Commands
@@ -261,6 +262,7 @@ namespace ScheduleSim
             Container.RegisterType<ICommand, Commands.PertPage.TaskChangeCommand>("PertPage.TaskChangeCommand");
             Container.RegisterType<ICommand, Commands.PertPage.SrcNodeChangeCommand>("PertPage.SrcNodeChangeCommand");
             Container.RegisterType<ICommand, Commands.PertPage.DstNodeChangeCommand>("PertPage.DstNodeChangeCommand");
+            Container.RegisterType<ICommand, Commands.PertPage.UpdateCalcValuesCommand>("PertPage.UpdateCalcValuesCommand");
 
             // Register Mappers
             Container.RegisterType<IMapper, Mapper>(new InjectionConstructor(new ResolvedParameter<IConfigurationProvider>()));
@@ -281,6 +283,7 @@ namespace ScheduleSim
             Container.RegisterType<Core.BusinessLogics.WPF.Menu.IOpenFileBusinessLogic, Core.BusinessLogics.WPF.Menu.OpenFileBusinessLogic>();
             Container.RegisterType<Core.BusinessLogics.WPF.Menu.ISaveBusinessLogic, Core.BusinessLogics.WPF.Menu.SaveBusinessLogic>();
             Container.RegisterType<Core.BusinessLogics.WPF.Menu.ISaveAsBusinessLogic, Core.BusinessLogics.WPF.Menu.SaveAsBusinessLogic>();
+            Container.RegisterType<Core.BusinessLogics.WPF.PertPage.IUpdateCalcValuesBusinessLogic, Core.BusinessLogics.WPF.PertPage.UpdateCalcValuesBusinessLogic>();
 
             // Register Services
             Container.RegisterType<Core.Service.IDbMigrationService, Core.Service.DbMigrationService>();
