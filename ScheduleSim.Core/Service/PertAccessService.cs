@@ -29,5 +29,10 @@ namespace ScheduleSim.Core.Service
             this.pertRepository.RemoveAll();
             this.pertRepository.Insert(edges);
         }
+
+        public int GetCurrentIndex()
+        {
+            return this.pertRepository.GetCurrentIndex();
+        }
     }
 }

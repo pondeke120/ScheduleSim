@@ -28,6 +28,7 @@ namespace ScheduleSim.Commands.Menu
         private ShellViewModel shellViewModel;
         private IIDGenerator memberIdGen;
         private IIDGenerator taskIdGen;
+        private IIDGenerator pertIdGen;
         private IMapper mapper;
         private IDispatcher dispatcher;
 
@@ -42,6 +43,7 @@ namespace ScheduleSim.Commands.Menu
             ShellViewModel shellViewModel,
             IIDGenerator memberIdGen,
             IIDGenerator taskIdGen,
+            IIDGenerator pertIdGen,
             IMapper mapper,
             IDispatcher dispatcher)
         {
@@ -53,6 +55,7 @@ namespace ScheduleSim.Commands.Menu
             this.shellViewModel = shellViewModel;
             this.memberIdGen = memberIdGen;
             this.taskIdGen = taskIdGen;
+            this.pertIdGen = pertIdGen;
             this.mapper = mapper;
             this.dispatcher = dispatcher;
         }
@@ -109,7 +112,7 @@ namespace ScheduleSim.Commands.Menu
             this.appContext.Members.Clear();
             this.appContext.Members.AddRange(output.Members);
 
-            this.taskIdGen.SetCurrentIndex(output.MaxMemberId + 1);
+            this.taskIdGen.SetCurrentIndex(output.MaxTaskId + 1);
             this.appContext.Tasks.Clear();
             this.appContext.Tasks.AddRange(output.Tasks);
 
@@ -122,6 +125,7 @@ namespace ScheduleSim.Commands.Menu
             this.appContext.FunctionDependencies.Clear();
             this.appContext.FunctionDependencies.AddRange(output.FunctionDependencies);
 
+            this.pertIdGen.SetCurrentIndex(output.MaxEdgeId + 1);
             this.appContext.PertEdges.Clear();
             this.appContext.PertEdges.AddRange(output.Edges);
 

@@ -25,6 +25,7 @@ namespace ScheduleSim.Access.Repositories
             var trn = this.connectionFactory.GetCurrentTransaction();
             var rows = conn.Query<Pert>(@"
                 select
+                    ID as Id,
                     SRC_NODE_NO as SrcNodeCd,
                     DST_NODE_NO as DstNodeCd,
                     TASK_CD as TaskCd
@@ -43,11 +44,12 @@ namespace ScheduleSim.Access.Repositories
             var trn = this.connectionFactory.GetCurrentTransaction();
             conn.Execute(@"
                 insert into M_PERT (
-                    SRC_NODE_NO, DST_NODE_NO, TASK_CD
+                    ID, SRC_NODE_NO, DST_NODE_NO, TASK_CD
                 )
-                values (@Src, @Dst, @Task)
+                values (@Id, @Src, @Dst, @Task)
             "
             , edges.Select(x => new {
+                Id = x.Id,
                 Src = x.SrcNodeCd,
                 Dst = x.DstNodeCd,
                 Task = x.TaskCd,
@@ -63,6 +65,22 @@ namespace ScheduleSim.Access.Repositories
                 delete from M_PERT
             "
             , null, trn);
+        }
+
+        public int GetCurrentIndex()
+        {
+            var conn = this.connectionFactory.Create();
+            var trn = this.connectionFactory.GetCurrentTransaction();
+            var rows = conn.Query<int?>(@"
+                select
+                    MAX(ID) as Id
+                from 
+                    M_PERT
+            "
+            , null, trn);
+
+            return
+                rows.FirstOrDefault() ?? default(int);
         }
     }
 }

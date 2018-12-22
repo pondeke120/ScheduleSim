@@ -32,13 +32,12 @@ namespace ScheduleSim.Commands.PertPage
             var sender = (parameter as object[])[0] as ComboBox;
             var e = (parameter as object[])[1] as SelectionChangedEventArgs;
             var viewModel = sender.DataContext as PertPageEdgeItemViewModel;
-            var targetEdge = appContext.PertEdges.FirstOrDefault(x => x.SrcNodeCd == viewModel?.INode
-                                                                        && x.DstNodeCd == viewModel?.JNode);
+            var targetEdge = appContext.PertEdges.FirstOrDefault(x => x.Id == viewModel?.Id);
+
             var selectedValue = (int?)((e.OriginalSource as ComboBox).SelectedValue);
-            if (targetEdge != null
-                && selectedValue != null)
+            if (targetEdge != null)
             {
-                targetEdge.TaskCd = selectedValue.Value;
+                targetEdge.TaskCd = selectedValue;
                 var task = appContext.Tasks.FirstOrDefault(x => x.TaskCd == targetEdge.TaskCd);
                 if (task != null)
                 {
@@ -48,7 +47,16 @@ namespace ScheduleSim.Commands.PertPage
                         viewModel.FunctionId = task.FunctionCd;
                     viewModel.PV = task.PlanValue;
                 }
+
+                if (viewModel != null
+                    && task == null
+                    && e.AddedItems.Count > 0
+                    && ((PertPageTaskItemViewModel)e.AddedItems[0]).TaskId == null)
+                {
+                    viewModel.PV = 0.0;
+                }
             }
+
             e.Handled = true;
         }
     }

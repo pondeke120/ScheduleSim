@@ -50,6 +50,16 @@ namespace ScheduleSim.Views
             this.viewModel.TaskChangeCommand.Execute(new object[] { sender, e });
         }
 
+        private void INode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.viewModel.SrcNodeChangeCommand.Execute(new object[] { sender, e });
+        }
+
+        private void JNode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.viewModel.DstNodeChangeCommand.Execute(new object[] { sender, e });
+        }
+
         private void Task_DropDownOpened(object sender, EventArgs e)
         {
             var cb = sender as ComboBox;
@@ -61,14 +71,18 @@ namespace ScheduleSim.Views
 
             var functionId = edgeVm.FunctionId;
             var processId = edgeVm.ProcessId;
-            if (functionId != null && processId != null)
+            var source = this.viewModel.TaskSource as IEnumerable<PertPageTaskItemViewModel>;
+            
+            if (processId != null)
             {
-                cb.ItemsSource = this.viewModel.TaskSource.Where(x => x.ProcessId == processId && x.FunctionId == functionId).ToList();
+                source = source.Where(x => x.ProcessId == processId || x.TaskId == null).ToList();
             }
-            else
+            if (functionId != null)
             {
-                cb.ItemsSource = this.viewModel.TaskSource;
+                source = source.Where(x => x.FunctionId == functionId || x.TaskId == null).ToList();
             }
+
+            cb.ItemsSource = source;
         }
     }
 }

@@ -12,5 +12,6 @@ namespace ScheduleSim.Entities.Repositories
         void RemoveAll();
         void Insert(IEnumerable<Pert> edges);
         IEnumerable<Pert> Find();
+        int GetCurrentIndex();
     }
 }

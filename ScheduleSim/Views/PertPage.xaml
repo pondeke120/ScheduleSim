@@ -104,8 +104,20 @@
                         </Style>
                     </DataGrid.Resources>
                     <DataGrid.Columns>
-                        <DataGridTextColumn x:Name="INode" Header="i" Width="40" Binding="{Binding INode}"/>
-                        <DataGridTextColumn x:Name="JNode" Header="j" Width="40" Binding="{Binding JNode}"/>
+                        <DataGridTextColumn x:Name="INode" Header="i" Width="40" Binding="{Binding INode}">
+                            <DataGridTextColumn.EditingElementStyle>
+                                <Style TargetType="TextBox">
+                                    <EventSetter Event="TextChanged" Handler="INode_TextChanged"/>
+                                </Style>
+                            </DataGridTextColumn.EditingElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn x:Name="JNode" Header="j" Width="40" Binding="{Binding JNode}">
+                            <DataGridTextColumn.EditingElementStyle>
+                                <Style TargetType="TextBox">
+                                    <EventSetter Event="TextChanged" Handler="JNode_TextChanged"/>
+                                </Style>
+                            </DataGridTextColumn.EditingElementStyle>
+                        </DataGridTextColumn>
                         <DataGridComboBoxColumn
                             x:Name="ProcessId"
                             Header="工程" Width="80"

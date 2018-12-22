@@ -6,18 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 
 namespace ScheduleSim.Commands.PertPage
 {
-    public class FunctionChangeCommand : ICommand
+    public class DstNodeChangeCommand : ICommand
     {
         private AppContext appContext;
 
         public event EventHandler CanExecuteChanged;
 
-        public FunctionChangeCommand(
+        public DstNodeChangeCommand(
             AppContext appContext)
         {
             this.appContext = appContext;
@@ -30,18 +29,17 @@ namespace ScheduleSim.Commands.PertPage
 
         public void Execute(object parameter)
         {
-            var sender = (parameter as object[])[0] as ComboBox;
-            var e = (parameter as object[])[1] as SelectionChangedEventArgs;
+            var sender = (parameter as object[])[0] as TextBox;
+            var e = (parameter as object[])[1] as TextChangedEventArgs;
             var viewModel = sender.DataContext as PertPageEdgeItemViewModel;
             var targetEdge = appContext.PertEdges.FirstOrDefault(x => x.Id == viewModel?.Id);
-
-            if (targetEdge != null && e.AddedItems.Count > 0)
+            if (targetEdge != null)
             {
-                // 選択項目の値を設定
-                var selectedValue = ((PertPageFunctionItemViewModel)(e.AddedItems[0])).FunctionId;
-                viewModel.FunctionId = selectedValue;
-
-                // 関数にフィルタ処理？
+                var val = 0;
+                if (int.TryParse(sender.Text, out val))
+                {
+                    targetEdge.DstNodeCd = val;
+                }
             }
             e.Handled = true;
         }

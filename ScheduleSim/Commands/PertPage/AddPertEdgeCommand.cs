@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ScheduleSim.Core.Contexts;
+using ScheduleSim.Core.Utility;
 using ScheduleSim.Entities.Models;
 using ScheduleSim.ViewModels;
 using System;
@@ -16,12 +17,15 @@ namespace ScheduleSim.Commands.PertPage
     {
         private AppContext appContext;
         private IMapper mapper;
+        private IIDGenerator pertIdGen;
 
         public AddPertEdgeCommand(
             AppContext appContext,
+            IIDGenerator pertIdGen,
             IMapper mapper)
         {
             this.appContext = appContext;
+            this.pertIdGen = pertIdGen;
             this.mapper = mapper;
         }
 
@@ -39,6 +43,7 @@ namespace ScheduleSim.Commands.PertPage
 
             var newEdge = new Pert()
             {
+                Id = this.pertIdGen.CreateNewId(),
             };
 
             this.appContext.PertEdges.Add(newEdge);

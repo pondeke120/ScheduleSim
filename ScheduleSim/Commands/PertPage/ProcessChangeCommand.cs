@@ -32,9 +32,8 @@ namespace ScheduleSim.Commands.PertPage
             var sender = (parameter as object[])[0] as ComboBox;
             var e = (parameter as object[])[1] as SelectionChangedEventArgs;
             var viewModel = sender.DataContext as PertPageEdgeItemViewModel;
-            var targetEdge = appContext.PertEdges.FirstOrDefault(x => x.SrcNodeCd == viewModel?.INode
-                                                                        && x.DstNodeCd == viewModel?.JNode);
-            
+            var targetEdge = appContext.PertEdges.FirstOrDefault(x => x.Id == viewModel?.Id);
+
             if (targetEdge != null && e.AddedItems.Count > 0)
             {
                 // 選択項目の値を設定

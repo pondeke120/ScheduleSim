@@ -72,6 +72,7 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.Menu
             output.FunctionDependencies = this.functionDependencyAccessService.GetAllDependencies();
             output.MaxTaskId = this.taskAccessService.GetCurrentIndex();
             output.Tasks = this.taskAccessService.GetAllTasks();
+            output.MaxEdgeId = this.pertAccessService.GetCurrentIndex();
             output.Edges = this.pertAccessService.GetAllEdges();
             output.DependencyTypes = this.dbMigrationService.GetAllDependencyTypes();
 

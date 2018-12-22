@@ -129,7 +129,9 @@
     <Compile Include="Commands\Menu\SaveCommand.cs" />
     <Compile Include="Commands\PertPage\AddPertEdgeCommand.cs" />
     <Compile Include="Commands\PertPage\DeleteEdgeCommand.cs" />
+    <Compile Include="Commands\PertPage\DstNodeChangeCommand.cs" />
     <Compile Include="Commands\PertPage\FunctionChangeCommand.cs" />
+    <Compile Include="Commands\PertPage\SrcNodeChangeCommand.cs" />
     <Compile Include="Commands\PertPage\ProcessChangeCommand.cs" />
     <Compile Include="Commands\PertPage\TaskChangeCommand.cs" />
     <Compile Include="Commands\ProcessDependencyPage\AddDependencyCommand.cs" />
@@ -162,8 +164,6 @@
     <Compile Include="Mappers\ProcessDependencyPageProfile.cs" />
     <Compile Include="Mappers\ProjectSettingPagePofile.cs" />
     <Compile Include="Mappers\WbsPageProfile.cs" />
-    <Compile Include="PresentationLogics\PertPage\ITaskItemFilter.cs" />
-    <Compile Include="PresentationLogics\PertPage\TaskItemFilter.cs" />
     <Compile Include="Resouces\CustomColors.cs" />
     <Compile Include="ViewModels\FunctionDependencyPageDependencyItemViewModel.cs" />
     <Compile Include="ViewModels\FunctionDependencyPageDependencyTypeItemViewModel.cs" />

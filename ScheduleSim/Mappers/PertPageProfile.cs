@@ -14,6 +14,7 @@ namespace ScheduleSim.Mappers
         {
             // ViewModel -> Model
             CreateMap<PertPageEdgeItemViewModel, Pert>()
+                .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
                 .ForMember(d => d.SrcNodeCd, o => o.MapFrom(s => s.INode))
                 .ForMember(d => d.DstNodeCd, o => o.MapFrom(s => s.JNode))
                 .ForMember(d => d.TaskCd, o => o.MapFrom(s => s.TaskId));
@@ -29,6 +30,7 @@ namespace ScheduleSim.Mappers
 
             // Model -> ViewModel
             CreateMap<Pert, PertPageEdgeItemViewModel>()
+                .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
                 .ForMember(d => d.INode, o => o.MapFrom(s => s.SrcNodeCd))
                 .ForMember(d => d.JNode, o => o.MapFrom(s => s.DstNodeCd))
                 .ForMember(d => d.TaskId, o => o.MapFrom(s => s.TaskCd));

@@ -18,6 +18,8 @@ namespace ScheduleSim.ViewModels
         public ICommand ProcessChangeCommand { get; private set; }
         public ICommand FunctionChangeCommand { get; private set; }
         public ICommand TaskChangeCommand { get; private set; }
+        public ICommand SrcNodeChangeCommand { get; private set; }
+        public ICommand DstNodeChangeCommand { get; private set; }
         private IMapper mapper;
 
         private ObservableCollection<PertPageEdgeItemViewModel> _edges;
@@ -42,6 +44,8 @@ namespace ScheduleSim.ViewModels
         }
 
         private ObservableCollection<PertPageFunctionItemViewModel> _functionSource;
+        private AppContext appContext;
+
         public ObservableCollection<PertPageFunctionItemViewModel> FunctionSource
         {
             get { return _functionSource; }
@@ -55,14 +59,19 @@ namespace ScheduleSim.ViewModels
             ICommand deleteEdgeCommand,
             ICommand processChangeCommand,
             ICommand functionChangeCommand,
-            ICommand taskChangeCommand)
+            ICommand taskChangeCommand,
+            ICommand srcNodeChangeCommand,
+            ICommand dstNodeChangeCommand)
         {
             this.AddEdgeCommand = addEdgeCommand;
             this.DeleteEdgeCommand = deleteEdgeCommand;
             this.ProcessChangeCommand = processChangeCommand;
             this.FunctionChangeCommand = functionChangeCommand;
             this.TaskChangeCommand = taskChangeCommand;
+            this.SrcNodeChangeCommand = srcNodeChangeCommand;
+            this.DstNodeChangeCommand = dstNodeChangeCommand;
             this.mapper = mapper;
+            this.appContext = appContext;
 
             //Edges = new ObservableCollection<PertPageEdgeItemViewModel>()
             //{
@@ -90,6 +99,25 @@ namespace ScheduleSim.ViewModels
                 || e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
             {
                 this.Edges = this.mapper.Map<ObservableCollection<PertPageEdgeItemViewModel>>(edges);
+
+                if (Edges.Count > 0)
+                {
+                    foreach (var edge in this.Edges)
+                    {
+                        var taskId = edge.TaskId;
+                        var task = this.appContext.Tasks.FirstOrDefault(x => x.TaskCd == taskId);
+                        if (task != null)
+                        {
+                            edge.ProcessId = task.ProcessCd;
+                            edge.FunctionId = task.FunctionCd;
+                            edge.PV = task.PlanValue;
+                        }
+                        else
+                        {
+                            edge.PV = 0.0;
+                        }
+                    }
+                }
             }
         }
 

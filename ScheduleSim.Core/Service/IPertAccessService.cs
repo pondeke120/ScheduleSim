@@ -11,5 +11,6 @@ namespace ScheduleSim.Core.Service
     {
         void Update(IEnumerable<Pert> edges);
         IEnumerable<Pert> GetAllEdges();
+        int GetCurrentIndex();
     }
 }

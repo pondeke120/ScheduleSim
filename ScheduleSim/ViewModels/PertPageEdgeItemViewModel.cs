@@ -9,6 +9,13 @@ namespace ScheduleSim.ViewModels
 {
     public class PertPageEdgeItemViewModel : BindableBase
     {
+        private int _id;
+        public int Id
+        {
+            get { return _id; }
+            set { SetProperty(ref _id, value); }
+        }
+
         private int? _iNode;
         public int? INode
         {

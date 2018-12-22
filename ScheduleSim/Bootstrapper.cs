@@ -170,7 +170,9 @@ namespace ScheduleSim
                     new ResolvedParameter<ICommand>("PertPage.DeleteEdgeCommand"),
                     new ResolvedParameter<ICommand>("PertPage.ProcessChangeCommand"),
                     new ResolvedParameter<ICommand>("PertPage.FunctionChangeCommand"),
-                    new ResolvedParameter<ICommand>("PertPage.TaskChangeCommand")
+                    new ResolvedParameter<ICommand>("PertPage.TaskChangeCommand"),
+                    new ResolvedParameter<ICommand>("PertPage.SrcNodeChangeCommand"),
+                    new ResolvedParameter<ICommand>("PertPage.DstNodeChangeCommand")
                 ));
 
             // Register Commands
@@ -185,6 +187,7 @@ namespace ScheduleSim
                     new ResolvedParameter<ShellViewModel>(),
                     new ResolvedParameter<IIDGenerator>("MemberIdGen"),
                     new ResolvedParameter<IIDGenerator>("TaskIdGen"),
+                    new ResolvedParameter<IIDGenerator>("PertIdGen"),
                     new ResolvedParameter<IMapper>(),
                     new ResolvedParameter<IDispatcher>()
                 ));
@@ -246,11 +249,18 @@ namespace ScheduleSim
             Container.RegisterType<ICommand, Commands.FunctionDependencyPage.SrcFunctionChangeCommand>("FunctionDependencyPage.SrcFunctionChangeCommand");
             Container.RegisterType<ICommand, Commands.FunctionDependencyPage.DstFunctionChangeCommand>("FunctionDependencyPage.DstFunctionChangeCommand");
             Container.RegisterType<ICommand, Commands.FunctionDependencyPage.DependencyTypeChangeCommand>("FunctionDependencyPage.DependencyTypeChangeCommand");
-            Container.RegisterType<ICommand, Commands.PertPage.AddPertEdgeCommand>("PertPage.AddPertEdgeCommand");
+            Container.RegisterType<ICommand, Commands.PertPage.AddPertEdgeCommand>("PertPage.AddPertEdgeCommand",
+                new InjectionConstructor(
+                    new ResolvedParameter<AppContext>(),
+                    new ResolvedParameter<IIDGenerator>("PertIdGen"),
+                    new ResolvedParameter<IMapper>()
+                ));
             Container.RegisterType<ICommand, Commands.PertPage.DeleteEdgeCommand>("PertPage.DeleteEdgeCommand");
             Container.RegisterType<ICommand, Commands.PertPage.FunctionChangeCommand>("PertPage.FunctionChangeCommand");
             Container.RegisterType<ICommand, Commands.PertPage.ProcessChangeCommand>("PertPage.ProcessChangeCommand");
             Container.RegisterType<ICommand, Commands.PertPage.TaskChangeCommand>("PertPage.TaskChangeCommand");
+            Container.RegisterType<ICommand, Commands.PertPage.SrcNodeChangeCommand>("PertPage.SrcNodeChangeCommand");
+            Container.RegisterType<ICommand, Commands.PertPage.DstNodeChangeCommand>("PertPage.DstNodeChangeCommand");
 
             // Register Mappers
             Container.RegisterType<IMapper, Mapper>(new InjectionConstructor(new ResolvedParameter<IConfigurationProvider>()));
@@ -316,6 +326,7 @@ namespace ScheduleSim
             Container.RegisterInstance<IIDGenerator>("HolidayIdGen", new IDGenerator());
             Container.RegisterInstance<IIDGenerator>("MemberIdGen", new IDGenerator());
             Container.RegisterInstance<IIDGenerator>("TaskIdGen", new IDGenerator());
+            Container.RegisterInstance<IIDGenerator>("PertIdGen", new IDGenerator());
         }
     }
 }
