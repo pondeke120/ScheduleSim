@@ -173,7 +173,8 @@ namespace ScheduleSim
                     new ResolvedParameter<ICommand>("PertPage.TaskChangeCommand"),
                     new ResolvedParameter<ICommand>("PertPage.SrcNodeChangeCommand"),
                     new ResolvedParameter<ICommand>("PertPage.DstNodeChangeCommand"),
-                    new ResolvedParameter<ICommand>("PertPage.UpdateCalcValuesCommand")
+                    new ResolvedParameter<ICommand>("PertPage.UpdateCalcValuesCommand"),
+                    new ResolvedParameter<ICommand>("PertPage.TaskSelectionSourceFilterCommand")
                 ));
 
             // Register Commands
@@ -263,6 +264,7 @@ namespace ScheduleSim
             Container.RegisterType<ICommand, Commands.PertPage.SrcNodeChangeCommand>("PertPage.SrcNodeChangeCommand");
             Container.RegisterType<ICommand, Commands.PertPage.DstNodeChangeCommand>("PertPage.DstNodeChangeCommand");
             Container.RegisterType<ICommand, Commands.PertPage.UpdateCalcValuesCommand>("PertPage.UpdateCalcValuesCommand");
+            Container.RegisterType<ICommand, Commands.PertPage.TaskSelectionSourceFilterCommand>("PertPage.TaskSelectionSourceFilterCommand");
 
             // Register Mappers
             Container.RegisterType<IMapper, Mapper>(new InjectionConstructor(new ResolvedParameter<IConfigurationProvider>()));

@@ -62,27 +62,7 @@ namespace ScheduleSim.Views
 
         private void Task_DropDownOpened(object sender, EventArgs e)
         {
-            var cb = sender as ComboBox;
-            var row = DataGridRow.GetRowContainingElement(cb);
-
-            var edgeVm = row.Item as PertPageEdgeItemViewModel;
-            if (edgeVm == null)
-                return;
-
-            var functionId = edgeVm.FunctionId;
-            var processId = edgeVm.ProcessId;
-            var source = this.viewModel.TaskSource as IEnumerable<PertPageTaskItemViewModel>;
-            
-            if (processId != null)
-            {
-                source = source.Where(x => x.ProcessId == processId || x.TaskId == null).ToList();
-            }
-            if (functionId != null)
-            {
-                source = source.Where(x => x.FunctionId == functionId || x.TaskId == null).ToList();
-            }
-
-            cb.ItemsSource = source;
+            this.viewModel.TaskSelectionSourceFilterCommand.Execute(new object[] { sender, this.viewModel });
         }
 
         private void ToolBar_Loaded(object sender, RoutedEventArgs e)
