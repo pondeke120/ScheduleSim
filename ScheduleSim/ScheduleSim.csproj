@@ -157,6 +157,10 @@
     <Compile Include="Commands\WbsPage\TaskNameChangeCommand.cs" />
     <Compile Include="ControlBehaviors\BindableSelectedItemBehavior.cs" />
     <Compile Include="ControlBehaviors\ContextMenuBindingProxy.cs" />
+    <Compile Include="ControlBehaviors\FreezableBinding.cs" />
+    <Compile Include="ControlBehaviors\PushBinding .cs" />
+    <Compile Include="ControlBehaviors\PushBindingCollection.cs" />
+    <Compile Include="ControlBehaviors\PushBindingManager.cs" />
     <Compile Include="ControlConverters\IndexConverter.cs" />
     <Compile Include="ControlConverters\MarginConverter.cs" />
     <Compile Include="ControlConverters\PertPageCriticalFlagConverter.cs" />

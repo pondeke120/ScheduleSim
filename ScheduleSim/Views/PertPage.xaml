@@ -87,6 +87,9 @@
                           BorderThickness="1,0,1,1"
                           CanUserReorderColumns="False"
                           AddingNewItem="dataGrid_AddingNewItem">
+                    <behavior:PushBindingManager.PushBindings>
+                        <behavior:PushBinding TargetProperty="SelectedItems" Path="SelectedEdges"/>
+                    </behavior:PushBindingManager.PushBindings>
                     <DataGrid.Template>
                         <ControlTemplate TargetType="DataGrid">
                             <DockPanel Dock="Top" HorizontalAlignment="Stretch">
@@ -164,7 +167,7 @@
                         <ContextMenu x:Key="DataGridContextMenu">
                             <MenuItem Header="Delete Row" 
                                       Command="{Binding Source={StaticResource ContextMenuBindingProxy}, Path=Data.DeleteEdgeCommand}"
-                                      CommandParameter="{Binding Source={StaticResource ContextMenuBindingProxy}, Path=Data}"
+                                      CommandParameter="{Binding Source={StaticResource ContextMenuBindingProxy}, Path=Data.SelectedEdges}"
                                       />
                         </ContextMenu>
                         <Style TargetType="{x:Type DataGridRow}">

@@ -3,6 +3,7 @@ using Prism.Mvvm;
 using ScheduleSim.Core.Contexts;
 using ScheduleSim.Entities.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -46,13 +47,20 @@ namespace ScheduleSim.ViewModels
         }
 
         private ObservableCollection<PertPageFunctionItemViewModel> _functionSource;
-        private AppContext appContext;
-
         public ObservableCollection<PertPageFunctionItemViewModel> FunctionSource
         {
             get { return _functionSource; }
             set { SetProperty(ref _functionSource, value); }
         }
+
+        private IList _selectedEdges;
+        public IList SelectedEdges
+        {
+            get { return _selectedEdges; }
+            set { SetProperty(ref _selectedEdges, value); }
+        }
+
+        private AppContext appContext;
 
         public PertPageViewModel(
             AppContext appContext,
