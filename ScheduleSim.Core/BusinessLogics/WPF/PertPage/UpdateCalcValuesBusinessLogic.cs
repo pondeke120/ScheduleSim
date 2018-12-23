@@ -14,9 +14,11 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
             var output = new UpdateCalcValuesOutput();
 
             // 循環依存のチェックを行う
-            if (ContainsCirculation(input.Data))
+            var circulationList = null as List<int>;
+            if (ContainsCirculation(input.Data, out circulationList))
             {
-                throw new Exception("Contains Circulation");
+                var list = string.Join(",", circulationList.ToArray());
+                throw new Exception($"Contains Circulation{Environment.NewLine}{list}");
             }
 
             // 稼働日数を演算
@@ -58,7 +60,7 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        private bool ContainsCirculation(IEnumerable<UpdateCalcValuesInput.ActivityData> data)
+        private bool ContainsCirculation(IEnumerable<UpdateCalcValuesInput.ActivityData> data, out List<int> circulationList)
         {
             // ノード番号の一覧を作成する
             var nodes = new HashSet<int>();
@@ -69,6 +71,7 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
                 // src = dstがあったらそこで循環してる
                 if (edge.SrcNodeId == edge.DstNodeId)
                 {
+                    circulationList = new List<int> { edge.SrcNodeId, edge.DstNodeId };
                     return true;
                 }
 
@@ -83,14 +86,17 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
 
             // 始点ノードを深さ優先探索
             var containsCirculation = false;
+            circulationList = null;
             foreach (var startNode in startNodes)
             {
                 var nodeMap = nodes.ToDictionary(x => x, x => false);
-                var already = nodes.ToDictionary(x => x, x => false);
-                nodeMap[startNode] = true;
-                already[startNode] = true;
+                var already = new List<int>();
                 containsCirculation |= DepthFirstSearch(startNode, data, nodeMap, already);
-                if (containsCirculation) break;
+                if (containsCirculation)
+                {
+                    circulationList = already;
+                    break;
+                }
             }
 
             return
@@ -104,13 +110,13 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
         /// <param name="nodes"></param>
         /// <param name="nodeMap"></param>
         /// <returns></returns>
-        private bool DepthFirstSearch(int startNode, IEnumerable<UpdateCalcValuesInput.ActivityData> data, Dictionary<int, bool> nodeMap, Dictionary<int, bool> already)
+        private bool DepthFirstSearch(int startNode, IEnumerable<UpdateCalcValuesInput.ActivityData> data, Dictionary<int, bool> nodeMap, List<int> already)
         {
             var ret = false;
 
             // 自ノードはこれで探索済み
             nodeMap[startNode] = true;
-            already[startNode] = true;
+            already.Add(startNode);
 
             // 接続エッジを検索
             var edges = data.Where(x => x.SrcNodeId == startNode).ToArray();
@@ -120,8 +126,12 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
                 return false;
 
             // 接続先の探索済みノードがある場合は循環している
-            if (edges.Any(x => already[x.DstNodeId]))
+            if (edges.Any(x => already.Contains(x.DstNodeId)))
+            {
+                var edge = edges.FirstOrDefault(x => already.Contains(x.DstNodeId));
+                already.Add(edge.DstNodeId);
                 return true;
+            }
 
             // 探索済みの接続先を除外する
             var nexts = edges.Where(x => nodeMap[x.DstNodeId] == false).ToArray();
@@ -130,8 +140,9 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
             foreach (var next in nexts)
             {
                 ret |= DepthFirstSearch(next.DstNodeId, data, nodeMap, already);
+                if (ret) break;
                 // 接続先の探索が終わったら次の探索を始める前にパスごとの探索済みフラグをリセットする
-                already[next.DstNodeId] = false;
+                already.Remove(next.DstNodeId);
             }
 
             return ret;
