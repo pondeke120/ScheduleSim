@@ -158,6 +158,7 @@
     <Compile Include="ControlBehaviors\BindableSelectedItemBehavior.cs" />
     <Compile Include="ControlBehaviors\ContextMenuBindingProxy.cs" />
     <Compile Include="ControlConverters\IndexConverter.cs" />
+    <Compile Include="ControlConverters\MarginConverter.cs" />
     <Compile Include="ControlConverters\PertPageCriticalFlagConverter.cs" />
     <Compile Include="ControlConverters\PertPageTaskNameConverter.cs" />
     <Compile Include="CustomControls\CustomDataGridTemplateColumn.cs" />

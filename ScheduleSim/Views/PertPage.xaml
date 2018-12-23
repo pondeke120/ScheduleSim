@@ -9,6 +9,7 @@
       xmlns:behavior="clr-namespace:ScheduleSim.ControlBehaviors"
       xmlns:resources="clr-namespace:ScheduleSim.Resources"
       xmlns:custom="clr-namespace:ScheduleSim.CustomControls"
+      xmlns:system="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="600"
       Title="PertPage">
@@ -16,6 +17,7 @@
         <converter:IndexConverter x:Key="IndexConverter"/>
         <converter:PertPageTaskNameConverter x:Key="TaskNameConverter"/>
         <converter:PertPageCriticalFlagConverter x:Key="CriticalFlagConverter"/>
+        <converter:MarginConverter x:Key="MarginConverter"/>
         <CollectionViewSource x:Key="ProcessSource" Source="{Binding ProcessSource}"/>
         <CollectionViewSource x:Key="FunctionSource" Source="{Binding FunctionSource}"/>
         <CollectionViewSource x:Key="TaskSource" Source="{Binding TaskSource}"/>
@@ -95,8 +97,35 @@
                                     Focusable="false" 
                                     Padding="{TemplateBinding Padding}">
                                     <DockPanel Dock="Top" VerticalAlignment="Stretch">
-                                        <DataGridColumnHeadersPresenter DockPanel.Dock="Top" Grid.Row="0" Margin="2,0,0,0"/>
-                                        <ScrollViewer HorizontalScrollBarVisibility="Hidden" 
+                                        <DataGridColumnHeadersPresenter DockPanel.Dock="Top" Grid.Row="0">
+                                            <DataGridColumnHeadersPresenter.Style>
+                                                <Style TargetType="DataGridColumnHeadersPresenter">
+                                                    <Setter Property="Margin">
+                                                        <Setter.Value>
+                                                            <MultiBinding Converter="{StaticResource MarginConverter}" ConverterParameter="1,0,0,0">
+                                                                <Binding ElementName="dataGrid" Path="RowHeaderActualWidth"/>
+                                                                <Binding>
+                                                                    <Binding.Source>
+                                                                        <system:Int32>0</system:Int32>
+                                                                    </Binding.Source>
+                                                                </Binding>
+                                                                <Binding>
+                                                                    <Binding.Source>
+                                                                        <system:Int32>0</system:Int32>
+                                                                    </Binding.Source>
+                                                                </Binding>
+                                                                <Binding>
+                                                                    <Binding.Source>
+                                                                        <system:Int32>0</system:Int32>
+                                                                    </Binding.Source>
+                                                                </Binding>
+                                                            </MultiBinding>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </DataGridColumnHeadersPresenter.Style>
+                                        </DataGridColumnHeadersPresenter>
+                                        <ScrollViewer HorizontalScrollBarVisibility="Hidden"
                                             DockPanel.Dock="Top" 
                                             VerticalScrollBarVisibility="Auto" 
                                             VerticalAlignment="Stretch" 
