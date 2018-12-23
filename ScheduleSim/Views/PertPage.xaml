@@ -305,7 +305,7 @@
             Width="auto"
             Height="auto">
             <ToolBar ToolBarTray.IsLocked="True" HorizontalAlignment="Left" Margin="0,0,-12,0" Loaded="ToolBar_Loaded">
-                <Button Content="再計算" ToolBar.OverflowMode="Never" ToolTip="再計算を行う"/>
+                <Button Content="再計算" Command="{Binding UpdateCalcValuesCommand}" CommandParameter="{Binding}" ToolBar.OverflowMode="Never" ToolTip="再計算を行う"/>
                 <Button Content="WBS" ToolBar.OverflowMode="Never" ToolTip="WBSのタスク一覧を取り込む"/>
             </ToolBar>
         </ToolBarPanel>
