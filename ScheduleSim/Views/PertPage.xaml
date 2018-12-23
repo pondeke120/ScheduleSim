@@ -21,7 +21,19 @@
         <CollectionViewSource x:Key="TaskSource" Source="{Binding TaskSource}"/>
     </Page.Resources>
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <ScrollViewer 
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"
+            VerticalScrollBarVisibility="Disabled"
+            HorizontalScrollBarVisibility="Auto">
             <Grid Width="Auto" Height="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -73,6 +85,32 @@
                           BorderThickness="1,0,1,1"
                           CanUserReorderColumns="False"
                           AddingNewItem="dataGrid_AddingNewItem">
+                    <DataGrid.Template>
+                        <ControlTemplate TargetType="DataGrid">
+                            <DockPanel Dock="Top" HorizontalAlignment="Stretch">
+                                <ScrollViewer DockPanel.Dock="Top" 
+                                    CanContentScroll="False" 
+                                    HorizontalScrollBarVisibility="Disabled" 
+                                    VerticalScrollBarVisibility="Disabled" 
+                                    Focusable="false" 
+                                    Padding="{TemplateBinding Padding}">
+                                    <DockPanel Dock="Top" VerticalAlignment="Stretch">
+                                        <DataGridColumnHeadersPresenter DockPanel.Dock="Top" Grid.Row="0" Margin="2,0,0,0"/>
+                                        <ScrollViewer HorizontalScrollBarVisibility="Hidden" 
+                                            DockPanel.Dock="Top" 
+                                            VerticalScrollBarVisibility="Auto" 
+                                            VerticalAlignment="Stretch" 
+                                            CanContentScroll="False" 
+                                            Focusable="false" 
+                                            Padding="{TemplateBinding Padding}"
+                                            Margin="1,0,0,0">
+                                            <ItemsPresenter VerticalAlignment="Stretch"/>
+                                        </ScrollViewer>
+                                    </DockPanel>
+                                </ScrollViewer>
+                            </DockPanel>
+                        </ControlTemplate>
+                    </DataGrid.Template>
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Style.Setters>
@@ -263,5 +301,13 @@
                 </DataGrid>
             </Grid>
         </ScrollViewer>
+        <ToolBarPanel
+            Width="auto"
+            Height="auto">
+            <ToolBar ToolBarTray.IsLocked="True" HorizontalAlignment="Left" Margin="0,0,-12,0" Loaded="ToolBar_Loaded">
+                <Button Content="再計算" ToolBar.OverflowMode="Never" ToolTip="再計算を行う"/>
+                <Button Content="WBS" ToolBar.OverflowMode="Never" ToolTip="WBSのタスク一覧を取り込む"/>
+            </ToolBar>
+        </ToolBarPanel>
     </Grid>
 </Page>
