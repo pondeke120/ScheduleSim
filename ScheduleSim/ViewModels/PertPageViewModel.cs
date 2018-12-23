@@ -114,7 +114,8 @@ namespace ScheduleSim.ViewModels
             {
                 this.Edges = this.mapper.Map<ObservableCollection<PertPageEdgeItemViewModel>>(edges);
 
-                if (Edges.Count > 0)
+                if (Edges.Count > 0
+                    && e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Reset)
                 {
                     this.UpdateCalcValuesCommand.Execute(this);
                 }

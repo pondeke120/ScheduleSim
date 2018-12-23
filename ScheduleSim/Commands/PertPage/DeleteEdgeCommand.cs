@@ -32,7 +32,9 @@ namespace ScheduleSim.Commands.PertPage
 
         public void Execute(object parameter)
         {
-            var viewModels = (parameter as IList).Cast<PertPageEdgeItemViewModel>().ToArray();
+            var viewModels = (parameter as IList).Cast<object>()
+                .Where(x => x is PertPageEdgeItemViewModel)
+                .Cast<PertPageEdgeItemViewModel>().ToArray();
             var ids = viewModels.Select(x => x.Id).ToArray();
             var removeEdges = this.appContext.PertEdges.Where(x => ids.Contains(x.Id)).ToArray();
             if (removeEdges.Length > 0)
