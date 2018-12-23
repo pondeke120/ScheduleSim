@@ -13,6 +13,12 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
         {
             var output = new UpdateCalcValuesOutput();
 
+            // 循環依存のチェックを行う
+            if (ContainsCirculation(input.Data))
+            {
+                throw new Exception("Contains Circulation");
+            }
+
             // 稼働日数を演算
             var totalValueOfPeriod = CalcTotalValueOfPeriod(input.StartDate, input.EndDate, input.RestDate, input.Holidays, input.ValueOfDay);
             // 最早開始時刻を演算
@@ -45,6 +51,90 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
             });
 
             return output;
+        }
+
+        /// <summary>
+        /// 循環依存のチェック
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private bool ContainsCirculation(IEnumerable<UpdateCalcValuesInput.ActivityData> data)
+        {
+            // ノード番号の一覧を作成する
+            var nodes = new HashSet<int>();
+            var srcNodes = new HashSet<int>();
+            var dstNodes = new HashSet<int>();
+            foreach (var edge in data)
+            {
+                // src = dstがあったらそこで循環してる
+                if (edge.SrcNodeId == edge.DstNodeId)
+                {
+                    return true;
+                }
+
+                nodes.Add(edge.SrcNodeId);
+                nodes.Add(edge.DstNodeId);
+                srcNodes.Add(edge.SrcNodeId);
+                dstNodes.Add(edge.DstNodeId);
+            }
+
+            // 始点ノードを検索する
+            var startNodes = nodes.Where(x => dstNodes.Contains(x) == false && srcNodes.Contains(x)).ToArray();
+
+            // 始点ノードを深さ優先探索
+            var containsCirculation = false;
+            foreach (var startNode in startNodes)
+            {
+                var nodeMap = nodes.ToDictionary(x => x, x => false);
+                var already = nodes.ToDictionary(x => x, x => false);
+                nodeMap[startNode] = true;
+                already[startNode] = true;
+                containsCirculation |= DepthFirstSearch(startNode, data, nodeMap, already);
+                if (containsCirculation) break;
+            }
+
+            return
+                containsCirculation;
+        }
+
+        /// <summary>
+        /// ノード間で同じ場所をたどらないように探索する
+        /// </summary>
+        /// <param name="startNode"></param>
+        /// <param name="nodes"></param>
+        /// <param name="nodeMap"></param>
+        /// <returns></returns>
+        private bool DepthFirstSearch(int startNode, IEnumerable<UpdateCalcValuesInput.ActivityData> data, Dictionary<int, bool> nodeMap, Dictionary<int, bool> already)
+        {
+            var ret = false;
+
+            // 自ノードはこれで探索済み
+            nodeMap[startNode] = true;
+            already[startNode] = true;
+
+            // 接続エッジを検索
+            var edges = data.Where(x => x.SrcNodeId == startNode).ToArray();
+
+            // 終点の場合探索終了
+            if (edges.Length == 0)
+                return false;
+
+            // 接続先の探索済みノードがある場合は循環している
+            if (edges.Any(x => already[x.DstNodeId]))
+                return true;
+
+            // 探索済みの接続先を除外する
+            var nexts = edges.Where(x => nodeMap[x.DstNodeId] == false).ToArray();
+
+            // 次のノードを探索
+            foreach (var next in nexts)
+            {
+                ret |= DepthFirstSearch(next.DstNodeId, data, nodeMap, already);
+                // 接続先の探索が終わったら次の探索を始める前にパスごとの探索済みフラグをリセットする
+                already[next.DstNodeId] = false;
+            }
+
+            return ret;
         }
 
         /// <summary>

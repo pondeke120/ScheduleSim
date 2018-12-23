@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ScheduleSim.Commands.PertPage
@@ -73,7 +74,16 @@ namespace ScheduleSim.Commands.PertPage
                 DstNodeId = x.JNode.Value,
                 PlanValue = x.PV.Value,
             }).ToArray();
-            var output = this.businessLogic.Execute(input);
+            var output = null as UpdateCalcValuesOutput;
+            try
+            {
+                output = this.businessLogic.Execute(input);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "演算エラー", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             var vmEdges = viewModel.Edges.Where(x => x.INode.HasValue && x.JNode.HasValue && x.PV.HasValue).OrderBy(x => x.Id).ToArray();
             var enEdges = output.CalcValues.OrderBy(x => x.EdgeId).ToArray();
             var pairs = vmEdges.Zip(enEdges, (a, b) => new { Vm = a, CalcVal = b }).ToArray();
