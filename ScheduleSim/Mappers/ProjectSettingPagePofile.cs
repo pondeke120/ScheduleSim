@@ -30,11 +30,9 @@ namespace ScheduleSim.Mappers
 
             // Model -> ViewModel
             CreateMap<Process, ProjectSettingPageProcessItemViewModel>()
-                .ForMember(d => d.Id, o => o.MapFrom(s => s.ProcessCd))
-                .ForMember(d => d.Name, o => o.MapFrom(s => s.ProcessName));
+                .ForMember(d => d.DataContext, o => o.MapFrom(s => s));
             CreateMap<Function, ProjectSettingPageFunctionItemViewModel>()
-                .ForMember(d => d.Id, o => o.MapFrom(s => s.FunctionCd))
-                .ForMember(d => d.Name, o => o.MapFrom(s => s.FunctionName));
+                .ForMember(d => d.DataContext, o => o.MapFrom(s => s));
             CreateMap<Holiday, ProjectSettingPageHolidayItemViewModel>()
                 .ForMember(d => d.Id, o => o.MapFrom(s => s.HolidayCd))
                 .ForMember(d => d.Date, o => o.MapFrom(s => s.HolidayDate));

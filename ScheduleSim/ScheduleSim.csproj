@@ -350,6 +350,10 @@
       <Project>{8FEB58A9-9B48-417B-9839-9F01161DD06B}</Project>
       <Name>ScheduleSim.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ScheduleSim.ImportTool\ScheduleSim.ImportTool.csproj">
+      <Project>{74f095b0-22d6-498b-9dd2-54ba89d7b768}</Project>
+      <Name>ScheduleSim.ImportTool</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

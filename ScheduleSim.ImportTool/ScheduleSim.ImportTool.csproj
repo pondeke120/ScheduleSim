@@ -160,6 +160,8 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="TestFile\import_test.csv" />
+    <None Include="TestFile\import_test.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

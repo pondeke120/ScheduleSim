@@ -11,7 +11,7 @@
         <Button x:Name="button1" Content="ファイルを開く" Width="75" Command="{Binding OpenFileCommand}"/>
         <Button x:Name="button2" Content="上書き保存" Width="75" Command="{Binding SaveCommand}"/>
         <Button x:Name="button3" Content="別名で保存" Width="75" Command="{Binding SaveAsCommand}"/>
-        <Button x:Name="button4" Content="進捗ツールからインポート" Width="75" Command="{Binding ImportXlsxCommand}"/>
+        <Button x:Name="button4" Content="進捗ツールからインポート" Width="75" Command="{Binding ImportXlsxCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
         <Button x:Name="button5" Content="ガントチャートを出力" Width="75" Command="{Binding ExportGanttChartCommand}"/>
         <Button x:Name="button6" Content="ＰＥＲＴ図を出力" Width="75" Command="{Binding ExportPertGraphCommand}"/>
     </StackPanel>

@@ -265,19 +265,29 @@ namespace ScheduleSim.ImportTool.Commands.ImportPage
                 }
             }
 
-            // IDを振り直し
-            foreach (var proc in addProcs)
-            {
-                proc.ProcessCd = this.procIdGenerator.CreateNewId();
-            }
-            foreach (var func in addFuncs)
-            {
-                func.FunctionCd = this.funcIdGenerator.CreateNewId();
-            }
+            //// IDを振り直し
+            //foreach (var proc in addProcs)
+            //{
+            //    proc.ProcessCd = this.procIdGenerator.CreateNewId();
+            //}
+            //foreach (var func in addFuncs)
+            //{
+            //    func.FunctionCd = this.funcIdGenerator.CreateNewId();
+            //}
 
             // データ更新
-            appContext.Processes.AddRange(addProcs);
-            appContext.Functions.AddRange(addFuncs);
+            foreach (var proc in addProcs)
+            {
+                var replace = appContext.Processes.FirstOrDefault(x => string.IsNullOrEmpty(x.ProcessName));
+                replace.ProcessName = proc.ProcessName;
+            }
+            //appContext.Processes.AddRange(addProcs);
+            foreach (var func in addFuncs)
+            {
+                var replace = appContext.Functions.FirstOrDefault(x => string.IsNullOrEmpty(x.FunctionName));
+                replace.FunctionName = func.FunctionName;
+            }
+            //appContext.Functions.AddRange(addFuncs);
         }
         
         /// <summary>

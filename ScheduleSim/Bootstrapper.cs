@@ -95,6 +95,7 @@ namespace ScheduleSim
             Container.RegisterType<GanttChartGraphPage>(new ContainerControlledLifetimeManager());
             Container.RegisterType<ActivityScheduleGraphPage>(new ContainerControlledLifetimeManager());
             Container.RegisterType<PertGraphPage>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<ImportTool.Views.ImportPage>();
 
             // Register ViewModels
             Container.RegisterType<ShellViewModel>(new ContainerControlledLifetimeManager());
@@ -176,6 +177,13 @@ namespace ScheduleSim
                     new ResolvedParameter<ICommand>("PertPage.UpdateCalcValuesCommand"),
                     new ResolvedParameter<ICommand>("PertPage.TaskSelectionSourceFilterCommand")
                 ));
+            Container.RegisterType<ImportTool.ViewModels.ShellViewModel>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<ImportTool.ViewModels.ImportPageViewModel>(
+                new InjectionConstructor(
+                    new ResolvedParameter<ICommand>("ImportPage.OpenFileCommand"),
+                    new ResolvedParameter<ICommand>("ImportPage.CloseCommand"),
+                    new ResolvedParameter<ICommand>("ImportPage.CompleteCommand")
+               ));
 
             // Register Commands
             Container.RegisterType<ICommand, Commands.Menu.CreateNewProjectCommand>("Menu.CreateNewProjectCommand");
@@ -265,6 +273,17 @@ namespace ScheduleSim
             Container.RegisterType<ICommand, Commands.PertPage.DstNodeChangeCommand>("PertPage.DstNodeChangeCommand");
             Container.RegisterType<ICommand, Commands.PertPage.UpdateCalcValuesCommand>("PertPage.UpdateCalcValuesCommand");
             Container.RegisterType<ICommand, Commands.PertPage.TaskSelectionSourceFilterCommand>("PertPage.TaskSelectionSourceFilterCommand");
+            Container.RegisterType<ICommand, ImportTool.Commands.ImportPage.OpenFileCommand>("ImportPage.OpenFileCommand");
+            Container.RegisterType<ICommand, ImportTool.Commands.ImportPage.CloseCommand>("ImportPage.CloseCommand");
+            Container.RegisterType<ICommand, ImportTool.Commands.ImportPage.CompleteCommand>("ImportPage.CompleteCommand",
+                new InjectionConstructor(
+                    new ResolvedParameter<AppContext>(),
+                    new ResolvedParameter<Core.BusinessLogics.WPF.ImportTool.ICompleteBusinessLogic>(),
+                    new ResolvedParameter<IIDGenerator>("ProcessIdGen"),
+                    new ResolvedParameter<IIDGenerator>("FunctionIdGen"),
+                    new ResolvedParameter<IIDGenerator>("MemberIdGen"),
+                    new ResolvedParameter<IIDGenerator>("TaskIdGen")
+                ));
 
             // Register Mappers
             Container.RegisterType<IMapper, Mapper>(new InjectionConstructor(new ResolvedParameter<IConfigurationProvider>()));
@@ -277,6 +296,7 @@ namespace ScheduleSim
                         cfg.AddProfile<ProcessDependencyPageProfile>();
                         cfg.AddProfile<FunctionDependencyPageProfile>();
                         cfg.AddProfile<PertPageProfile>();
+                        cfg.AddProfile<ImportTool.Mappers.ImportPageProfile>();
                     })
                 ));
 
@@ -286,6 +306,8 @@ namespace ScheduleSim
             Container.RegisterType<Core.BusinessLogics.WPF.Menu.ISaveBusinessLogic, Core.BusinessLogics.WPF.Menu.SaveBusinessLogic>();
             Container.RegisterType<Core.BusinessLogics.WPF.Menu.ISaveAsBusinessLogic, Core.BusinessLogics.WPF.Menu.SaveAsBusinessLogic>();
             Container.RegisterType<Core.BusinessLogics.WPF.PertPage.IUpdateCalcValuesBusinessLogic, Core.BusinessLogics.WPF.PertPage.UpdateCalcValuesBusinessLogic>();
+            Container.RegisterType<Core.BusinessLogics.WPF.ImportTool.IOpenFileBusinessLogic, Core.BusinessLogics.WPF.ImportTool.OpenFileBusinessLogic>();
+            Container.RegisterType<Core.BusinessLogics.WPF.ImportTool.ICompleteBusinessLogic, Core.BusinessLogics.WPF.ImportTool.CompleteBusinessLogic>();
 
             // Register Services
             Container.RegisterType<Core.Service.IDbMigrationService, Core.Service.DbMigrationService>();
@@ -296,6 +318,8 @@ namespace ScheduleSim
             Container.RegisterType<Core.Service.IProcessDependencyAccessService, Core.Service.ProcessDependencyAccessService>();
             Container.RegisterType<Core.Service.IFunctionDependencyAccessService, Core.Service.FunctionDependencyAccessService>();
             Container.RegisterType<Core.Service.IPertAccessService, Core.Service.PertAccessService>();
+            Container.RegisterType<Core.Service.ICsvReadService<Core.IO.WPF.ImportTool.OpenFileOutput.TaskItem>, Core.Service.CsvReadService<Core.IO.WPF.ImportTool.OpenFileOutput.TaskItem>>();
+            Container.RegisterType<Core.Service.IXlsxReadService<Core.IO.WPF.ImportTool.OpenFileOutput.TaskItem>, Core.Service.XlsxReadService<Core.IO.WPF.ImportTool.OpenFileOutput.TaskItem>>();
 
             // Register Database Provider
             Container.RegisterType<AccessConnectionFactory>(new HierarchicalLifetimeManager(), new InjectionConstructor(new Func<string>(() => Container.Resolve<AppContext>().ProjectDbFile)));
@@ -332,6 +356,16 @@ namespace ScheduleSim
             Container.RegisterInstance<IIDGenerator>("MemberIdGen", new IDGenerator());
             Container.RegisterInstance<IIDGenerator>("TaskIdGen", new IDGenerator());
             Container.RegisterInstance<IIDGenerator>("PertIdGen", new IDGenerator());
+            Container.RegisterType<ICsvToModelConverter<Core.IO.WPF.ImportTool.OpenFileOutput.TaskItem>, CsvToTaskItemConverter>(
+                new InjectionConstructor(
+                    "工程",
+                    "機能",
+                    "作業",
+                    "計画工数",
+                    "作業開始日",
+                    "作業終了日",
+                    "担当者"
+                ));
         }
     }
 }
