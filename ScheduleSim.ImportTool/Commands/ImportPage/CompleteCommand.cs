@@ -354,7 +354,7 @@ namespace ScheduleSim.ImportTool.Commands.ImportPage
                 }
                 // 要員と紐づけ
                 var member = this.appContext.Members.FirstOrDefault(x => x.MemberName.Equals(task.Item.Member));
-                if (func != null)
+                if (member != null)
                 {
                     task.Entity.AssignMemberCd = member.MemberCd;
                 }
