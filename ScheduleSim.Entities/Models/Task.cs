@@ -16,15 +16,15 @@ namespace ScheduleSim.Entities.Models
             set { _taskCd = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaskCd))); }
         }
 
-        private int _processCd;
-        public int ProcessCd
+        private int? _processCd;
+        public int? ProcessCd
         {
             get { return _processCd; }
             set { _processCd = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ProcessCd))); }
         }
 
-        private int _functionCd;
-        public int FunctionCd
+        private int? _functionCd;
+        public int? FunctionCd
         {
             get { return _functionCd; }
             set { _functionCd = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FunctionCd))); }

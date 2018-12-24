@@ -10,3 +10,5 @@ ScheduleSim/bin/
 ScheduleSim/obj/
 packages/
 .vs/
+ScheduleSim.ImportTool/bin/
+ScheduleSim.ImportTool/obj/

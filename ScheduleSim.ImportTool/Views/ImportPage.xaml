@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="ScheduleSim.ImportTool.Views.ImportPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ScheduleSim.ImportTool.Views"
+      xmlns:vm="clr-namespace:ScheduleSim.ImportTool.ViewModels"
+      xmlns:converter="clr-namespace:ScheduleSim.ImportTool.ControlConverters"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="720">
+    <UserControl.Resources>
+        <converter:IndexConverter x:Key="IndexConverter"/>
+        <converter:BoolToImportTypeConverter x:Key="BoolToImportTypeConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20px"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="20px"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60px"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="60px"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Vertical">
+                <TextBlock Text="インポート対象のファイルを選択"/>
+                <StackPanel FlowDirection="LeftToRight" Orientation="Horizontal" HorizontalAlignment="Stretch">
+                    <TextBox Text="{Binding ImportFile}" Width="500" HorizontalAlignment="Left" />
+                    <Button Content="参照" Command="{Binding OpenFileCommand}" CommandParameter="{Binding}" Width="60" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="20,0,0,0" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,30,0,0" >
+                <RadioButton Content="現在のプロジェクトに追加する" Margin="10,5,0,5" GroupName="ImportTypeAddition"
+                             IsChecked="{Binding ImportType, Converter={StaticResource BoolToImportTypeConverter}, ConverterParameter=Addition}"/>
+                <RadioButton Content="現在のプロジェクトに上書きする" Margin="10,5,0,5"  GroupName="ImportTypeOverwrite"
+                             IsChecked="{Binding ImportType, Converter={StaticResource BoolToImportTypeConverter}, ConverterParameter=Overwrite}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0,30,0,0">
+                <TextBlock Text="取り込み先" Margin="10,5,0,5"/>
+                <CheckBox Content="プロジェクト設定" Margin="10,5,0,5" IsChecked="{Binding IsImportToProjectSettings}"/>
+                <CheckBox Content="WBS" Margin="10,5,0,5" IsChecked="{Binding IsImportToWbs}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="3" Orientation="Vertical" Margin="0,30,0,0">
+                <TextBlock Text="取り込み内容"/>
+                <DataGrid 
+                    x:Name="dataGrid" 
+                    AutoGenerateColumns="False" 
+                    Height="220" 
+                    ItemsSource="{Binding TaskItems}"
+                    CanUserAddRows="False" 
+                    IsReadOnly="True" 
+                    CanUserSortColumns="False" 
+                    CanUserDeleteRows="False"
+                    CanUserReorderColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="通番">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource IndexConverter}">
+                                    <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=DataGridRow}" Path="DataContext"/>
+                                    <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=UserControl}" Path="DataContext.TaskItems"/>
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="工程" Binding="{Binding Process}" />
+                        <DataGridTextColumn Header="機能" Binding="{Binding Function}" />
+                        <DataGridTextColumn Header="作業" Binding="{Binding TaskName}" />
+                        <DataGridTextColumn Header="計画工数" Binding="{Binding PlanValue, StringFormat={}{0:N1}}"/>
+                        <DataGridTextColumn Header="作業開始日" Binding="{Binding StartDate, StringFormat=yyyy年MM月dd日}"/>
+                        <DataGridTextColumn Header="作業終了日" Binding="{Binding EndDate, StringFormat=yyyy年MM月dd日}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+            <StackPanel Grid.Row="4" Orientation="Horizontal" FlowDirection="RightToLeft">
+                <Button Content="完了" Command="{Binding CompleteCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:ImportPage}, Mode=FindAncestor}}" Width="80" Margin="10,0,10,0"/>
+                <Button Content="キャンセル" Command="{Binding CloseCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}" Width="80" Margin="10,0,10,0"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
