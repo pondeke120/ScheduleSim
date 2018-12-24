@@ -34,6 +34,13 @@ namespace ScheduleSim.ImportTool.ViewModels
             set { SetProperty(ref _isImportToProjectSettings, value); }
         }
 
+        private bool _isImportToMembers;
+        public bool IsImportToMembers
+        {
+            get { return _isImportToMembers; }
+            set { SetProperty(ref _isImportToMembers, value); }
+        }
+
         private bool _isImportToWbs;
         public bool IsImportToWbs
         {
@@ -64,6 +71,7 @@ namespace ScheduleSim.ImportTool.ViewModels
             // 画面表示時のデフォルト設定
             ImportType = ImportTypes.Addition;
             IsImportToProjectSettings = true;
+            IsImportToMembers = true;
             IsImportToWbs = true;
             TaskItems = new ObservableCollection<ImportPageTaskItemViewModel>();
         }

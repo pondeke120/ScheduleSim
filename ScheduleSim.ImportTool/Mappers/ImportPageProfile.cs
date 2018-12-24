@@ -20,7 +20,8 @@ namespace ScheduleSim.ImportTool.Mappers
                     .ForMember(d => d.TaskName, o => o.MapFrom(s => s.TaskName))
                     .ForMember(d => d.PlanValue, o => o.MapFrom(s => s.PlanValue))
                     .ForMember(d => d.StartDate, o => o.MapFrom(s => s.StartDate))
-                    .ForMember(d => d.EndDate, o => o.MapFrom(s => s.EndDate));
+                    .ForMember(d => d.EndDate, o => o.MapFrom(s => s.EndDate))
+                    .ForMember(d => d.Member, o => o.MapFrom(s => s.Member));
 
             // Model -> ViewModel
             CreateMap<OpenFileOutput.TaskItem, ImportPageTaskItemViewModel>()

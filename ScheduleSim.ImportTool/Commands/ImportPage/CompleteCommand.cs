@@ -23,6 +23,7 @@ namespace ScheduleSim.ImportTool.Commands.ImportPage
         private IIDGenerator taskIdGenerator;
         private IIDGenerator procIdGenerator;
         private IIDGenerator funcIdGenerator;
+        private IIDGenerator memberIdGenerator;
 
         public event EventHandler CanExecuteChanged;
 
@@ -31,12 +32,14 @@ namespace ScheduleSim.ImportTool.Commands.ImportPage
             ICompleteBusinessLogic businessLogic,
             IIDGenerator procIdGenerator,
             IIDGenerator funcIdGenerator,
+            IIDGenerator memberIdGenerator,
             IIDGenerator taskIdGenerator)
         {
             this.appContext = appContext;
             this.businessLogic = businessLogic;
             this.procIdGenerator = procIdGenerator;
             this.funcIdGenerator = funcIdGenerator;
+            this.memberIdGenerator = memberIdGenerator;
             this.taskIdGenerator = taskIdGenerator;
         }
 
@@ -49,7 +52,7 @@ namespace ScheduleSim.ImportTool.Commands.ImportPage
                 return false;
 
             var exists = File.Exists(viewModel.ImportFile);
-            var check = viewModel.IsImportToProjectSettings || viewModel.IsImportToWbs;
+            var check = viewModel.IsImportToProjectSettings || viewModel.IsImportToMembers || viewModel.IsImportToWbs;
 
             return exists && check;
         }
@@ -65,6 +68,7 @@ namespace ScheduleSim.ImportTool.Commands.ImportPage
             var importType = viewModel.ImportType;
             // 取り込み先を選択
             var isImportToPrjSettings = viewModel.IsImportToProjectSettings;
+            var isImportToMembers = viewModel.IsImportToMembers;
             var isImportToWbs = viewModel.IsImportToWbs;
 
             var input = new CompleteInput();
@@ -73,7 +77,7 @@ namespace ScheduleSim.ImportTool.Commands.ImportPage
             {
                 var output = this.businessLogic.Execute(input);
                 // AppContextに読み込み内容を反映
-                UpdateContext(this.appContext, importType, isImportToPrjSettings, isImportToWbs, output);
+                UpdateContext(this.appContext, importType, isImportToPrjSettings, isImportToMembers, isImportToWbs, output);
             }
             catch (Exception ex)
             {
@@ -95,10 +99,10 @@ namespace ScheduleSim.ImportTool.Commands.ImportPage
         /// <param name="isImportToPrjSettings"></param>
         /// <param name="isImportToWbs"></param>
         /// <param name="output"></param>
-        private void UpdateContext(AppContext appContext, ImportTypes importType, bool isImportToPrjSettings, bool isImportToWbs, CompleteOutput output)
+        private void UpdateContext(AppContext appContext, ImportTypes importType, bool isImportToPrjSettings, bool isImportToMembers, bool isImportToWbs, CompleteOutput output)
         {
             // インポート種別と取り込み先により適用メソッドを選択
-            var applyRoutine = GetRoutine(importType, isImportToPrjSettings, isImportToWbs);
+            var applyRoutine = GetRoutine(importType, isImportToPrjSettings, isImportToMembers, isImportToWbs);
 
             // 適用処理を実行
             applyRoutine.Invoke(appContext, output);
@@ -111,18 +115,21 @@ namespace ScheduleSim.ImportTool.Commands.ImportPage
         /// <param name="isImportToPrjSettings"></param>
         /// <param name="isImportToWbs"></param>
         /// <returns></returns>
-        private Action<AppContext, CompleteOutput> GetRoutine(ImportTypes importType, bool isImportToPrjSettings, bool isImportToWbs)
+        private Action<AppContext, CompleteOutput> GetRoutine(ImportTypes importType, bool isImportToPrjSettings, bool isImportToMembers, bool isImportToWbs)
         {
             var importPrjSettingAction = null as Action<AppContext, CompleteOutput>;
+            var importMembersAction = null as Action<AppContext, CompleteOutput>;
             var importWbsAction = null as Action<AppContext, CompleteOutput>;
             if (importType == ImportTypes.Overwrite)
             {
                 importPrjSettingAction = new Action<AppContext, CompleteOutput>(OverwritePrjSettings);
+                importMembersAction = new Action<AppContext, CompleteOutput>(OverwriteMembers);
                 importWbsAction = new Action<AppContext, CompleteOutput>(OverriteWbs);
             }
             else if (importType == ImportTypes.Addition)
             {
                 importPrjSettingAction = new Action<AppContext, CompleteOutput>(AddPrjSettings);
+                importMembersAction = new Action<AppContext, CompleteOutput>(AddMembers);
                 importWbsAction = new Action<AppContext, CompleteOutput>(AddWbs);
             }
 
@@ -131,6 +138,8 @@ namespace ScheduleSim.ImportTool.Commands.ImportPage
                 {
                     if (isImportToPrjSettings)
                         importPrjSettingAction.Invoke(appContext, output);
+                    if (isImportToMembers)
+                        importMembersAction.Invoke(appContext, output);
                     if (isImportToWbs)
                         importWbsAction.Invoke(appContext, output);
                 });
@@ -172,6 +181,33 @@ namespace ScheduleSim.ImportTool.Commands.ImportPage
         }
 
         /// <summary>
+        /// 要員を上書き
+        /// </summary>
+        /// <param name="appContext"></param>
+        /// <param name="output"></param>
+        public void OverwriteMembers(AppContext appContext, CompleteOutput output)
+        {
+            // 要員を削除
+            appContext.Members.Clear();
+            memberIdGenerator.SetCurrentIndex(1);
+
+            // タスクのIDをnullで初期化
+            foreach (var task in appContext.Tasks)
+            {
+                task.AssignMemberCd = null;
+            }
+
+            // メンバーのIDを振り直し
+            foreach (var member in output.Members)
+            {
+                member.MemberCd = this.procIdGenerator.CreateNewId();
+            }
+
+            // データ更新
+            appContext.Members.AddRange(output.Members);
+        }
+
+        /// <summary>
         /// Wbs(作業)を上書き
         /// </summary>
         /// <param name="appContext"></param>
@@ -189,11 +225,13 @@ namespace ScheduleSim.ImportTool.Commands.ImportPage
             {
                 var procId = appContext.Processes.FirstOrDefault(x => x.ProcessName.Equals(task.Item.Process))?.ProcessCd;
                 var funcId = appContext.Functions.FirstOrDefault(x => x.FunctionName.Equals(task.Item.Function))?.FunctionCd;
+                var memberId = appContext.Members.FirstOrDefault(x => x.MemberName.Equals(task.Item.Member))?.MemberCd;
                 var entity = task.Entity;
 
                 entity.TaskCd = taskIdGenerator.CreateNewId();
                 entity.ProcessCd = procId;
                 entity.FunctionCd = funcId;
+                entity.AssignMemberCd = memberId;
             }
 
             // データ更新
@@ -241,6 +279,34 @@ namespace ScheduleSim.ImportTool.Commands.ImportPage
             appContext.Processes.AddRange(addProcs);
             appContext.Functions.AddRange(addFuncs);
         }
+        
+        /// <summary>
+        /// 要員を追加
+        /// </summary>
+        /// <param name="appContext"></param>
+        /// <param name="output"></param>
+        public void AddMembers(AppContext appContext, CompleteOutput output)
+        {
+            // 名前に重複がある場合は削除
+            var addMembers = output.Members.ToList();
+            foreach (var member in appContext.Members)
+            {
+                var exists = addMembers.FirstOrDefault(x => x.MemberName.Equals(member.MemberName));
+                if (exists != null)
+                {
+                    addMembers.Remove(exists);
+                }
+            }
+
+            // IDを振り直し
+            foreach (var member in addMembers)
+            {
+                member.MemberCd = this.memberIdGenerator.CreateNewId();
+            }
+
+            // データ更新
+            appContext.Members.AddRange(addMembers);
+        }
 
         /// <summary>
         /// WBS(作業)を追加
@@ -275,6 +341,12 @@ namespace ScheduleSim.ImportTool.Commands.ImportPage
                 if (func != null)
                 {
                     task.Entity.FunctionCd = func.FunctionCd;
+                }
+                // 要員と紐づけ
+                var member = this.appContext.Members.FirstOrDefault(x => x.MemberName.Equals(task.Item.Member));
+                if (func != null)
+                {
+                    task.Entity.AssignMemberCd = member.MemberCd;
                 }
             }
 

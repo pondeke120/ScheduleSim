@@ -11,6 +11,7 @@ namespace ScheduleSim.Core.IO.WPF.ImportTool
         public IEnumerable<OpenFileOutput.TaskItem> TaskItems;
         public IEnumerable<Task> Tasks { get; set; }
         public IEnumerable<Process> Processes { get; set; }
-        public IEnumerable<Function> Functions { get; set; } 
+        public IEnumerable<Function> Functions { get; set; }
+        public IEnumerable<Member> Members { get; set; }
     }
 }

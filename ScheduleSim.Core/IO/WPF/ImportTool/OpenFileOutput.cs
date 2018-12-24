@@ -18,6 +18,7 @@ namespace ScheduleSim.Core.IO.WPF.ImportTool
             public double? PlanValue { get; set; }
             public DateTime? StartDate { get; set; }
             public DateTime? EndDate { get; set; }
+            public string Member { get; set; }
         }
     }
 }

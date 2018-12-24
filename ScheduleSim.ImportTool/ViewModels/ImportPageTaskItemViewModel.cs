@@ -59,6 +59,13 @@ namespace ScheduleSim.ImportTool.ViewModels
             set { SetProperty(ref _endDate, value); }
         }
 
+        private string _member;
+        public string Member
+        {
+            get { return _dataContext?.Member; }
+            set { SetProperty(ref _member, value); }
+        }
+
         private OpenFileOutput.TaskItem _dataContext;
         public OpenFileOutput.TaskItem DataContext
         {

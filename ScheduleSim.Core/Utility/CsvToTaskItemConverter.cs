@@ -19,12 +19,14 @@ namespace ScheduleSim.Core.Utility
         private string planValueheaderName;
         private string startDateHeaderName;
         private string endDateHeaderName;
+        private string memberHeaderName;
         private int processIndex;
         private int functionIndex;
         private int taskIndex;
         private int planValueIndex;
         private int startDateIndex;
         private int endDateIndex;
+        private int memberIndex;
 
         public CsvToTaskItemConverter(
             string processHeaderName,
@@ -32,7 +34,8 @@ namespace ScheduleSim.Core.Utility
             string taskHeaderName,
             string planValueheaderName,
             string startDateHeaderName,
-            string endDateHeaderName)
+            string endDateHeaderName,
+            string memberHeaderName)
         {
             this.processHeaderName = processHeaderName;
             this.functionHeaderName = functionHeaderName;
@@ -40,6 +43,7 @@ namespace ScheduleSim.Core.Utility
             this.planValueheaderName = planValueheaderName;
             this.startDateHeaderName = startDateHeaderName;
             this.endDateHeaderName = endDateHeaderName;
+            this.memberHeaderName = memberHeaderName;
         }
 
         /// <summary>
@@ -57,6 +61,7 @@ namespace ScheduleSim.Core.Utility
             this.planValueIndex = split.IndexOf(this.planValueheaderName);
             this.startDateIndex = split.IndexOf(this.startDateHeaderName);
             this.endDateIndex = split.IndexOf(this.endDateHeaderName);
+            this.memberIndex = split.IndexOf(this.memberHeaderName);
         }
 
         public OpenFileOutput.TaskItem Convert(string text)
@@ -88,6 +93,7 @@ namespace ScheduleSim.Core.Utility
             {
                 output.EndDate = endDate;
             }
+            output.Member = split[this.memberIndex];
 
             return output;
         }

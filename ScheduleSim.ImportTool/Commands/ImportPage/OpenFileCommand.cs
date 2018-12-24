@@ -77,8 +77,6 @@ namespace ScheduleSim.ImportTool.Commands.ImportPage
                 // エラーメッセージを表示
                 MessageBox.Show(ex.Message, "読み込みエラー", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-            Application.Current.Dispatcher.Invoke(CommandManager.InvalidateRequerySuggested);
         }
     }
 }

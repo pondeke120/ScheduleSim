@@ -68,6 +68,7 @@ namespace ScheduleSim.ImportTool
                     new ResolvedParameter<Core.BusinessLogics.WPF.ImportTool.ICompleteBusinessLogic>(),
                     new ResolvedParameter<IIDGenerator>("ProcessIdGen"),
                     new ResolvedParameter<IIDGenerator>("FunctionIdGen"),
+                    new ResolvedParameter<IIDGenerator>("MemberIdGen"),
                     new ResolvedParameter<IIDGenerator>("TaskIdGen")
                 ));
 
@@ -105,10 +106,12 @@ namespace ScheduleSim.ImportTool
                     "作業",
                     "計画工数",
                     "作業開始日",
-                    "作業終了日"
+                    "作業終了日",
+                    "担当者"
                 ));
             Container.RegisterInstance<IIDGenerator>("ProcessIdGen", new IDGenerator());
             Container.RegisterInstance<IIDGenerator>("FunctionIdGen", new IDGenerator());
+            Container.RegisterInstance<IIDGenerator>("MemberIdGen", new IDGenerator());
             Container.RegisterInstance<IIDGenerator>("TaskIdGen", new IDGenerator());
         }
     }

@@ -45,16 +45,25 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.ImportTool
             output.Tasks = ConvertTaskEntity(taskItems).ToArray();
             output.Processes = ConvertProcessEntity(taskItems).ToArray();
             output.Functions = ConvertFunctionEntity(taskItems).ToArray();
+            output.Members = ConvertMemberEntity(taskItems).ToArray();
 
             return output;
         }
 
-        private IEnumerable<Function> ConvertFunctionEntity(IEnumerable<OpenFileOutput.TaskItem> taskItems)
+        private IEnumerable<Member> ConvertMemberEntity(IEnumerable<OpenFileOutput.TaskItem> taskItems)
         {
-            var processNames = taskItems.Select(x => x.Function).Distinct();
+            var memberNames = taskItems.Select(x => x.Member).Distinct();
 
             return
-                processNames.Select(x => new Function() { FunctionName = x });
+                memberNames.Select(x => new Member() { MemberName = x });
+        }
+
+        private IEnumerable<Function> ConvertFunctionEntity(IEnumerable<OpenFileOutput.TaskItem> taskItems)
+        {
+            var functionNames = taskItems.Select(x => x.Function).Distinct();
+
+            return
+                functionNames.Select(x => new Function() { FunctionName = x });
         }
 
         private IEnumerable<Process> ConvertProcessEntity(IEnumerable<OpenFileOutput.TaskItem> taskItems)
