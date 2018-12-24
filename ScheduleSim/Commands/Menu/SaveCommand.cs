@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using ScheduleSim.Entities.Models;
+using System.Windows;
 
 namespace ScheduleSim.Commands.Menu
 {
@@ -69,6 +70,12 @@ namespace ScheduleSim.Commands.Menu
                 return;
             }
 
+            if (CheckEnable() == false)
+            {
+                MessageBox.Show("プロジェクト期間を入力してください。");
+                return;
+            }
+
             var input = new Core.IO.WPF.Menu.SaveInput();
 
             input.StartDate = this.projectSettingPageViewModel.ProjectStartDate;
@@ -87,6 +94,17 @@ namespace ScheduleSim.Commands.Menu
             input.currentDbFile = this.appContext.ProjectDbFile;
 
             this.dispatcher.Dispatch(this.businessLogic, input);
+        }
+        
+        /// <summary>
+        /// 保存可能であるか否かの判定
+        /// </summary>
+        /// <returns></returns>
+        private bool CheckEnable()
+        {
+            return
+                this.appContext.PrjSettings.StartDate.HasValue
+                && this.appContext.PrjSettings.EndDate.HasValue;
         }
     }
 }

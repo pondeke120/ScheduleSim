@@ -62,6 +62,13 @@ namespace ScheduleSim.Commands.Menu
 
         public void Execute(object parameter)
         {
+            // 保存可能かチェック
+            if (CheckEnable() == false)
+            {
+                MessageBox.Show("プロジェクト期間を入力してください。");
+                return;
+            }
+
             // ファイル保存ダイアログ
             var sfd = new SaveFileDialog();
             sfd.Filter = "Accessファイル形式|*.accdb";
@@ -73,7 +80,7 @@ namespace ScheduleSim.Commands.Menu
             {
                 return;
             }
-
+            
             var input = new SaveAsInput();
 
             input.MasterFilePath = appContext.MasterDbFile;
@@ -98,6 +105,17 @@ namespace ScheduleSim.Commands.Menu
 
             this.shellViewModel.ProjectPath = output?.ProjectPath ?? input.SrcPath;
             this.appContext.IsSaved = true;
+        }
+
+        /// <summary>
+        /// 保存可能であるか否かの判定
+        /// </summary>
+        /// <returns></returns>
+        private bool CheckEnable()
+        {
+            return
+                this.appContext.PrjSettings.StartDate.HasValue
+                && this.appContext.PrjSettings.EndDate.HasValue;
         }
     }
 }
