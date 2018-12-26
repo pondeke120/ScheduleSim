@@ -59,7 +59,7 @@
                               />
                     <MenuItem Header="Delete Row" 
                               Command="{Binding Source={StaticResource ContextMenuBindingProxy}, Path=Data.DeleteMemberCommand}"
-                              CommandParameter="{Binding Source={StaticResource ContextMenuBindingProxy}, Path=Data.SelectedMember}"
+                              CommandParameter="{Binding Source={StaticResource ContextMenuBindingProxy}, Path=Data.SelectedMembers}"
                               />
                 </ContextMenu>
                 <Style TargetType="{x:Type DataGridRow}">
