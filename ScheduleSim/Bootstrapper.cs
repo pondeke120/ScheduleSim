@@ -153,7 +153,8 @@ namespace ScheduleSim
                     new ResolvedParameter<ICommand>("ProcessDependencyPage.DeleteDependencyCommand"),
                     new ResolvedParameter<ICommand>("ProcessDependencyPage.SrcProcessChangeCommand"),
                     new ResolvedParameter<ICommand>("ProcessDependencyPage.DstProcessChangeCommand"),
-                    new ResolvedParameter<ICommand>("ProcessDependencyPage.DependencyTypeChangeCommand")
+                    new ResolvedParameter<ICommand>("ProcessDependencyPage.DependencyTypeChangeCommand"),
+                    new ResolvedParameter<ICommand>("ProcessDependencyPage.InsertDependencyCommand")
                 ));
             Container.RegisterType<FunctionDependencyPageViewModel>(new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(
@@ -268,6 +269,7 @@ namespace ScheduleSim
             Container.RegisterType<ICommand, Commands.ProcessDependencyPage.SrcProcessChangeCommand>("ProcessDependencyPage.SrcProcessChangeCommand");
             Container.RegisterType<ICommand, Commands.ProcessDependencyPage.DstProcessChangeCommand>("ProcessDependencyPage.DstProcessChangeCommand");
             Container.RegisterType<ICommand, Commands.ProcessDependencyPage.DependencyTypeChangeCommand>("ProcessDependencyPage.DependencyTypeChangeCommand");
+            Container.RegisterType<ICommand, Commands.ProcessDependencyPage.InsertDependencyCommand>("ProcessDependencyPage.InsertDependencyCommand");
             Container.RegisterType<ICommand, Commands.FunctionDependencyPage.AddDependencyCommand>("FunctionDependencyPage.AddDependencyCommand");
             Container.RegisterType<ICommand, Commands.FunctionDependencyPage.DeleteDependencyCommand>("FunctionDependencyPage.DeleteDependencyCommand");
             Container.RegisterType<ICommand, Commands.FunctionDependencyPage.SrcFunctionChangeCommand>("FunctionDependencyPage.SrcFunctionChangeCommand");
