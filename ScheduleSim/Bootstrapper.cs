@@ -141,7 +141,8 @@ namespace ScheduleSim
                     new ResolvedParameter<ICommand>("WbsPage.PlanValueChangeCommand"),
                     new ResolvedParameter<ICommand>("WbsPage.StartDateChangeCommand"),
                     new ResolvedParameter<ICommand>("WbsPage.EndDateChangeCommand"),
-                    new ResolvedParameter<ICommand>("WbsPage.AssignMemberChangeCommand")
+                    new ResolvedParameter<ICommand>("WbsPage.AssignMemberChangeCommand"),
+                    new ResolvedParameter<ICommand>("WbsPage.InsertTaskCommand")
                 ));
             Container.RegisterType<ProcessDependencyPageViewModel>(new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(
@@ -251,6 +252,11 @@ namespace ScheduleSim
             Container.RegisterType<ICommand, Commands.WbsPage.StartDateChangeCommand>("WbsPage.StartDateChangeCommand");
             Container.RegisterType<ICommand, Commands.WbsPage.EndDateChangeCommand>("WbsPage.EndDateChangeCommand");
             Container.RegisterType<ICommand, Commands.WbsPage.AssignMemberChangeCommand>("WbsPage.AssignMemberChangeCommand");
+            Container.RegisterType<ICommand, Commands.WbsPage.InsertTaskCommand>("WbsPage.InsertTaskCommand",
+                new InjectionConstructor(
+                    new ResolvedParameter<AppContext>(),
+                    new ResolvedParameter<IIDGenerator>("TaskIdGen")
+                ));
             Container.RegisterType<ICommand, Commands.ProcessDependencyPage.AddDependencyCommand>("ProcessDependencyPage.AddDependencyCommand");
             Container.RegisterType<ICommand, Commands.ProcessDependencyPage.DeleteDependencyCommand>("ProcessDependencyPage.DeleteDependencyCommand");
             Container.RegisterType<ICommand, Commands.ProcessDependencyPage.SrcProcessChangeCommand>("ProcessDependencyPage.SrcProcessChangeCommand");

@@ -153,6 +153,7 @@
     <Compile Include="Commands\WbsPage\DeleteTaskCommand.cs" />
     <Compile Include="Commands\WbsPage\EndDateChangeCommand.cs" />
     <Compile Include="Commands\WbsPage\FunctionChangeCommand.cs" />
+    <Compile Include="Commands\WbsPage\InsertTaskCommand.cs" />
     <Compile Include="Commands\WbsPage\PlanValueChangeCommand.cs" />
     <Compile Include="Commands\WbsPage\ProcessChangeCommand.cs" />
     <Compile Include="Commands\WbsPage\StartDateChangeCommand.cs" />

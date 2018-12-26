@@ -42,9 +42,16 @@
                 CanUserDeleteRows="True" 
                 IsSynchronizedWithCurrentItem="True"
                 AddingNewItem="dataGrid_AddingNewItem">
+            <behavior:PushBindingManager.PushBindings>
+                <behavior:PushBinding TargetProperty="SelectedItems" Path="SelectedTasks"/>
+            </behavior:PushBindingManager.PushBindings>
             <DataGrid.Resources>
                 <behavior:ContextMenuBindingProxy x:Key="ContextMenuBindingProxy" Data="{Binding Path=DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}"/>
                 <ContextMenu x:Key="DataGridContextMenu">
+                    <MenuItem Header="Insert Row" 
+                              Command="{Binding Source={StaticResource ContextMenuBindingProxy}, Path=Data.InsertTaskCommand}"
+                              CommandParameter="{Binding Source={StaticResource ContextMenuBindingProxy}, Path=Data.SelectedTasks}"
+                              />
                     <MenuItem Header="Delete Row" 
                               Command="{Binding Source={StaticResource ContextMenuBindingProxy}, Path=Data.DeleteTaskCommand}"
                               CommandParameter="{Binding Source={StaticResource ContextMenuBindingProxy}, Path=Data}"

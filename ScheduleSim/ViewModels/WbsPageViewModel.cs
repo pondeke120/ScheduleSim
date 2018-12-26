@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using ScheduleSim.Core.Extensions;
+using System.Collections;
 
 namespace ScheduleSim.ViewModels
 {
@@ -23,6 +24,7 @@ namespace ScheduleSim.ViewModels
         public ICommand StartDateChangeCommand { get; private set; }
         public ICommand EndDateChangeCommand { get; private set; }
         public ICommand AssignMemberChangeCommand { get; private set; }
+        public ICommand InsertTaskCommand { get; private set; }
         private IMapper mapper;
 
         private ObservableCollection<WbsPageTaskItemViewModel> _tasks;
@@ -53,6 +55,13 @@ namespace ScheduleSim.ViewModels
             set { SetProperty(ref _memberSource, value); }
         }
 
+        private IList _selectedTasks;
+        public IList SelectedTasks
+        {
+            get { return _selectedTasks; }
+            set { SetProperty(ref _selectedTasks, value); }
+        }
+
         public WbsPageViewModel(
             AppContext appContext,
             IMapper mapper,
@@ -64,7 +73,8 @@ namespace ScheduleSim.ViewModels
             ICommand planValueChangeCommand,
             ICommand startDateChangeCommand,
             ICommand endDateChangeCommand,
-            ICommand assignMemberChangeCommand)
+            ICommand assignMemberChangeCommand,
+            ICommand insertTaskCommand)
         {
             AddTaskCommand = addTaskCommand;
             DeleteTaskCommand = deleteTaskCommand;
@@ -75,6 +85,7 @@ namespace ScheduleSim.ViewModels
             StartDateChangeCommand = startDateChangeCommand;
             EndDateChangeCommand = endDateChangeCommand;
             AssignMemberChangeCommand = assignMemberChangeCommand;
+            InsertTaskCommand = insertTaskCommand;
             this.mapper = mapper;
 
             //Tasks = new List<WbsPageTaskItemViewModel>()
