@@ -162,6 +162,7 @@
     <Compile Include="ControlBehaviors\PushBinding .cs" />
     <Compile Include="ControlBehaviors\PushBindingCollection.cs" />
     <Compile Include="ControlBehaviors\PushBindingManager.cs" />
+    <Compile Include="ControlBehaviors\ScrollSyncronizingBehavior.cs" />
     <Compile Include="ControlConverters\IndexConverter.cs" />
     <Compile Include="ControlConverters\MarginConverter.cs" />
     <Compile Include="ControlConverters\PertPageCriticalFlagConverter.cs" />
