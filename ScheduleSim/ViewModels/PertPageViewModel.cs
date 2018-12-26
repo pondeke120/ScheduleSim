@@ -24,6 +24,7 @@ namespace ScheduleSim.ViewModels
         public ICommand UpdateCalcValuesCommand { get; private set; }
         public ICommand TaskSelectionSourceFilterCommand { get; private set; }
         public ICommand ImportFromWbsCommand { get; private set; }
+        public ICommand InsertEdgeCommand { get; private set; }
         private IMapper mapper;
 
         private ObservableCollection<PertPageEdgeItemViewModel> _edges;
@@ -75,7 +76,8 @@ namespace ScheduleSim.ViewModels
             ICommand dstNodeChangeCommand,
             ICommand updateCalcValuesCommand,
             ICommand taskSelectionSourceFilterCommand,
-            ICommand importFromWbsCommand)
+            ICommand importFromWbsCommand,
+            ICommand insertEdgeCommand)
         {
             this.AddEdgeCommand = addEdgeCommand;
             this.DeleteEdgeCommand = deleteEdgeCommand;
@@ -87,6 +89,7 @@ namespace ScheduleSim.ViewModels
             this.UpdateCalcValuesCommand = updateCalcValuesCommand;
             this.TaskSelectionSourceFilterCommand = taskSelectionSourceFilterCommand;
             this.ImportFromWbsCommand = importFromWbsCommand;
+            this.InsertEdgeCommand = insertEdgeCommand;
             this.mapper = mapper;
             this.appContext = appContext;
 

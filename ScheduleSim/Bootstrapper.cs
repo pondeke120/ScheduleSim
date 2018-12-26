@@ -176,7 +176,8 @@ namespace ScheduleSim
                     new ResolvedParameter<ICommand>("PertPage.DstNodeChangeCommand"),
                     new ResolvedParameter<ICommand>("PertPage.UpdateCalcValuesCommand"),
                     new ResolvedParameter<ICommand>("PertPage.TaskSelectionSourceFilterCommand"),
-                    new ResolvedParameter<ICommand>("PertPage.ImportFromWbsCommand")
+                    new ResolvedParameter<ICommand>("PertPage.ImportFromWbsCommand"),
+                    new ResolvedParameter<ICommand>("PertPage.InsertEdgeCommand")
                 ));
             Container.RegisterType<ImportTool.ViewModels.ShellViewModel>(new ContainerControlledLifetimeManager());
             Container.RegisterType<ImportTool.ViewModels.ImportPageViewModel>(
@@ -275,6 +276,11 @@ namespace ScheduleSim
             Container.RegisterType<ICommand, Commands.PertPage.UpdateCalcValuesCommand>("PertPage.UpdateCalcValuesCommand");
             Container.RegisterType<ICommand, Commands.PertPage.TaskSelectionSourceFilterCommand>("PertPage.TaskSelectionSourceFilterCommand");
             Container.RegisterType<ICommand, Commands.PertPage.ImportFromWbsCommand>("PertPage.ImportFromWbsCommand");
+            Container.RegisterType<ICommand, Commands.PertPage.InsertEdgeCommand>("PertPage.InsertEdgeCommand",
+                new InjectionConstructor(
+                    new ResolvedParameter<AppContext>(),
+                    new ResolvedParameter<IIDGenerator>("PertIdGen")
+                ));
             Container.RegisterType<ICommand, ImportTool.Commands.ImportPage.OpenFileCommand>("ImportPage.OpenFileCommand");
             Container.RegisterType<ICommand, ImportTool.Commands.ImportPage.CloseCommand>("ImportPage.CloseCommand");
             Container.RegisterType<ICommand, ImportTool.Commands.ImportPage.CompleteCommand>("ImportPage.CompleteCommand",

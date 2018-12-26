@@ -51,5 +51,30 @@ namespace ScheduleSim.Core.Extensions
                 source.Remove(item);
             }
         }
+
+        public static void InsertRange<T>(this ObservableCollection<T> source, int index, IEnumerable<T> collection)
+        {
+            if (ValidateAddCollectionCount(source, collection))
+            {
+                return;
+            }
+
+            var itProperty = typeof(ObservableCollection<T>).GetProperty("Items", BindingFlags.NonPublic | BindingFlags.Instance);
+            var colResetMethod = typeof(ObservableCollection<T>).GetMethod("OnCollectionReset", BindingFlags.NonPublic | BindingFlags.Instance);
+
+            var list = itProperty.GetValue(source) as List<T>;
+            if (list != null)
+            {
+                var iterator = collection.GetEnumerator();
+                var i = index;
+                while (iterator.MoveNext())
+                {
+                    var item = iterator.Current;
+                    list.Insert(i++, item);
+                }
+                colResetMethod.Invoke(source, null);
+                iterator.Dispose();
+            }
+        }
     }
 }

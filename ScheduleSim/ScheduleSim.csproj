@@ -132,6 +132,7 @@
     <Compile Include="Commands\PertPage\DstNodeChangeCommand.cs" />
     <Compile Include="Commands\PertPage\FunctionChangeCommand.cs" />
     <Compile Include="Commands\PertPage\ImportFromWbsCommand.cs" />
+    <Compile Include="Commands\PertPage\InsertEdgeCommand.cs" />
     <Compile Include="Commands\PertPage\SrcNodeChangeCommand.cs" />
     <Compile Include="Commands\PertPage\ProcessChangeCommand.cs" />
     <Compile Include="Commands\PertPage\TaskChangeCommand.cs" />

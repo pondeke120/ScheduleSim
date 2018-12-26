@@ -121,6 +121,10 @@
                 <DataGrid.Resources>
                     <behavior:ContextMenuBindingProxy x:Key="ContextMenuBindingProxy" Data="{Binding Path=DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}"/>
                     <ContextMenu x:Key="DataGridContextMenu">
+                        <MenuItem Header="Insert Row" 
+                                      Command="{Binding Source={StaticResource ContextMenuBindingProxy}, Path=Data.InsertEdgeCommand}"
+                                      CommandParameter="{Binding Source={StaticResource ContextMenuBindingProxy}, Path=Data.SelectedEdges}"
+                                      />
                         <MenuItem Header="Delete Row" 
                                       Command="{Binding Source={StaticResource ContextMenuBindingProxy}, Path=Data.DeleteEdgeCommand}"
                                       CommandParameter="{Binding Source={StaticResource ContextMenuBindingProxy}, Path=Data.SelectedEdges}"
