@@ -19,7 +19,8 @@ namespace ScheduleSim.Core.Service
 
         public void CopyDbFile(string srcPath, string dstPath)
         {
-            File.Copy(srcPath, dstPath, true);
+            if (srcPath.Equals(dstPath) == false)
+                File.Copy(srcPath, dstPath, true);
             this.appContext.ProjectDbFile = dstPath;
         }
 
