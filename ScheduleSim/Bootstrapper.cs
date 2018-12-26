@@ -175,7 +175,8 @@ namespace ScheduleSim
                     new ResolvedParameter<ICommand>("PertPage.SrcNodeChangeCommand"),
                     new ResolvedParameter<ICommand>("PertPage.DstNodeChangeCommand"),
                     new ResolvedParameter<ICommand>("PertPage.UpdateCalcValuesCommand"),
-                    new ResolvedParameter<ICommand>("PertPage.TaskSelectionSourceFilterCommand")
+                    new ResolvedParameter<ICommand>("PertPage.TaskSelectionSourceFilterCommand"),
+                    new ResolvedParameter<ICommand>("PertPage.ImportFromWbsCommand")
                 ));
             Container.RegisterType<ImportTool.ViewModels.ShellViewModel>(new ContainerControlledLifetimeManager());
             Container.RegisterType<ImportTool.ViewModels.ImportPageViewModel>(
@@ -273,6 +274,7 @@ namespace ScheduleSim
             Container.RegisterType<ICommand, Commands.PertPage.DstNodeChangeCommand>("PertPage.DstNodeChangeCommand");
             Container.RegisterType<ICommand, Commands.PertPage.UpdateCalcValuesCommand>("PertPage.UpdateCalcValuesCommand");
             Container.RegisterType<ICommand, Commands.PertPage.TaskSelectionSourceFilterCommand>("PertPage.TaskSelectionSourceFilterCommand");
+            Container.RegisterType<ICommand, Commands.PertPage.ImportFromWbsCommand>("PertPage.ImportFromWbsCommand");
             Container.RegisterType<ICommand, ImportTool.Commands.ImportPage.OpenFileCommand>("ImportPage.OpenFileCommand");
             Container.RegisterType<ICommand, ImportTool.Commands.ImportPage.CloseCommand>("ImportPage.CloseCommand");
             Container.RegisterType<ICommand, ImportTool.Commands.ImportPage.CompleteCommand>("ImportPage.CompleteCommand",
@@ -306,6 +308,10 @@ namespace ScheduleSim
             Container.RegisterType<Core.BusinessLogics.WPF.Menu.ISaveBusinessLogic, Core.BusinessLogics.WPF.Menu.SaveBusinessLogic>();
             Container.RegisterType<Core.BusinessLogics.WPF.Menu.ISaveAsBusinessLogic, Core.BusinessLogics.WPF.Menu.SaveAsBusinessLogic>();
             Container.RegisterType<Core.BusinessLogics.WPF.PertPage.IUpdateCalcValuesBusinessLogic, Core.BusinessLogics.WPF.PertPage.UpdateCalcValuesBusinessLogic>();
+            Container.RegisterType<Core.BusinessLogics.WPF.PertPage.IImportFromWbsBusinessLogic, Core.BusinessLogics.WPF.PertPage.ImportFromWbsBusinessLogic>(
+                new InjectionConstructor(
+                    new ResolvedParameter<IIDGenerator>("PertIdGen")
+                ));
             Container.RegisterType<Core.BusinessLogics.WPF.ImportTool.IOpenFileBusinessLogic, Core.BusinessLogics.WPF.ImportTool.OpenFileBusinessLogic>();
             Container.RegisterType<Core.BusinessLogics.WPF.ImportTool.ICompleteBusinessLogic, Core.BusinessLogics.WPF.ImportTool.CompleteBusinessLogic>();
 
