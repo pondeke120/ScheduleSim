@@ -114,6 +114,7 @@
     <Compile Include="Commands\FunctionDependencyPage\DeleteDependencyCommand.cs" />
     <Compile Include="Commands\FunctionDependencyPage\DependencyTypeChangeCommand.cs" />
     <Compile Include="Commands\FunctionDependencyPage\DstFunctionChangeCommand.cs" />
+    <Compile Include="Commands\FunctionDependencyPage\InsertDependencyCommand.cs" />
     <Compile Include="Commands\FunctionDependencyPage\SrcFunctionChangeCommand.cs" />
     <Compile Include="Commands\MemberPage\AddMemberCommand.cs" />
     <Compile Include="Commands\MemberPage\DeleteMemberCommand.cs" />

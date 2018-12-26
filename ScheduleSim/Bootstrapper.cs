@@ -164,7 +164,8 @@ namespace ScheduleSim
                     new ResolvedParameter<ICommand>("FunctionDependencyPage.DeleteDependencyCommand"),
                     new ResolvedParameter<ICommand>("FunctionDependencyPage.SrcFunctionChangeCommand"),
                     new ResolvedParameter<ICommand>("FunctionDependencyPage.DstFunctionChangeCommand"),
-                    new ResolvedParameter<ICommand>("FunctionDependencyPage.DependencyTypeChangeCommand")
+                    new ResolvedParameter<ICommand>("FunctionDependencyPage.DependencyTypeChangeCommand"),
+                    new ResolvedParameter<ICommand>("FunctionDependencyPage.InsertDependencyCommand")
                 ));
             Container.RegisterType<PertPageViewModel>(new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(
@@ -275,6 +276,7 @@ namespace ScheduleSim
             Container.RegisterType<ICommand, Commands.FunctionDependencyPage.SrcFunctionChangeCommand>("FunctionDependencyPage.SrcFunctionChangeCommand");
             Container.RegisterType<ICommand, Commands.FunctionDependencyPage.DstFunctionChangeCommand>("FunctionDependencyPage.DstFunctionChangeCommand");
             Container.RegisterType<ICommand, Commands.FunctionDependencyPage.DependencyTypeChangeCommand>("FunctionDependencyPage.DependencyTypeChangeCommand");
+            Container.RegisterType<ICommand, Commands.FunctionDependencyPage.InsertDependencyCommand>("FunctionDependencyPage.InsertDependencyCommand");
             Container.RegisterType<ICommand, Commands.PertPage.AddPertEdgeCommand>("PertPage.AddPertEdgeCommand",
                 new InjectionConstructor(
                     new ResolvedParameter<AppContext>(),

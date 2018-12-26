@@ -3,6 +3,7 @@ using Prism.Mvvm;
 using ScheduleSim.Core.Contexts;
 using ScheduleSim.Entities.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace ScheduleSim.ViewModels
         public ICommand SrcFunctionChangeCommand { get; private set; }
         public ICommand DstFunctionChangeCommand { get; private set; }
         public ICommand DependencyTypeChangeCommand { get; private set; }
+        public ICommand InsertDependencyCommand { get; private set; }
 
         private ObservableCollection<FunctionDependencyPageDependencyItemViewModel> _dependencies;
         public ObservableCollection<FunctionDependencyPageDependencyItemViewModel> Dependencies
@@ -43,6 +45,13 @@ namespace ScheduleSim.ViewModels
             set { SetProperty(ref _dependencyTypeSource, value); }
         }
 
+        private IList _selectedDependencies;
+        public IList SelectedDependencies
+        {
+            get { return _selectedDependencies; }
+            set { SetProperty(ref _selectedDependencies, value); }
+        }
+
         public FunctionDependencyPageViewModel(
             AppContext appContext,
             IMapper mapper,
@@ -50,7 +59,8 @@ namespace ScheduleSim.ViewModels
             ICommand deleteDependencyCommand,
             ICommand srcFunctionChangeCommand,
             ICommand dstFunctionChangeCommand,
-            ICommand dependencyTypeChangeCommand)
+            ICommand dependencyTypeChangeCommand,
+            ICommand insertDependencyCommand)
         {
             this.appContext = appContext;
             this.mapper = mapper;
@@ -59,6 +69,7 @@ namespace ScheduleSim.ViewModels
             SrcFunctionChangeCommand = srcFunctionChangeCommand;
             DstFunctionChangeCommand = dstFunctionChangeCommand;
             DependencyTypeChangeCommand = dependencyTypeChangeCommand;
+            InsertDependencyCommand = insertDependencyCommand;
 
             //Dependencies = new List<FunctionDependencyPageDependencyItemViewModel>()
             //{
