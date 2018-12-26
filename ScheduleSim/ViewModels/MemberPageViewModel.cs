@@ -3,6 +3,7 @@ using Prism.Mvvm;
 using ScheduleSim.Core.Contexts;
 using ScheduleSim.Entities.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace ScheduleSim.ViewModels
         public ICommand NameChangeCommand { get; private set; }
         public ICommand JoinDateChangeCommand { get; private set; }
         public ICommand LeaveDateChangeCommand { get; private set; }
+        public ICommand InsertMemberCommand { get; private set; }
         private IMapper mapper;
 
         private MemberPageMemberItemViewModel _selectedMember;
@@ -35,6 +37,13 @@ namespace ScheduleSim.ViewModels
             set { SetProperty(ref _members, value); }
         }
 
+        private IList _selectedMembers;
+        public IList SelectedMembers
+        {
+            get { return _selectedMembers; }
+            set { SetProperty(ref _selectedMembers, value); }
+        }
+
         public MemberPageViewModel(
             AppContext appContext,
             ICommand addMemberCommand,
@@ -42,6 +51,7 @@ namespace ScheduleSim.ViewModels
             ICommand nameChangeCommand,
             ICommand joinDateChangeCommand,
             ICommand leaveDateChangeCommand,
+            ICommand insertMemberCommand,
             IMapper mapper)
         {
             this.AddMemberCommand = addMemberCommand;
@@ -49,6 +59,7 @@ namespace ScheduleSim.ViewModels
             this.NameChangeCommand = nameChangeCommand;
             this.JoinDateChangeCommand = joinDateChangeCommand;
             this.LeaveDateChangeCommand = leaveDateChangeCommand;
+            this.InsertMemberCommand = insertMemberCommand;
 
             //Members = new List<MemberPageMemberItemViewModel>()
             //{

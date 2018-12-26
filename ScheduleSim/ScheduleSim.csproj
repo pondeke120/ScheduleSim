@@ -117,6 +117,7 @@
     <Compile Include="Commands\FunctionDependencyPage\SrcFunctionChangeCommand.cs" />
     <Compile Include="Commands\MemberPage\AddMemberCommand.cs" />
     <Compile Include="Commands\MemberPage\DeleteMemberCommand.cs" />
+    <Compile Include="Commands\MemberPage\InsertMemberCommand.cs" />
     <Compile Include="Commands\MemberPage\JoinDateChangeCommand.cs" />
     <Compile Include="Commands\MemberPage\LeaveDateChangeCommand.cs" />
     <Compile Include="Commands\MemberPage\NameChangeCommand.cs" />
