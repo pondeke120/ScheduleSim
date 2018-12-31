@@ -8,7 +8,9 @@ namespace ScheduleSim.Entities.Enum
 {
     public enum DependencyTypes : int
     {
-        StartDependency,
-        CompleteDependency
+        StartStartDependency,
+        StartFinishDependency,
+        FinishStartDependency,
+        FinishFinishDependency
     }
 }
