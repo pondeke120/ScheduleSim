@@ -21,6 +21,7 @@ namespace ScheduleSim.ViewModels
         public ICommand JoinDateChangeCommand { get; private set; }
         public ICommand LeaveDateChangeCommand { get; private set; }
         public ICommand InsertMemberCommand { get; private set; }
+        public ICommand ProductivityChangeCommand { get; private set; }
         private IMapper mapper;
 
         private MemberPageMemberItemViewModel _selectedMember;
@@ -52,6 +53,7 @@ namespace ScheduleSim.ViewModels
             ICommand joinDateChangeCommand,
             ICommand leaveDateChangeCommand,
             ICommand insertMemberCommand,
+            ICommand productivityChangeCommand,
             IMapper mapper)
         {
             this.AddMemberCommand = addMemberCommand;
@@ -60,6 +62,7 @@ namespace ScheduleSim.ViewModels
             this.JoinDateChangeCommand = joinDateChangeCommand;
             this.LeaveDateChangeCommand = leaveDateChangeCommand;
             this.InsertMemberCommand = insertMemberCommand;
+            this.ProductivityChangeCommand = productivityChangeCommand;
 
             //Members = new List<MemberPageMemberItemViewModel>()
             //{

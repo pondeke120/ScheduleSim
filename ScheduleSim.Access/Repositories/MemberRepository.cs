@@ -27,6 +27,7 @@ namespace ScheduleSim.Access.Repositories
                 select
                     MEMBER_CD as MemberCd,
                     MEMBER_NAME as MemberName,
+                    PRODUCTIVITY as Productivity,
                     JOIN_DATE as JoinDate,
                     LEAVE_DATE as LeaveDate
                 from 
@@ -44,13 +45,14 @@ namespace ScheduleSim.Access.Repositories
             var trn = this.connectionFactory.GetCurrentTransaction();
             conn.Execute(@"
                 insert into M_MEMBER (
-                    MEMBER_CD, MEMBER_NAME, JOIN_DATE, LEAVE_DATE
+                    MEMBER_CD, MEMBER_NAME, PRODUCTIVITY, JOIN_DATE, LEAVE_DATE
                 )
-                values (@Cd, @Name, @Join, @Leave)
+                values (@Cd, @Name, @Productivity,  @Join, @Leave)
             "
             , members.Select(x => new {
                 Cd = x.MemberCd,
                 Name = x.MemberName,
+                Productivity = x.Productivity,
                 Join = x.JoinDate?.ToString("yyyy/MM/dd"),
                 Leave = x.LeaveDate?.ToString("yyyy/MM/dd"),
             }).ToArray()

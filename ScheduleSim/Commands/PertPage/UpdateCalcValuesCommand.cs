@@ -63,8 +63,7 @@ namespace ScheduleSim.Commands.PertPage
             input.EndDate = appContext.PrjSettings.EndDate.Value;
             input.RestDate = appContext.WeekDays.Where(x => x.HolidayFlg).Select(x => x.WeekdayCd).ToArray();
             input.Holidays = appContext.Holidays.Where(x => x.HolidayDate.HasValue).Select(x => x.HolidayDate.Value).ToArray();
-            // TODO 一日当たりの生産量は画面から入力可能にする
-            input.ValueOfDay = 8.0;
+            input.Members = appContext.Members;
             input.Data = viewModel.Edges
             .Where(x => x.INode.HasValue && x.JNode.HasValue && x.PV.HasValue)
             .Select(x => new UpdateCalcValuesInput.ActivityData()

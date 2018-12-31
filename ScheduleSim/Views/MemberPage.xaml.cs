@@ -51,5 +51,10 @@ namespace ScheduleSim.Views
         {
             this.viewModel.NameChangeCommand.Execute(new[] { sender, e });
         }
+
+        private void Productivity_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.viewModel.ProductivityChangeCommand.Execute(new[] { sender, e });
+        }
     }
 }

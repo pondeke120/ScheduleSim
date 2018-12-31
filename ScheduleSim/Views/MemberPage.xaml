@@ -79,6 +79,13 @@
                     Header="名前" Width="120" 
                     CellTemplate="{StaticResource NameTemplate}"
                     CellEditingTemplate="{StaticResource NameEditTemplate}"/>
+                <DataGridTextColumn Header="生産性(H)" Width="80" Binding="{Binding Productivity, StringFormat=#.##}">
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type TextBox}">
+                            <EventSetter Event="TextChanged" Handler="Productivity_TextChanged" />
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
                 <custom:CustomDataGridTemplateColumn 
                     Header="参加日" Width="120" 
                     CellTemplate="{StaticResource JoinDateTemplate}"

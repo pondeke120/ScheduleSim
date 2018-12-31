@@ -24,6 +24,13 @@ namespace ScheduleSim.ViewModels
             set { SetProperty(ref _name, value); }
         }
 
+        private double? _productivity;
+        public double? Productivity
+        {
+            get { return _productivity; }
+            set { SetProperty(ref _productivity, value); }
+        }
+
         private DateTime? _joinDate;
         public DateTime? JoinDate
         {
@@ -70,6 +77,10 @@ namespace ScheduleSim.ViewModels
             else if (e.PropertyName == nameof(Member.MemberName))
             {
                 Name = DataContext.MemberName;
+            }
+            else if (e.PropertyName == nameof(Member.Productivity))
+            {
+                Productivity = DataContext.Productivity;
             }
         }
     }

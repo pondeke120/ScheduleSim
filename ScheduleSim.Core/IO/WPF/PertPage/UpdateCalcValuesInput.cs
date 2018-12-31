@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ScheduleSim.Entities.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace ScheduleSim.Core.IO.WPF.PertPage
         public DateTime EndDate { get; set; }
         public IEnumerable<DayOfWeek> RestDate { get; set; }
         public IEnumerable<DateTime> Holidays { get; set; }
-        public double ValueOfDay { get; set; }
+        public IEnumerable<Member> Members { get; set; }
         public IEnumerable<ActivityData> Data { get; set; }
 
         public class ActivityData

@@ -128,6 +128,7 @@ namespace ScheduleSim
                     new ResolvedParameter<ICommand>("MemberPage.JoinDateChangeCommand"),
                     new ResolvedParameter<ICommand>("MemberPage.LeaveDateChangeCommand"),
                     new ResolvedParameter<ICommand>("MemberPage.InsertMemberCommand"),
+                    new ResolvedParameter<ICommand>("MemberPage.ProductivityChangeCommand"),
                     new ResolvedParameter<IMapper>()
                 ));
             Container.RegisterType<WbsPageViewModel>(new ContainerControlledLifetimeManager(),
@@ -239,6 +240,7 @@ namespace ScheduleSim
                 ));
             Container.RegisterType<ICommand, Commands.MemberPage.DeleteMemberCommand>("MemberPage.DeleteMemberCommand");
             Container.RegisterType<ICommand, Commands.MemberPage.NameChangeCommand>("MemberPage.NameChangeCommand");
+            Container.RegisterType<ICommand, Commands.MemberPage.ProductivityChangeCommand>("MemberPage.ProductivityChangeCommand");
             Container.RegisterType<ICommand, Commands.MemberPage.JoinDateChangeCommand>("MemberPage.JoinDateChangeCommand");
             Container.RegisterType<ICommand, Commands.MemberPage.LeaveDateChangeCommand>("MemberPage.LeaveDateChangeCommand");
             Container.RegisterType<ICommand, Commands.MemberPage.InsertMemberCommand>("MemberPage.InsertMemberCommand",

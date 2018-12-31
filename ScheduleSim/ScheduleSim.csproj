@@ -122,6 +122,7 @@
     <Compile Include="Commands\MemberPage\JoinDateChangeCommand.cs" />
     <Compile Include="Commands\MemberPage\LeaveDateChangeCommand.cs" />
     <Compile Include="Commands\MemberPage\NameChangeCommand.cs" />
+    <Compile Include="Commands\MemberPage\ProductivityChangeCommand.cs" />
     <Compile Include="Commands\Menu\CreateNewProjectCommand.cs" />
     <Compile Include="Commands\Menu\ExportGanttChartCommand.cs" />
     <Compile Include="Commands\Menu\ExportPertGraphCommand.cs" />

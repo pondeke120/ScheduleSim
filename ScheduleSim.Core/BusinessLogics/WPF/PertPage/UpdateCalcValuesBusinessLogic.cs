@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ScheduleSim.Core.IO.WPF.PertPage;
+using ScheduleSim.Entities.Models;
 
 namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
 {
@@ -22,7 +23,7 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
             }
 
             // 稼働日数を演算
-            var totalValueOfPeriod = CalcTotalValueOfPeriod(input.StartDate, input.EndDate, input.RestDate, input.Holidays, input.ValueOfDay);
+            var totalValueOfPeriod = CalcTotalValueOfPeriod(input.StartDate, input.EndDate, input.RestDate, input.Holidays, input.Members);
             // 最早開始時刻を演算
             var earliestStartValues = CalcEarliestStartValues(input.Data);
             // 最遅開始時刻を演算
@@ -241,17 +242,26 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
         /// <param name="holidays"></param>
         /// <param name="valueOfDay"></param>
         /// <returns></returns>
-        private double CalcTotalValueOfPeriod(DateTime startDate, DateTime endDate, IEnumerable<DayOfWeek> restDate, IEnumerable<DateTime> holidays, double valueOfDay)
+        private double CalcTotalValueOfPeriod(DateTime startDate, DateTime endDate, IEnumerable<DayOfWeek> restDate, IEnumerable<DateTime> holidays, IEnumerable<Member> members)
         {
-            // 日数を算出
-            var span = endDate - startDate;
-            var days = Enumerable.Range(0, 1 + (int)Math.Ceiling(span.TotalDays)).Select(i => startDate.AddDays(i)).ToArray();
-            // 休日にあたる曜日を減算
-            days = days.Where(x => restDate.Contains(x.DayOfWeek) == false && holidays.Contains(x) == false).ToArray();
+            // 要員ごとに参画期間内に出せるアウトプット量を計上
+            var sum = 0.0;
+            foreach (var member in members)
+            {
+                var startDateTemp = startDate > member.JoinDate ? startDate : member.JoinDate;
+                var endDateTemp = endDate < member.LeaveDate ? endDate : member.LeaveDate;
+                // 日数を算出
+                var span = (endDateTemp - startDateTemp).Value;
+                var days = Enumerable.Range(0, 1 + (int)Math.Ceiling(span.TotalDays)).Select(i => startDateTemp.Value.AddDays(i)).ToArray();
+                // 休日にあたる曜日を減算
+                days = days.Where(x => restDate.Contains(x.DayOfWeek) == false && holidays.Contains(x) == false).ToArray();
 
+                // 要員のアウトプット量を加算
+                sum += days.Length * member.Productivity ?? 0.0;
+            }
             // 稼働日×一日当たりの生産量
             return
-                days.Length * valueOfDay;
+                sum;
         }
 
         /// <summary>

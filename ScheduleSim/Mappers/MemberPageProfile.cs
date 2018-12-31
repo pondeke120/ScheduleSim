@@ -17,6 +17,7 @@ namespace ScheduleSim.Mappers
             CreateMap<MemberPageMemberItemViewModel, Member>()
                 .ForMember(d => d.MemberCd, o => o.MapFrom(s => s.No))
                 .ForMember(d => d.MemberName, o => o.MapFrom(d => d.Name))
+                .ForMember(d => d.Productivity, o => o.MapFrom(s => s.Productivity))
                 .ForMember(d => d.JoinDate, o => o.MapFrom(d => d.JoinDate))
                 .ForMember(d => d.LeaveDate, o => o.MapFrom(d => d.LeaveDate));
 
@@ -25,6 +26,7 @@ namespace ScheduleSim.Mappers
                 .ForMember(d => d.DataContext, o => o.MapFrom(s => s))
                 .ForMember(d => d.No, o => o.MapFrom(s => s.MemberCd))
                 .ForMember(d => d.Name, o => o.MapFrom(s => s.MemberName))
+                .ForMember(d => d.Productivity, o => o.MapFrom(s => s.Productivity))
                 .ForMember(d => d.JoinDate, o => o.MapFrom(s => s.JoinDate))
                 .ForMember(d => d.LeaveDate, o => o.MapFrom(s => s.LeaveDate));
         }

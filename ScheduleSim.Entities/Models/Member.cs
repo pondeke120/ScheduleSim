@@ -23,6 +23,13 @@ namespace ScheduleSim.Entities.Models
             set { _memberName = value;  PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MemberName))); }
         }
 
+        private double? _productivity;
+        public double? Productivity
+        {
+            get { return _productivity; }
+            set { _productivity = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Productivity))); }
+        }
+
         private DateTime? _joinDate;
         public DateTime? JoinDate
         {
