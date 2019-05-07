@@ -157,7 +157,9 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
         private IDictionary<int, bool> CalcCriticalPath(IDictionary<int, double> totalFloats)
         {
             // トータルフローの最小値を取得
-            var minFloat = totalFloats.Values.Min();
+            var minFloat = double.MinValue;
+            if (totalFloats.Count > 0)
+                minFloat = totalFloats.Values.Min();
 
             // トータルフローが最小値をとっているパスがクリティカルパス
             return
@@ -248,8 +250,8 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
             var sum = 0.0;
             foreach (var member in members)
             {
-                var startDateTemp = startDate > member.JoinDate ? startDate : member.JoinDate;
-                var endDateTemp = endDate < member.LeaveDate ? endDate : member.LeaveDate;
+                var startDateTemp = startDate > member.JoinDate ? startDate : (member.JoinDate ?? startDate) as DateTime?;
+                var endDateTemp = endDate < member.LeaveDate ? endDate : (member.LeaveDate ?? endDate) as DateTime?;
                 // 日数を算出
                 var span = (endDateTemp - startDateTemp).Value;
                 var days = Enumerable.Range(0, 1 + (int)Math.Ceiling(span.TotalDays)).Select(i => startDateTemp.Value.AddDays(i)).ToArray();
