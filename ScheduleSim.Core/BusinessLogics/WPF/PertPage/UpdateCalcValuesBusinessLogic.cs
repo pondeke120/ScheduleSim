@@ -43,6 +43,7 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
             {
                 return new UpdateCalcValuesOutput.CalcValue()
                 {
+                    EdgeId = x.Id,
                     EarliestStartTime = earliestStartValues[x.Id],
                     LatestStartTime = latestStartValues[x.Id],
                     EarliestFinishTime = earliestFinishValues[x.Id],
@@ -353,7 +354,7 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
             var startEdges = data.Where(x => startNodes.Contains(x.SrcNodeId)).ToArray();
             foreach (var startEdge in startEdges)
             {
-                // 終点ノードの最早開始時刻=MAX(直列ノードの最早開始時刻+ノード自身の作業時間)
+                // 終点ノードの最遅開始時刻=MAX(直列ノードの最早開始時刻+ノード自身の作業時間)
                 valMap[startEdge.Id] = CalcLatestStartValue(startEdge, data, valMap, totalValueOfPeriod) - startEdge.PlanValue;
             }
 
