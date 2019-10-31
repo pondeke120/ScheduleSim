@@ -296,8 +296,10 @@
             Width="auto"
             Height="auto">
             <ToolBar ToolBarTray.IsLocked="True" HorizontalAlignment="Left" Margin="0,0,-12,0" Loaded="ToolBar_Loaded">
-                <Button Content="再計算" Command="{Binding UpdateCalcValuesCommand}" CommandParameter="{Binding}" ToolBar.OverflowMode="Never" ToolTip="再計算を行う"/>
-                <Button Content="WBS" Command="{Binding ImportFromWbsCommand}" ToolBar.OverflowMode="Never" ToolTip="WBSのタスク一覧を取り込む"/>
+                <Button Width="55" Content="WBS" Command="{Binding ImportFromWbsCommand}" ToolBar.OverflowMode="Never" ToolTip="WBSのタスク一覧を取り込む"/>
+                <Button Width="55" Content="番号割振" Command="{Binding UpdateCalcValuesCommand}" CommandParameter="{Binding}" ToolBar.OverflowMode="Never" ToolTip="再計算を行う"/>
+                <Button Width="55" Content="検　証" Command="{Binding CheckDependencyCommand}" CommandParameter="{Binding}" ToolBar.OverflowMode="Never" ToolTip="依存性による検証を行う"/>
+                <Button Width="55" Content="再計算" Command="{Binding UpdateCalcValuesCommand}" CommandParameter="{Binding}" ToolBar.OverflowMode="Never" ToolTip="再計算を行う"/>
             </ToolBar>
         </ToolBarPanel>
     </Grid>

@@ -182,7 +182,8 @@ namespace ScheduleSim
                     new ResolvedParameter<ICommand>("PertPage.UpdateCalcValuesCommand"),
                     new ResolvedParameter<ICommand>("PertPage.TaskSelectionSourceFilterCommand"),
                     new ResolvedParameter<ICommand>("PertPage.ImportFromWbsCommand"),
-                    new ResolvedParameter<ICommand>("PertPage.InsertEdgeCommand")
+                    new ResolvedParameter<ICommand>("PertPage.InsertEdgeCommand"),
+                    new ResolvedParameter<ICommand>("PertPage.CheckDependencyCommand")
                 ));
             Container.RegisterType<ImportTool.ViewModels.ShellViewModel>(new ContainerControlledLifetimeManager());
             Container.RegisterType<ImportTool.ViewModels.ImportPageViewModel>(
@@ -299,6 +300,7 @@ namespace ScheduleSim
                     new ResolvedParameter<AppContext>(),
                     new ResolvedParameter<IIDGenerator>("PertIdGen")
                 ));
+            Container.RegisterType<ICommand, Commands.PertPage.CheckDependencyCommand>("PertPage.CheckDependencyCommand");
             Container.RegisterType<ICommand, ImportTool.Commands.ImportPage.OpenFileCommand>("ImportPage.OpenFileCommand");
             Container.RegisterType<ICommand, ImportTool.Commands.ImportPage.CloseCommand>("ImportPage.CloseCommand");
             Container.RegisterType<ICommand, ImportTool.Commands.ImportPage.CompleteCommand>("ImportPage.CompleteCommand",
@@ -336,6 +338,7 @@ namespace ScheduleSim
                 new InjectionConstructor(
                     new ResolvedParameter<IIDGenerator>("PertIdGen")
                 ));
+            Container.RegisterType<Core.BusinessLogics.WPF.PertPage.ICheckDependencyBusinessLogic, Core.BusinessLogics.WPF.PertPage.CheckDependencyBusinessLogic>();
             Container.RegisterType<Core.BusinessLogics.WPF.ImportTool.IOpenFileBusinessLogic, Core.BusinessLogics.WPF.ImportTool.OpenFileBusinessLogic>();
             Container.RegisterType<Core.BusinessLogics.WPF.ImportTool.ICompleteBusinessLogic, Core.BusinessLogics.WPF.ImportTool.CompleteBusinessLogic>();
 

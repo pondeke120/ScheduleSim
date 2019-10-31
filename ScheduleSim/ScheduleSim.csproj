@@ -131,6 +131,7 @@
     <Compile Include="Commands\Menu\SaveAsCommand.cs" />
     <Compile Include="Commands\Menu\SaveCommand.cs" />
     <Compile Include="Commands\PertPage\AddPertEdgeCommand.cs" />
+    <Compile Include="Commands\PertPage\CheckDependencyCommand.cs" />
     <Compile Include="Commands\PertPage\DeleteEdgeCommand.cs" />
     <Compile Include="Commands\PertPage\DstNodeChangeCommand.cs" />
     <Compile Include="Commands\PertPage\FunctionChangeCommand.cs" />
