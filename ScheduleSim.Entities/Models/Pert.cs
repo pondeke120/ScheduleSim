@@ -37,6 +37,13 @@ namespace ScheduleSim.Entities.Models
             set { _taskCd = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaskCd))); }
         }
 
+        private bool _isCritical;
+        public bool IsCritical
+        {
+            get { return _isCritical; }
+            set { _isCritical = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsCritical))); }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

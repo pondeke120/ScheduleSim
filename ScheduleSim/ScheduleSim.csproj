@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="AutoMapper, Version=7.0.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.7.0.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
@@ -43,6 +46,15 @@
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net45\CommonServiceLocator.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Graphviz, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Graphviz.2.38.0.2\lib\Graphviz.dll</HintPath>
+    </Reference>
+    <Reference Include="Graphviz4Net, Version=2.0.36.0, Culture=neutral, PublicKeyToken=4b46ae066952113a, processorArchitecture=MSIL">
+      <HintPath>..\packages\GraphViz4Net.2.0.36\lib\net45\Graphviz4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Graphviz4Net.WPF, Version=2.0.36.0, Culture=neutral, PublicKeyToken=4b46ae066952113a, processorArchitecture=MSIL">
+      <HintPath>..\packages\GraphViz4Net.WPF2.2.0.36\lib\net45\Graphviz4Net.WPF.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
@@ -72,6 +84,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
@@ -102,6 +117,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WPFExtensions, Version=1.0.3437.34043, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFExtensions.1.0.0\lib\WPFExtensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -130,6 +148,7 @@
     <Compile Include="Commands\Menu\OpenFileCommand.cs" />
     <Compile Include="Commands\Menu\SaveAsCommand.cs" />
     <Compile Include="Commands\Menu\SaveCommand.cs" />
+    <Compile Include="Commands\PertGraphPage\RefreshCommand.cs" />
     <Compile Include="Commands\PertPage\AddPertEdgeCommand.cs" />
     <Compile Include="Commands\PertPage\CheckDependencyCommand.cs" />
     <Compile Include="Commands\PertPage\DeleteEdgeCommand.cs" />
@@ -189,6 +208,8 @@
     <Compile Include="ViewModels\MemberPageMemberItemViewModel.cs" />
     <Compile Include="ViewModels\MemberPageViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
+    <Compile Include="ViewModels\PertGraphPageNodeViewModel.cs" />
+    <Compile Include="ViewModels\PertGraphPageViewModel.cs" />
     <Compile Include="ViewModels\PertPageEdgeItemViewModel.cs" />
     <Compile Include="ViewModels\PertPageFunctionItemViewModel.cs" />
     <Compile Include="ViewModels\PertPageProcessItemViewModel.cs" />
@@ -364,7 +385,368 @@
       <Name>ScheduleSim.ImportTool</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="..\packages\Graphviz.2.38.0.2\acyclic.exe">
+      <Link>GraphViz\acyclic.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\ann.dll">
+      <Link>GraphViz\ann.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\bcomps.exe">
+      <Link>GraphViz\bcomps.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\ccomps.exe">
+      <Link>GraphViz\ccomps.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\cdt.dll">
+      <Link>GraphViz\cdt.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\cgraph.dll">
+      <Link>GraphViz\cgraph.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\circo.exe">
+      <Link>GraphViz\circo.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\diffimg.exe">
+      <Link>GraphViz\diffimg.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\dijkstra.exe">
+      <Link>GraphViz\dijkstra.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\dot.exe">
+      <Link>GraphViz\dot.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\dotty.exe">
+      <Link>GraphViz\dotty.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\edgepaint.exe">
+      <Link>GraphViz\edgepaint.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\fc-cache.exe">
+      <Link>GraphViz\fc-cache.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\fc-cat.exe">
+      <Link>GraphViz\fc-cat.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\fc-list.exe">
+      <Link>GraphViz\fc-list.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\fc-match.exe">
+      <Link>GraphViz\fc-match.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\fdp.exe">
+      <Link>GraphViz\fdp.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\fontconfig.dll">
+      <Link>GraphViz\fontconfig.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\fontconfig_fix.dll">
+      <Link>GraphViz\fontconfig_fix.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\freetype6.dll">
+      <Link>GraphViz\freetype6.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\gc.exe">
+      <Link>GraphViz\gc.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\glut32.dll">
+      <Link>GraphViz\glut32.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\gml2gv.exe">
+      <Link>GraphViz\gml2gv.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\graphml2gv.exe">
+      <Link>GraphViz\graphml2gv.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\gv2gml.exe">
+      <Link>GraphViz\gv2gml.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\gvc.dll">
+      <Link>GraphViz\gvc.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\gvcolor.exe">
+      <Link>GraphViz\gvcolor.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\gvedit.exe">
+      <Link>GraphViz\gvedit.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\gvgen.exe">
+      <Link>GraphViz\gvgen.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\gvmap.exe">
+      <Link>GraphViz\gvmap.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\gvpack.exe">
+      <Link>GraphViz\gvpack.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\gvplugin_core.dll">
+      <Link>GraphViz\gvplugin_core.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\gvplugin_dot_layout.dll">
+      <Link>GraphViz\gvplugin_dot_layout.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\gvplugin_gd.dll">
+      <Link>GraphViz\gvplugin_gd.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\gvplugin_gdiplus.dll">
+      <Link>GraphViz\gvplugin_gdiplus.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\gvplugin_neato_layout.dll">
+      <Link>GraphViz\gvplugin_neato_layout.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\gvplugin_pango.dll">
+      <Link>GraphViz\gvplugin_pango.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\gvpr.exe">
+      <Link>GraphViz\gvpr.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\gxl2gv.exe">
+      <Link>GraphViz\gxl2gv.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\iconv.dll">
+      <Link>GraphViz\iconv.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\intl.dll">
+      <Link>GraphViz\intl.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\jpeg62.dll">
+      <Link>GraphViz\jpeg62.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\lefty.exe">
+      <Link>GraphViz\lefty.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libatk-1.0-0.dll">
+      <Link>GraphViz\libatk-1.0-0.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libcairo-2.dll">
+      <Link>GraphViz\libcairo-2.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libexpat-1.dll">
+      <Link>GraphViz\libexpat-1.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libexpat.dll">
+      <Link>GraphViz\libexpat.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libfontconfig-1.dll">
+      <Link>GraphViz\libfontconfig-1.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libfreetype-6.dll">
+      <Link>GraphViz\libfreetype-6.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libgdk-win32-2.0-0.dll">
+      <Link>GraphViz\libgdk-win32-2.0-0.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libgdkglext-win32-1.0-0.dll">
+      <Link>GraphViz\libgdkglext-win32-1.0-0.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libgdk_pixbuf-2.0-0.dll">
+      <Link>GraphViz\libgdk_pixbuf-2.0-0.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libgio-2.0-0.dll">
+      <Link>GraphViz\libgio-2.0-0.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libglade-2.0-0.dll">
+      <Link>GraphViz\libglade-2.0-0.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libglib-2.0-0.dll">
+      <Link>GraphViz\libglib-2.0-0.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libgmodule-2.0-0.dll">
+      <Link>GraphViz\libgmodule-2.0-0.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libgobject-2.0-0.dll">
+      <Link>GraphViz\libgobject-2.0-0.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libgthread-2.0-0.dll">
+      <Link>GraphViz\libgthread-2.0-0.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libgtk-win32-2.0-0.dll">
+      <Link>GraphViz\libgtk-win32-2.0-0.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libgtkglext-win32-1.0-0.dll">
+      <Link>GraphViz\libgtkglext-win32-1.0-0.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libltdl-3.dll">
+      <Link>GraphViz\libltdl-3.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libpango-1.0-0.dll">
+      <Link>GraphViz\libpango-1.0-0.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libpangocairo-1.0-0.dll">
+      <Link>GraphViz\libpangocairo-1.0-0.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libpangoft2-1.0-0.dll">
+      <Link>GraphViz\libpangoft2-1.0-0.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libpangowin32-1.0-0.dll">
+      <Link>GraphViz\libpangowin32-1.0-0.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libpng12.dll">
+      <Link>GraphViz\libpng12.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libpng14-14.dll">
+      <Link>GraphViz\libpng14-14.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\librsvg-2-2.dll">
+      <Link>GraphViz\librsvg-2-2.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\libxml2.dll">
+      <Link>GraphViz\libxml2.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\lib\Graphviz.dll">
+      <Link>GraphViz\lib\Graphviz.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\lneato.exe">
+      <Link>GraphViz\lneato.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\ltdl.dll">
+      <Link>GraphViz\ltdl.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\mingle.exe">
+      <Link>GraphViz\mingle.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\mm2gv.exe">
+      <Link>GraphViz\mm2gv.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\neato.exe">
+      <Link>GraphViz\neato.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\nop.exe">
+      <Link>GraphViz\nop.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\osage.exe">
+      <Link>GraphViz\osage.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\patchwork.exe">
+      <Link>GraphViz\patchwork.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\Pathplan.dll">
+      <Link>GraphViz\Pathplan.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\prune.exe">
+      <Link>GraphViz\prune.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\QtCore4.dll">
+      <Link>GraphViz\QtCore4.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\QtGui4.dll">
+      <Link>GraphViz\QtGui4.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\sccmap.exe">
+      <Link>GraphViz\sccmap.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\sfdp.exe">
+      <Link>GraphViz\sfdp.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\smyrna.exe">
+      <Link>GraphViz\smyrna.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\tred.exe">
+      <Link>GraphViz\tred.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\twopi.exe">
+      <Link>GraphViz\twopi.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\unflatten.exe">
+      <Link>GraphViz\unflatten.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\vmalloc.dll">
+      <Link>GraphViz\vmalloc.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Graphviz.2.38.0.2\zlib1.dll">
+      <Link>GraphViz\zlib1.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

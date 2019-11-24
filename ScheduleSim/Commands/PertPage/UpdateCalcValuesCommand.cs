@@ -98,6 +98,7 @@ namespace ScheduleSim.Commands.PertPage
                 vmEdge.FreeFloat = enEdge.FreeFloat;
                 vmEdge.TotalFloat = enEdge.TotalFloat;
                 vmEdge.IsCritical = enEdge.IsCritical;
+                this.appContext.PertEdges.First(x => x.SrcNodeCd == vmEdge.INode && x.DstNodeCd == vmEdge.JNode).IsCritical = vmEdge.IsCritical;
             }
 
         }

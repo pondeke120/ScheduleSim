@@ -185,6 +185,11 @@ namespace ScheduleSim
                     new ResolvedParameter<ICommand>("PertPage.InsertEdgeCommand"),
                     new ResolvedParameter<ICommand>("PertPage.CheckDependencyCommand")
                 ));
+            Container.RegisterType<PertGraphPageViewModel>(new ContainerControlledLifetimeManager(),
+                new InjectionConstructor(
+                    new ResolvedParameter<AppContext>(),
+                    new ResolvedParameter<ICommand>("PertGraphPage.RefreshCommand")
+                ));
             Container.RegisterType<ImportTool.ViewModels.ShellViewModel>(new ContainerControlledLifetimeManager());
             Container.RegisterType<ImportTool.ViewModels.ImportPageViewModel>(
                 new InjectionConstructor(
@@ -301,6 +306,7 @@ namespace ScheduleSim
                     new ResolvedParameter<IIDGenerator>("PertIdGen")
                 ));
             Container.RegisterType<ICommand, Commands.PertPage.CheckDependencyCommand>("PertPage.CheckDependencyCommand");
+            Container.RegisterType<ICommand, Commands.PertGraphPage.RefreshCommand>("PertGraphPage.RefreshCommand");
             Container.RegisterType<ICommand, ImportTool.Commands.ImportPage.OpenFileCommand>("ImportPage.OpenFileCommand");
             Container.RegisterType<ICommand, ImportTool.Commands.ImportPage.CloseCommand>("ImportPage.CloseCommand");
             Container.RegisterType<ICommand, ImportTool.Commands.ImportPage.CompleteCommand>("ImportPage.CompleteCommand",

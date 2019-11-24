@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ScheduleSim.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,34 @@ namespace ScheduleSim.Views
     /// </summary>
     public partial class PertGraphPage : Page
     {
-        public PertGraphPage()
+        private PertGraphPageViewModel viewModel;
+
+        public PertGraphPage(PertGraphPageViewModel viewModel)
         {
             InitializeComponent();
+            this.viewModel = viewModel;
+            this.DataContext = viewModel;
+            //this.AddNewEdge.Click += AddNewEdgeClick;
+            //this.AddNewPerson.Click += AddNewPersonClick;
+            //this.UpdatePerson.Click += UpdatePersonClick;
         }
+
+        //void UpdatePersonClick(object sender, RoutedEventArgs e)
+        //{
+        //    this.viewModel.UpdatePersonName = (string)this.UpdatePersonName.SelectedItem;
+        //    this.viewModel.UpdatePerson();
+        //}
+
+        //private void AddNewPersonClick(object sender, RoutedEventArgs e)
+        //{
+        //    this.viewModel.CreatePerson();
+        //}
+
+        //private void AddNewEdgeClick(object sender, RoutedEventArgs e)
+        //{
+        //    this.viewModel.NewEdgeStart = (string)this.NewEdgeStart.SelectedItem;
+        //    this.viewModel.NewEdgeEnd = (string)this.NewEdgeEnd.SelectedItem;
+        //    this.viewModel.CreateEdge();
+        //}
     }
 }
