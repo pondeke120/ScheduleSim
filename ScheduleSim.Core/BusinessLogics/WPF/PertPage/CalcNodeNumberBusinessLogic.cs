@@ -67,10 +67,13 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
             // 順番に番号を付けていく
             var allocationList = new Dictionary<Task, Pert>();
             var resultEdges = new List<Pert>();
+            var createdDstNode = new Dictionary<Task, int>(); 
             var currentNodeNumber = 2;
+            var createNumber = 0;
             foreach (var taskGraph in dependencyMap)
             {
                 var task = taskGraph.Key;
+                createNumber = 0;
 
                 // 一次スライス(直前のタスク)のタスクから順に検索する
                 var beforeNode = null as int?;
@@ -110,11 +113,27 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
                                 }
 
                                 // 依存元タスクとマージ用ノードをつなぐエッジ
-                                var maybeFromPert = allocationList[maybeFrom.Key];
+                                var maybeFromPert = null as Pert;
+                                var dstNodeNumber = 0;
+                                if (allocationList.ContainsKey(maybeFrom.Key))
+                                {
+                                    maybeFromPert = allocationList[maybeFrom.Key];
+                                    dstNodeNumber = maybeFromPert.DstNodeCd;
+                                }
+                                else
+                                {
+                                    if (createdDstNode.ContainsKey(maybeFrom.Key) == false)
+                                    {
+                                        createNumber++;
+                                        createdDstNode.Add(maybeFrom.Key, currentNodeNumber + createNumber);
+                                    }
+                                    dstNodeNumber = createdDstNode[maybeFrom.Key];
+                                }
+
                                 mergeEdgeList.Add(new Pert()
                                 {
                                     Id = this.pertIdGen.CreateNewId(),
-                                    SrcNodeCd = maybeFromPert.DstNodeCd,
+                                    SrcNodeCd = dstNodeNumber,
                                     DstNodeCd = currentNodeNumber,
                                     TaskCd = null,
                                 });
@@ -129,7 +148,7 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
 
                 if (mergeEdgeList.Count > 0)
                 {
-                    currentNodeNumber++;
+                    currentNodeNumber += createNumber + 1;
                     resultEdges.AddRange(mergeEdgeList);
                 }
                 
@@ -137,11 +156,12 @@ namespace ScheduleSim.Core.BusinessLogics.WPF.PertPage
                 {
                     Id = this.pertIdGen.CreateNewId(),
                     SrcNodeCd = beforeNode ?? 1,
-                    DstNodeCd = currentNodeNumber,
+                    DstNodeCd = createdDstNode.ContainsKey(task) ? createdDstNode[task] : currentNodeNumber,
                     TaskCd = task.TaskCd,
                 };
 
-                currentNodeNumber++;
+                if (createdDstNode.ContainsKey(task) == false)
+                    currentNodeNumber++;
                 allocationList.Add(task, pert);
                 resultEdges.Add(pert);
             }
