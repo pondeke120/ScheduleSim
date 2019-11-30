@@ -101,7 +101,7 @@
                         </Style>
                     </DataGridTextColumn.EditingElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="計画工数" Width="60" Binding="{Binding PV, StringFormat=#.##}">
+                <DataGridTextColumn Header="計画工数" Width="60" Binding="{Binding PV, StringFormat=0.00}">
                     <DataGridTextColumn.EditingElementStyle>
                         <Style TargetType="{x:Type TextBox}">
                             <EventSetter Event="TextChanged" Handler="PlanValue_TextChanged" />
