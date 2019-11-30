@@ -183,7 +183,8 @@ namespace ScheduleSim
                     new ResolvedParameter<ICommand>("PertPage.TaskSelectionSourceFilterCommand"),
                     new ResolvedParameter<ICommand>("PertPage.ImportFromWbsCommand"),
                     new ResolvedParameter<ICommand>("PertPage.InsertEdgeCommand"),
-                    new ResolvedParameter<ICommand>("PertPage.CheckDependencyCommand")
+                    new ResolvedParameter<ICommand>("PertPage.CheckDependencyCommand"),
+                    new ResolvedParameter<ICommand>("PertPage.CalcNodeNumberCommand")
                 ));
             Container.RegisterType<ActivityScheduleGraphPageViewModel>(new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(
@@ -311,6 +312,7 @@ namespace ScheduleSim
                     new ResolvedParameter<IIDGenerator>("PertIdGen")
                 ));
             Container.RegisterType<ICommand, Commands.PertPage.CheckDependencyCommand>("PertPage.CheckDependencyCommand");
+            Container.RegisterType<ICommand, Commands.PertPage.CalcNodeNumberCommand>("PertPage.CalcNodeNumberCommand");
             Container.RegisterType<ICommand, Commands.ActivityScheduleGraphPage.DrawCommand>("ActivityScheduleGraphPage.DrawCommand");
             Container.RegisterType<ICommand, Commands.PertGraphPage.RefreshCommand>("PertGraphPage.RefreshCommand");
             Container.RegisterType<ICommand, ImportTool.Commands.ImportPage.OpenFileCommand>("ImportPage.OpenFileCommand");
@@ -351,6 +353,10 @@ namespace ScheduleSim
                     new ResolvedParameter<IIDGenerator>("PertIdGen")
                 ));
             Container.RegisterType<Core.BusinessLogics.WPF.PertPage.ICheckDependencyBusinessLogic, Core.BusinessLogics.WPF.PertPage.CheckDependencyBusinessLogic>();
+            Container.RegisterType<Core.BusinessLogics.WPF.PertPage.ICalcNodeNumberBusinessLogic, Core.BusinessLogics.WPF.PertPage.CalcNodeNumberBusinessLogic>(
+                new InjectionConstructor(
+                    new ResolvedParameter<IIDGenerator>("PertIdGen")
+                )); ;
             Container.RegisterType<Core.BusinessLogics.WPF.ImportTool.IOpenFileBusinessLogic, Core.BusinessLogics.WPF.ImportTool.OpenFileBusinessLogic>();
             Container.RegisterType<Core.BusinessLogics.WPF.ImportTool.ICompleteBusinessLogic, Core.BusinessLogics.WPF.ImportTool.CompleteBusinessLogic>();
 

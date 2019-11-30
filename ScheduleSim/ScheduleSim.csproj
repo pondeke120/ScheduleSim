@@ -157,6 +157,7 @@
     <Compile Include="Commands\Menu\SaveCommand.cs" />
     <Compile Include="Commands\PertGraphPage\RefreshCommand.cs" />
     <Compile Include="Commands\PertPage\AddPertEdgeCommand.cs" />
+    <Compile Include="Commands\PertPage\CalcNodeNumberCommand.cs" />
     <Compile Include="Commands\PertPage\CheckDependencyCommand.cs" />
     <Compile Include="Commands\PertPage\DeleteEdgeCommand.cs" />
     <Compile Include="Commands\PertPage\DstNodeChangeCommand.cs" />

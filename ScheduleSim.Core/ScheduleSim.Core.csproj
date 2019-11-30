@@ -71,7 +71,9 @@
     <Compile Include="BusinessLogics\WPF\Menu\OpenFileBusinessLogic.cs" />
     <Compile Include="BusinessLogics\WPF\Menu\SaveAsBusinessLogic.cs" />
     <Compile Include="BusinessLogics\WPF\Menu\SaveBusinessLogic.cs" />
+    <Compile Include="BusinessLogics\WPF\PertPage\CalcNodeNumberBusinessLogic.cs" />
     <Compile Include="BusinessLogics\WPF\PertPage\CheckDependencyBusinessLogic.cs" />
+    <Compile Include="BusinessLogics\WPF\PertPage\ICalcNodeNumberBusinessLogic.cs" />
     <Compile Include="BusinessLogics\WPF\PertPage\ICheckDependencyBusinessLogic.cs" />
     <Compile Include="BusinessLogics\WPF\PertPage\IImportFromWbsBusinessLogic.cs" />
     <Compile Include="BusinessLogics\WPF\PertPage\ImportFromWbsBusinessLogic.cs" />
@@ -94,6 +96,8 @@
     <Compile Include="IO\WPF\Menu\SaveAsOutput.cs" />
     <Compile Include="IO\WPF\Menu\SaveOutput.cs" />
     <Compile Include="IO\WPF\Menu\SaveInput.cs" />
+    <Compile Include="IO\WPF\PertPage\CalcNodeNumberInput.cs" />
+    <Compile Include="IO\WPF\PertPage\CalcNodeNumberOutput.cs" />
     <Compile Include="IO\WPF\PertPage\CheckDependencyInput.cs" />
     <Compile Include="IO\WPF\PertPage\CheckependencyOutput.cs" />
     <Compile Include="IO\WPF\PertPage\ImportFromWbsInput.cs" />
