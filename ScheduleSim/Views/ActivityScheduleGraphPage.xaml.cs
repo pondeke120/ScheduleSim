@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LiveCharts;
+using LiveCharts.Wpf;
+using ScheduleSim.ViewModels;
 
 namespace ScheduleSim.Views
 {
@@ -20,9 +23,15 @@ namespace ScheduleSim.Views
     /// </summary>
     public partial class ActivityScheduleGraphPage : Page
     {
-        public ActivityScheduleGraphPage()
+
+        public ActivityScheduleGraphPage(ActivityScheduleGraphPageViewModel viewModel)
         {
             InitializeComponent();
+
+            this.ViewModel = viewModel;
+            this.DataContext = viewModel;
         }
+
+        public ActivityScheduleGraphPageViewModel ViewModel { get; private set; }
     }
 }
